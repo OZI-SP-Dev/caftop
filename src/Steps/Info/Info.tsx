@@ -30,7 +30,7 @@ export const Info = () => {
     return Promise.resolve();
   };
 
-  const submitError: SubmitErrorHandler<Partial<CAFTOPInfo>> = (data) => {
+  const submitError: SubmitErrorHandler<Partial<CAFTOPInfo>> = (_data) => {
     window.alert(
       "Please correct errors on this page before navigating to another page"
     );
