@@ -1,5 +1,6 @@
 import { GenericStep } from "Steps/GenericStep";
 import { ReactElement } from "react";
+import { Info } from "Steps/Info/Info";
 
 type WizardStep = {
   id: string;
@@ -9,7 +10,7 @@ type WizardStep = {
 
 export const WizardSteps: WizardStep[] = [
   { id: "Home", name: "Home", jsxObj: <GenericStep /> },
-  { id: "Info", name: "CAFTOP Information Page", jsxObj: <GenericStep /> },
+  { id: "Info", name: "CAFTOP Information Page", jsxObj: <Info /> },
   {
     id: "Description",
     name: "Program Description and General Information",
