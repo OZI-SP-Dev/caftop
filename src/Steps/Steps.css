@@ -1,0 +1,12 @@
+@import "../components/BaseFormFields/BaseFormFields.css";
+
+.requestFormContainer {
+    display: grid;
+    width: 100%;
+}
+
+.requestFieldContainer {
+    margin: 1em;
+    display: grid;
+    position: relative;
+}
