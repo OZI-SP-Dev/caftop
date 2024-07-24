@@ -16,7 +16,7 @@ export const ProgramGroup = () => {
   const ProgramGroups = useProgramGroups();
   const Groups =
     ProgramGroups.data?.map((item) => {
-      return { children: item.Title, value: item.Title };
+      return { children: item, value: item };
     }) ?? [];
 
   return (
