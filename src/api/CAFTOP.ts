@@ -3,4 +3,5 @@ export type CAFTOPInfo = {
   ProgramName: string;
   ProgramElementCode: string;
   LeadCommand: string;
+  PreparingBase: string;
 };
