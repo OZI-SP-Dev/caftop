@@ -256,7 +256,7 @@ const getProgramNamesAndECs = async () => {
   }
 };
 
-const transformData = (data: { Title: string; PECs: string }[]) => {
+const transformData = (data: TProgramNamesAndECs) => {
   return data.map((item) => ({
     Title: item.Title,
     PECs: JSON.parse(item.PECs) as string[],
