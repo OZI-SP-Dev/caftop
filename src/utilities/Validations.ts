@@ -3,6 +3,7 @@ import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
 import { PreparingOfficeRuleFinal } from "Steps/Info/Fields/PreparingOffice";
 import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCode";
 import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
+import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { ZodSchema, z } from "zod";
@@ -28,7 +29,8 @@ export const useInfoPageValidation = () => {
     .merge(ProgramElementCodeRuleFinal)
     .merge(LeadCommandRuleFinal)
     .merge(PreparingBaseRuleFinal)
-    .merge(PreparingOfficeRuleFinal);
+    .merge(PreparingOfficeRuleFinal)
+    .merge(ProgramManagersRuleFinal);
 
   return useAddlPECValidation(schema);
 };

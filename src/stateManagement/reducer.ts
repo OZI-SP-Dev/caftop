@@ -8,6 +8,7 @@ const Info: CAFTOPInfo = {
   LeadCommand: "",
   PreparingBase: "",
   PreparingOffice: "",
+  ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
 };
 
 export const initialState: GlobalStateInterface = {

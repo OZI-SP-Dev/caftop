@@ -18,6 +18,7 @@ import { useInfoPageValidation } from "utilities/Validations";
 import { LeadCommand } from "./Fields/LeadCommand";
 import { PreparingBase } from "./Fields/PreparingBase";
 import { PreparingOffice } from "./Fields/PreparingOffice";
+import { ProgramManagers } from "./Fields/ProgramManagers";
 
 export const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -37,6 +38,7 @@ export const Info = () => {
   };
 
   const submitError: SubmitErrorHandler<Partial<CAFTOPInfo>> = (_data) => {
+    console.log(_data);
     window.alert(
       "Please correct errors on this page before navigating to another page"
     );
@@ -79,6 +81,9 @@ export const Info = () => {
             </div>
             <div className="requestFieldContainer">
               <PreparingOffice />
+            </div>
+            <div className="requestFieldContainer">
+              <ProgramManagers />
             </div>
           </div>
         </form>
