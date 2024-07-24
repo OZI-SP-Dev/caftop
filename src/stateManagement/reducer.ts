@@ -7,6 +7,7 @@ const Info: CAFTOPInfo = {
   ProgramElementCode: "",
   LeadCommand: "",
   PreparingBase: "",
+  PreparingOffice: "",
 };
 
 export const initialState: GlobalStateInterface = {

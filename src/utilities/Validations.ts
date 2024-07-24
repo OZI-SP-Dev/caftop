@@ -1,5 +1,6 @@
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
+import { PreparingOfficeRuleFinal } from "Steps/Info/Fields/PreparingOffice";
 import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCode";
 import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
@@ -26,7 +27,8 @@ export const useInfoPageValidation = () => {
   const schema = ProgramGroupRuleFinal.merge(ProgramNameRuleFinal)
     .merge(ProgramElementCodeRuleFinal)
     .merge(LeadCommandRuleFinal)
-    .merge(PreparingBaseRuleFinal);
+    .merge(PreparingBaseRuleFinal)
+    .merge(PreparingOfficeRuleFinal);
 
   return useAddlPECValidation(schema);
 };
