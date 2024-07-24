@@ -44,6 +44,6 @@ const getLeadCommands = async () => {
   }
 };
 
-const transformData = (data: { Title: string }[]) => {
+const transformData = (data: TLeadCommands) => {
   return data.map((item) => item.Title);
 };
