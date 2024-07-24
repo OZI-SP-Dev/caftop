@@ -3,6 +3,7 @@ import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {
   ProgramGroup: "",
+  ProgramName: "",
 };
 
 export const initialState: GlobalStateInterface = {

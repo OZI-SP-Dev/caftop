@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPInfo } from "api/CAFTOP";
 import { ProgramGroup, ProgramGroupRuleFinal } from "./Fields/ProgramGroup";
+import { ProgramName, ProgramNameRuleFinal } from "./Fields/ProgramName";
 
 export const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -36,7 +37,7 @@ export const Info = () => {
     );
   };
 
-  const schema = ProgramGroupRuleFinal;
+  const schema = ProgramGroupRuleFinal.merge(ProgramNameRuleFinal);
   const myForm = useForm<CAFTOPInfo>({
     defaultValues: currentCAFTOP,
     resolver: zodResolver(schema),
@@ -57,6 +58,9 @@ export const Info = () => {
           <div className="requestFormContainer">
             <div className="requestFieldContainer">
               <ProgramGroup />
+            </div>
+            <div className="requestFieldContainer">
+              <ProgramName />
             </div>
           </div>
         </form>
