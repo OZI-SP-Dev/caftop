@@ -5,6 +5,7 @@ const Info: CAFTOPInfo = {
   ProgramGroup: "",
   ProgramName: "",
   ProgramElementCode: "",
+  LeadCommand: "",
 };
 
 export const initialState: GlobalStateInterface = {
