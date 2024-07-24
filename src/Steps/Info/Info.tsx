@@ -11,8 +11,10 @@ import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPInfo } from "api/CAFTOP";
-import { ProgramGroup, ProgramGroupRuleFinal } from "./Fields/ProgramGroup";
-import { ProgramName, ProgramNameRuleFinal } from "./Fields/ProgramName";
+import { ProgramGroup } from "./Fields/ProgramGroup";
+import { ProgramName } from "./Fields/ProgramName";
+import { ProgramElementCode } from "./Fields/ProgramElementCode";
+import { useInfoPageValidation } from "utilities/Validations";
 
 export const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -37,7 +39,8 @@ export const Info = () => {
     );
   };
 
-  const schema = ProgramGroupRuleFinal.merge(ProgramNameRuleFinal);
+  const schema = useInfoPageValidation();
+
   const myForm = useForm<CAFTOPInfo>({
     defaultValues: currentCAFTOP,
     resolver: zodResolver(schema),
@@ -61,6 +64,9 @@ export const Info = () => {
             </div>
             <div className="requestFieldContainer">
               <ProgramName />
+            </div>
+            <div className="requestFieldContainer">
+              <ProgramElementCode />
             </div>
           </div>
         </form>

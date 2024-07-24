@@ -68,12 +68,14 @@ const BACDropdown = <T extends FieldValues>({
         id={name + "Id"}
         aria-describedby={name + "Err"}
         aria-invalid={fieldState.error ? "true" : "false"}
-        selectedOptions={field.value}
+        selectedOptions={
+          typeof field.value === "string" ? [field.value] : field.value
+        }
         onOptionSelect={
           customOnOptionSelect
             ? (event, data) => customOnOptionSelect(event, data, field)
             : (_e, data) => {
-                field.onChange(data.selectedOptions);
+                field.onChange(data.optionValue);
               }
         }
         value={customValue ? customValue(field.value) : field.value}

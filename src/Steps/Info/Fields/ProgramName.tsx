@@ -14,7 +14,10 @@ export const ProgramNameRuleFinal = z.object({
 
 export const ProgramName = () => {
   const ProgramNames = useProgramNamesAndECs();
-  const Names = ProgramNames.data?.map((item) => item.Title) ?? [];
+  const Names =
+    ProgramNames.data?.map((item) => {
+      return { children: item.Title, value: item.Title };
+    }) ?? [];
 
   return (
     <BACCombobox<CAFTOPInfo>
