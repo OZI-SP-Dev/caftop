@@ -15,6 +15,7 @@ import { ProgramGroup } from "./Fields/ProgramGroup";
 import { ProgramName } from "./Fields/ProgramName";
 import { ProgramElementCode } from "./Fields/ProgramElementCode";
 import { useInfoPageValidation } from "utilities/Validations";
+import { LeadCommand } from "./Fields/LeadCommand";
 
 export const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -67,6 +68,9 @@ export const Info = () => {
             </div>
             <div className="requestFieldContainer">
               <ProgramElementCode />
+            </div>
+            <div className="requestFieldContainer">
+              <LeadCommand />
             </div>
           </div>
         </form>
