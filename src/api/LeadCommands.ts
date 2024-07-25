@@ -8,6 +8,8 @@ export const useLeadCommands = () => {
     queryKey: ["LeadCommand"],
     queryFn: getLeadCommands,
     select: transformData,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 };
 

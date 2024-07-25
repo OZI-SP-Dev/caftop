@@ -27,7 +27,7 @@ const getProgramNamesAndECs = async () => {
           resolve([
             { Title: "465L", PECs: '["11316F"]' },
             { Title: "806L", PECs: '["27429F", "78202D"]' },
-            { Title: "A010", PECs: '["27131F", "78202D "]' },
+            { Title: "A010", PECs: '["27131F", "78202D"]' },
             { Title: "AC130J", PECs: '["44011F", "78202D"]' },
             { Title: "ACCESSORIES", PECs: '["78202D"]' },
             { Title: "ACD", PECs: '["28088F"]' },

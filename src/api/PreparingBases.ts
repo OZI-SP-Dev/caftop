@@ -8,6 +8,8 @@ export const usePreparingBases = () => {
     queryKey: ["PreparingBases"],
     queryFn: getPreparingBases,
     select: transformData,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 };
 
