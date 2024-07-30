@@ -13,6 +13,7 @@ import "@pnp/sp/files";
 import "@pnp/sp/files/folder";
 import "@pnp/sp/files/web";
 import "@pnp/sp/comments/item";
+import "@pnp/sp/profiles";
 
 declare const _spPageContextInfo: { webAbsoluteUrl: string };
 

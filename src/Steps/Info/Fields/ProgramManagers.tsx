@@ -4,6 +4,9 @@ import { CAFTOPInfo } from "api/CAFTOP";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
 import { SyntheticEvent } from "react";
+import { PopupPeoplePicker } from "components/PeoplePicker/PopupPeoplePicker";
+import { spWebContext } from "api/SPWebContext";
+import { Person } from "api/UserApi";
 
 const firstNameRule = z
   .string()
@@ -49,28 +52,62 @@ export const ProgramManagers = () => {
     control: myForm.control,
   });
 
-  const onDSNInput = (e: SyntheticEvent<HTMLInputElement>) => {
+  const formatDSN = (dsn: string) => {
     let endsDash = false;
-    if (e.currentTarget.value.match(/-$/)) {
+    let retVal = dsn;
+    if (dsn.match(/-$/)) {
       endsDash = true;
     }
-    e.currentTarget.value = e.currentTarget.value.replace(/\D/g, "");
-    const size = e.currentTarget.value.length;
+    retVal = dsn.replace(/\D/g, "");
+    const size = retVal.length;
     if (size > 3 || endsDash) {
       // If we have more than 3 numbers, or we have either (###) or (###) ###-
       // The second condition allows them to type a dash, otherwise the code would "reject" it
-      e.currentTarget.value =
-        "(" +
-        e.currentTarget.value.slice(0, 3) +
-        ") " +
-        e.currentTarget.value.slice(3, 10);
+      retVal = "(" + retVal.slice(0, 3) + ") " + retVal.slice(3, 10);
     }
     if (size > 6 || (size > 5 && endsDash)) {
-      e.currentTarget.value =
-        e.currentTarget.value.slice(0, 9) +
-        "-" +
-        e.currentTarget.value.slice(9);
+      retVal = retVal.slice(0, 9) + "-" + retVal.slice(9);
     }
+    return retVal;
+  };
+
+  const onDSNInput = (e: SyntheticEvent<HTMLInputElement>) => {
+    e.currentTarget.value = formatDSN(e.currentTarget.value);
+  };
+
+  const setProgramManagerValues = async (
+    programManager: string,
+    person: Person[]
+  ) => {
+    const user = (await spWebContext.profiles.getPropertiesFor(
+      "i:0#.f|membership|" + person[0].EMail
+    )) as { UserProfileProperties: { Key: string; Value: string }[] };
+
+    let workPhone = "",
+      firstName = "",
+      lastName = "";
+
+    user.UserProfileProperties.forEach(function (prop: {
+      Key: string;
+      Value: string;
+    }) {
+      switch (prop.Key) {
+        case "WorkPhone":
+          workPhone = prop.Value;
+          break;
+        case "FirstName":
+          firstName = prop.Value;
+          break;
+        case "LastName":
+          lastName = prop.Value;
+          break;
+      }
+    });
+
+    myForm.setValue(programManager + ".FirstName", firstName);
+    myForm.setValue(programManager + ".LastName", lastName);
+    myForm.setValue(programManager + ".DSN", formatDSN(workPhone));
+    myForm.setValue(programManager + ".Email", person[0].EMail);
   };
 
   return (
@@ -82,6 +119,13 @@ export const ProgramManagers = () => {
               Program Manager {index > 0 ? index + 1 : ""}
             </Text>
           </legend>
+          <div className="requestFieldContainer">
+            <PopupPeoplePicker
+              onUpdate={(person: Person[]) =>
+                setProgramManagerValues(`ProgramManagers.${index}`, person)
+              }
+            />
+          </div>
           <div className="requestFieldContainer">
             <BACInput<CAFTOPInfo>
               name={`ProgramManagers.${index}.FirstName`}
