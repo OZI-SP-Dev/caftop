@@ -122,7 +122,7 @@ export const ProgramManagers = () => {
           <div className="requestFieldContainer">
             <PopupPeoplePicker
               onUpdate={(person: Person[]) =>
-                setProgramManagerValues(`ProgramManagers.${index}`, person)
+                void setProgramManagerValues(`ProgramManagers.${index}`, person)
               }
             />
           </div>
