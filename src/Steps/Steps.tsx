@@ -1,4 +1,4 @@
-import { ReactElement, lazy } from "react";
+import { ReactElement, Suspense, lazy } from "react";
 
 type WizardStep = {
   id: string;
@@ -52,5 +52,9 @@ interface ICAFTOPWizardSteps {
 export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   const stepToDisplay = WizardSteps[props.currentStep].jsxObj;
 
-  return <>{stepToDisplay}</>;
+  return (
+    <Suspense fallback={<div style={{ paddingLeft: ".5em" }}>Loading...</div>}>
+      {stepToDisplay}
+    </Suspense>
+  );
 };
