@@ -1,12 +1,17 @@
-import { GenericStep } from "Steps/GenericStep";
-import { ReactElement } from "react";
-import { Info } from "Steps/Info/Info";
+import { ReactElement, lazy } from "react";
 
 type WizardStep = {
   id: string;
   name: string;
   jsxObj: ReactElement;
 };
+
+// Begin module downloads immediately, but still utilize lazy() for code splitting
+const infoPromise = import("Steps/Info/Info");
+const Info = lazy(() => infoPromise);
+
+const genericStepPromise = import("Steps/GenericStep");
+const GenericStep = lazy(() => genericStepPromise);
 
 export const WizardSteps: WizardStep[] = [
   { id: "Home", name: "Home", jsxObj: <GenericStep /> },

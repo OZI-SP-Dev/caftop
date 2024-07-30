@@ -20,7 +20,7 @@ import { PreparingBase } from "./Fields/PreparingBase";
 import { PreparingOffice } from "./Fields/PreparingOffice";
 import { ProgramManagers } from "./Fields/ProgramManagers";
 
-export const Info = () => {
+const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
   const currentCAFTOP = globalState.Info;
 
@@ -91,3 +91,5 @@ export const Info = () => {
     </>
   );
 };
+
+export default Info;
