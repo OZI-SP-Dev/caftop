@@ -5,6 +5,7 @@ import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCod
 import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
+import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { ZodSchema, z } from "zod";
 
@@ -30,7 +31,8 @@ export const useInfoPageValidation = () => {
     .merge(LeadCommandRuleFinal)
     .merge(PreparingBaseRuleFinal)
     .merge(PreparingOfficeRuleFinal)
-    .merge(ProgramManagersRuleFinal);
+    .merge(ProgramManagersRuleFinal)
+    .merge(TechOrderManagerRuleFinal);
 
   return useAddlPECValidation(schema);
 };

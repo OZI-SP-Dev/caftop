@@ -19,6 +19,7 @@ import { LeadCommand } from "./Fields/LeadCommand";
 import { PreparingBase } from "./Fields/PreparingBase";
 import { PreparingOffice } from "./Fields/PreparingOffice";
 import { ProgramManagers } from "./Fields/ProgramManagers";
+import { TechOrderManager } from "./Fields/TechOrderManager";
 
 const Info = () => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -84,6 +85,9 @@ const Info = () => {
             </div>
             <div className="requestFieldContainer">
               <ProgramManagers />
+            </div>
+            <div className="requestFieldContainer">
+              <TechOrderManager />
             </div>
           </div>
         </form>
