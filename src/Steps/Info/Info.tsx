@@ -49,7 +49,9 @@ const Info = () => {
       <FormProvider {...myForm}>
         <form
           id="innerForm"
-          onSubmit={(...args) => myForm.handleSubmit(submitSuccess)(...args)}
+          onSubmit={(...args) =>
+            void myForm.handleSubmit(submitSuccess)(...args)
+          }
         >
           <div className="requestFormContainer">
             <div className="requestFieldContainer">
