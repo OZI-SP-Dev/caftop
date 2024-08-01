@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { spWebContext } from "./SPWebContext";
+import { spWebContext } from "api/SPWebContext";
 
 type TPreparingBases = { Title: string }[];
 

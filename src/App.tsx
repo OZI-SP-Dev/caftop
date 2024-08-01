@@ -1,10 +1,10 @@
 import { useContext, useState, SyntheticEvent } from "react";
-import { CAFTOPFinalStep, CAFTOPWizardSteps } from "./Steps/Steps";
-import { AppHeader } from "./components/AppHeader";
-import { globalContext } from "./stateManagement/GlobalStore";
-import { AlertModal } from "./Steps/AlertModal";
-import { AppLeftNav } from "./components/AppLeftNav";
-import { CAFTOPError } from "./utilities/Utilities";
+import { CAFTOPFinalStep, CAFTOPWizardSteps } from "Steps/Steps";
+import { AppHeader } from "components/AppHeader";
+import { globalContext } from "stateManagement/GlobalStore";
+import { AlertModal } from "Steps/AlertModal";
+import { AppLeftNav } from "components/AppLeftNav";
+import { CAFTOPError } from "utilities/Utilities";
 import {
   Dialog,
   DialogSurface,
