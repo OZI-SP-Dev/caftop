@@ -6,10 +6,11 @@ import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
 import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
+import { CAFTOPInfo } from "api/CAFTOP";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { ZodSchema, z } from "zod";
 
-const useAddlPECValidation = (schema: ZodSchema) => {
+const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
   return schema.superRefine((data, ctx) => {
     const validPECs: string[] =
