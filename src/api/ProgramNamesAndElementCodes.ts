@@ -3,16 +3,20 @@ import { spWebContext } from "api/SPWebContext";
 
 type TProgramNamesAndECs = { Title: string; PECs: string }[];
 
+/** Hook returning the RQ for list of Program Names and associated Program Element Codes */
 export const useProgramNamesAndECs = () => {
   return useQuery({
     queryKey: ["ProgramNamesAndECs"],
     queryFn: getProgramNamesAndECs,
     select: transformData,
-    staleTime: Infinity,
-    cacheTime: Infinity,
+    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
+    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
   });
 };
 
+/** Function to retreive the Program Names and Program Element Codes, either from SharePoint, or local Dev examples
+ * @returns Array of {Title: "LeadCommand", PECs:'["PEC1","PEC2"]'}
+ */
 const getProgramNamesAndECs = async () => {
   if (!import.meta.env.DEV) {
     return spWebContext.web.lists
@@ -256,6 +260,10 @@ const getProgramNamesAndECs = async () => {
   }
 };
 
+/** Turn the array of TProgramNamesAndECs into an array containing the Title, and an array of PECs
+ * @param data Array of {Title: "LeadCommand", PECs:'["PEC1","PEC2"]'}
+ * @returns Array of Program Names and PECs {Title: "ProgramName", PECs:["PEC1","PEC2"]}
+ */
 const transformData = (data: TProgramNamesAndECs) => {
   return data.map((item) => ({
     Title: item.Title,
