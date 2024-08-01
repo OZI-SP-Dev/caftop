@@ -44,7 +44,7 @@ const BACDatePicker = <T extends FieldValues>({
           field.value
             ? labelText +
               " has selected date of " +
-              field.value.toLocaleDateString()
+              (field.value as Date).toLocaleDateString()
             : labelText + ", no date selected. Select a date."
         }
         onSelectDate={field.onChange}
