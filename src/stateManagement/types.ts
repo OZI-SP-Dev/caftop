@@ -8,7 +8,12 @@ export interface GlobalStateInterface {
 }
 
 export type ActionType = {
-  type: string;
+  type:
+    | "MERGE_GLOBAL_OPTION"
+    | "NEXT_STEP"
+    | "PREV_STEP"
+    | "GOTO_STEP"
+    | "PURGE_STATE";
   payload?: Partial<GlobalStateInterface>;
 };
 
