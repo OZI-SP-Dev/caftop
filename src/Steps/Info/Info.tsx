@@ -1,12 +1,7 @@
 import { useContext } from "react";
 import { Title1, Title2 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import {
-  FormProvider,
-  SubmitHandler,
-  SubmitErrorHandler,
-  useForm,
-} from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -38,13 +33,6 @@ const Info = () => {
     return Promise.resolve();
   };
 
-  const submitError: SubmitErrorHandler<Partial<CAFTOPInfo>> = (_data) => {
-    console.log(_data);
-    window.alert(
-      "Please correct errors on this page before navigating to another page"
-    );
-  };
-
   const schema = useInfoPageValidation();
 
   const myForm = useForm<CAFTOPInfo>({
@@ -61,9 +49,7 @@ const Info = () => {
       <FormProvider {...myForm}>
         <form
           id="innerForm"
-          onSubmit={(...args) =>
-            myForm.handleSubmit(submitSuccess, submitError)(...args)
-          }
+          onSubmit={(...args) => myForm.handleSubmit(submitSuccess)(...args)}
         >
           <div className="requestFormContainer">
             <div className="requestFieldContainer">
