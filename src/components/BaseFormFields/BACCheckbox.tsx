@@ -45,7 +45,10 @@ const BACCheckbox = <T extends FieldValues>({
             id={option.id + "Id"}
             key={option.id}
             label={option.text}
-            checked={field.value?.some((item: string) => item === option.id)}
+            checked={
+              Array.isArray(field.value) &&
+              (field.value as []).some((item) => item === option.id)
+            }
             aria-describedby={name + "Err"}
             aria-invalid={fieldState.error ? "true" : "false"}
             onChange={(e) => {

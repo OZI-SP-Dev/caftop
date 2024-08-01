@@ -1,6 +1,19 @@
+import { CAFTOPInfo } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
+const Info: CAFTOPInfo = {
+  ProgramGroup: "",
+  ProgramName: "",
+  ProgramElementCode: "",
+  LeadCommand: "",
+  PreparingBase: "",
+  PreparingOffice: "",
+  ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
+  TechOrderManager: { FirstName: "", LastName: "", DSN: "", Email: "" },
+};
+
 export const initialState: GlobalStateInterface = {
+  Info,
   wizardStep: 0,
   wizardMaxStep: 0,
 };
@@ -38,13 +51,6 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
     }
     case "PURGE_STATE": {
       return initialState;
-    }
-    case "LOAD_TMCR": {
-      let wizardStep = state.wizardStep;
-      if (wizardStep > state.wizardMaxStep) {
-        wizardStep = state.wizardMaxStep;
-      }
-      return { ...state, tmcrIndex: action.payload, wizardStep };
     }
     default: {
       return state;

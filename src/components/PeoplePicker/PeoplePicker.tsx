@@ -1,4 +1,4 @@
-import { FunctionComponent, useRef } from "react";
+import { useRef } from "react";
 import { IPersonaProps } from "@fluentui/react/lib/Persona";
 import {
   IBasePickerSuggestionsProps,
@@ -6,19 +6,23 @@ import {
   NormalPeoplePicker,
   PeoplePickerItemSuggestion,
 } from "@fluentui/react/lib/Pickers";
+import { InfoLabel, Text } from "@fluentui/react-components";
 import { spWebContext } from "api/SPWebContext";
 import { IPeoplePickerEntity } from "@pnp/sp/profiles";
 import { LayerHost } from "@fluentui/react";
+import { FieldValues, useController } from "react-hook-form";
+import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { TextFieldIcon } from "@fluentui/react-icons-mdl2";
 
 interface Person {
-  Id: string;
+  Id: number;
   EMail: string;
   Title: string;
 }
 
 // Custom Persona type so we can save Id and/or EMail with the item
 interface CustomPersona extends IPersonaProps {
-  Id: string;
+  Id: number;
   Title: string;
   EMail: string;
 }
@@ -46,21 +50,39 @@ interface IPeoplePickerProps {
   selectedItems: Person[] | Person;
 }
 
-export const PeoplePicker: FunctionComponent<IPeoplePickerProps> = (props) => {
+const BACPeoplePicker = <T extends FieldValues>({
+  name,
+  labelText,
+  labelInfo,
+  labelIcon,
+  rules,
+  selectedItems,
+  updatePeople,
+  ariaLabel,
+  readOnly,
+  itemLimit,
+}: BaseFormField<T> &
+  IPeoplePickerProps & {
+    /** Don't show the error message within the component -- If using this, you should be displaying the error message elsewhere.  It still sets the aria-invalid flag and sets RHF as error */
+    disableError?: boolean;
+  }) => {
   const picker = useRef(null);
 
-  let selectedItems: CustomPersona[];
-  if (Array.isArray(props.selectedItems)) {
-    selectedItems = props.selectedItems.map((item) => ({
+  const { field, fieldState } = useController<T>({
+    name,
+    rules,
+  });
+
+  let selectedItems2: CustomPersona[];
+  if (Array.isArray(selectedItems)) {
+    selectedItems2 = selectedItems.map((item) => ({
       ...item,
       text: item.Title,
     }));
-  } else if (props.selectedItems) {
-    selectedItems = [
-      { ...props.selectedItems, text: props.selectedItems.Title },
-    ];
+  } else if (selectedItems) {
+    selectedItems2 = [{ ...selectedItems, text: selectedItems.Title }];
   } else {
-    selectedItems = [];
+    selectedItems2 = [];
   }
 
   const onFilterChanged = async (
@@ -83,7 +105,7 @@ export const PeoplePicker: FunctionComponent<IPeoplePickerProps> = (props) => {
       const newPersonas: IPersonaProps[] = [];
       results.forEach((person: IPeoplePickerEntity) => {
         const persona: CustomPersona = {
-          Id: person.EntityData.SPUserID ?? "-1",
+          Id: Number(person.EntityData.SPUserID) ?? -1,
           Title: person.DisplayText,
           EMail: person.EntityData.Email ?? "",
           text: person.DisplayText,
@@ -113,9 +135,10 @@ export const PeoplePicker: FunctionComponent<IPeoplePickerProps> = (props) => {
 
   const onItemsChange = (items: IPersonaProps[] | undefined) => {
     if (items) {
-      props.updatePeople(items as Person[]);
+      field.onChange(items);
+      updatePeople(items as Person[]);
     } else {
-      props.updatePeople([]);
+      updatePeople([]);
     }
   };
 
@@ -130,8 +153,23 @@ export const PeoplePicker: FunctionComponent<IPeoplePickerProps> = (props) => {
     />
   );
 
+  /* Is it a required field, if so, then mark the label as required */
+  const isRequired: boolean = rules?.required ? true : false;
+
   return (
     <>
+      {labelText && (
+        <InfoLabel
+          htmlFor={name + "Id"}
+          weight="semibold"
+          className="fieldLabel"
+          required={isRequired}
+          info={labelInfo}
+        >
+          {labelIcon ?? <TextFieldIcon className="fieldIcon" />}
+          {labelText}
+        </InfoLabel>
+      )}
       <NormalPeoplePicker
         pickerCalloutProps={{
           layerProps: {
@@ -146,16 +184,21 @@ export const PeoplePicker: FunctionComponent<IPeoplePickerProps> = (props) => {
         key={"controlled"}
         selectionAriaLabel={"Selected users"}
         removeButtonAriaLabel={"Remove"}
-        selectedItems={selectedItems}
+        selectedItems={selectedItems2}
         onChange={onItemsChange}
         inputProps={{
-          "aria-label": props.ariaLabel,
+          "aria-label": ariaLabel,
         }}
         componentRef={picker}
         resolveDelay={300}
-        disabled={props.readOnly}
-        itemLimit={props.itemLimit ? props.itemLimit : 1}
+        disabled={readOnly}
+        itemLimit={itemLimit ? itemLimit : 1}
       />
+      {fieldState?.error && (
+        <Text id="userErr" /*className={classes.errorText}*/>
+          {fieldState.error.message}
+        </Text>
+      )}
       {/* Creating a LayerHost and setting the z-index to 1 higher than it's default of 1000000
              allows the popup people suggestions to appear above the V9 Dialog box 
              This can likely be eliminated once they release a V9 for the PeoplePicker
@@ -190,3 +233,5 @@ function listContainsPersona(
 function getTextFromItem(persona: IPersonaProps): string {
   return persona.text as string;
 }
+
+export default BACPeoplePicker;

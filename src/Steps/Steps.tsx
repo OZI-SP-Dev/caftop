@@ -1,5 +1,4 @@
-import { GenericStep } from "Steps/GenericStep";
-import { ReactElement } from "react";
+import { ReactElement, Suspense, lazy } from "react";
 
 type WizardStep = {
   id: string;
@@ -7,9 +6,16 @@ type WizardStep = {
   jsxObj: ReactElement;
 };
 
+// Begin module downloads immediately, but still utilize lazy() for code splitting
+const infoPromise = import("Steps/Info/Info");
+const Info = lazy(() => infoPromise);
+
+const genericStepPromise = import("Steps/GenericStep");
+const GenericStep = lazy(() => genericStepPromise);
+
 export const WizardSteps: WizardStep[] = [
   { id: "Home", name: "Home", jsxObj: <GenericStep /> },
-  { id: "Info", name: "CAFTOP Information Page", jsxObj: <GenericStep /> },
+  { id: "Info", name: "CAFTOP Information Page", jsxObj: <Info /> },
   {
     id: "Description",
     name: "Program Description and General Information",
@@ -46,5 +52,9 @@ interface ICAFTOPWizardSteps {
 export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   const stepToDisplay = WizardSteps[props.currentStep].jsxObj;
 
-  return <>{stepToDisplay}</>;
+  return (
+    <Suspense fallback={<div style={{ paddingLeft: ".5em" }}>Loading...</div>}>
+      {stepToDisplay}
+    </Suspense>
+  );
 };

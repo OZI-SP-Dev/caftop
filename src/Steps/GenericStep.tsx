@@ -2,7 +2,7 @@ import { Title1, Title2 } from "@fluentui/react-components";
 import { SyntheticEvent, useContext } from "react";
 import { globalContext } from "stateManagement/GlobalStore";
 
-export const GenericStep = () => {
+const GenericStep = () => {
   const { dispatch } = useContext(globalContext);
   function handleSubmit(e: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
     if (e?.nativeEvent?.submitter?.id === "next") {
@@ -20,3 +20,5 @@ export const GenericStep = () => {
     </>
   );
 };
+
+export default GenericStep;
