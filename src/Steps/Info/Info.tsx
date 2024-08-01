@@ -50,6 +50,7 @@ const Info = () => {
   const myForm = useForm<CAFTOPInfo>({
     defaultValues: currentCAFTOP,
     resolver: zodResolver(schema),
+    mode: "onChange",
   });
 
   return (
