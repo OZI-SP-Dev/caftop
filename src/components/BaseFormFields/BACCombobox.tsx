@@ -83,7 +83,10 @@ const BACCombobox = <T extends FieldValues>({
         selectedOptions={field.value ? [field.value] : []}
         onOptionSelect={
           customOnOptionSelect
-            ? (event, data) => customOnOptionSelect(event, data, field)
+            ? (event, data) => {
+                customOnOptionSelect(event, data, field);
+                setQuery(data.optionValue ?? "");
+              }
             : (_event, data) => {
                 field.onChange(data.optionValue ?? "");
                 setQuery(data.optionValue ?? "");
