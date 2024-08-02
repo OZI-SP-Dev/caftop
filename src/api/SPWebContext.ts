@@ -14,6 +14,7 @@ import "@pnp/sp/files/folder";
 import "@pnp/sp/files/web";
 import "@pnp/sp/comments/item";
 import "@pnp/sp/profiles";
+import { getSPUserProfileDataDev } from "api/SPSampleUserData";
 
 declare const _spPageContextInfo: { webAbsoluteUrl: string };
 
@@ -22,3 +23,20 @@ export const webUrl = import.meta.env.DEV
   : _spPageContextInfo.webAbsoluteUrl;
 
 export const spWebContext = spfi().using(SPBrowser({ baseUrl: webUrl }));
+
+/** Function to either call SharePoint or get data from local sample in DEV
+ * @param email The email of the user to look up
+ * @returns An object containing the user profile
+ */
+export const getSPUserProfileData = async (email: string) => {
+  const loginName = "i:0#.f|membership|" + email;
+  if (!import.meta.env.DEV) {
+    return (await spWebContext.profiles.getPropertiesFor(loginName)) as {
+      UserProfileProperties: { Key: string; Value: string }[];
+    };
+  } else {
+    return getSPUserProfileDataDev(loginName) as {
+      UserProfileProperties: { Key: string; Value: string }[];
+    };
+  }
+};

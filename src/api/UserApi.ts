@@ -64,8 +64,8 @@ export const useCurrentUser = () => {
   if (import.meta.env.DEV) {
     currentUser = new Person({
       Id: 1,
-      Title: "Barb Akew",
-      EMail: "Barb Akew@localhost",
+      Title: "AKEW, BARB N CIV USAF AFMC AFLCMC/OZIC",
+      EMail: "barb.akew@us.af.mil",
       imageUrl: TestImages.personaFemale,
     });
   } else {

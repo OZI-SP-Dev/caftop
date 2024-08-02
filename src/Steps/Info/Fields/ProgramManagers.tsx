@@ -5,7 +5,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
 import { SyntheticEvent } from "react";
 import { PopupPeoplePicker } from "components/PeoplePicker/PopupPeoplePicker";
-import { spWebContext } from "api/SPWebContext";
+import { getSPUserProfileData } from "api/SPWebContext";
 import { Person } from "api/UserApi";
 
 const firstNameRule = z
@@ -79,9 +79,7 @@ export const ProgramManagers = () => {
     programManager: string,
     person: Person[]
   ) => {
-    const user = (await spWebContext.profiles.getPropertiesFor(
-      "i:0#.f|membership|" + person[0].EMail
-    )) as { UserProfileProperties: { Key: string; Value: string }[] };
+    const user = await getSPUserProfileData(person[0].EMail);
 
     let workPhone = "",
       firstName = "",

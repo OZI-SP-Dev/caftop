@@ -13,6 +13,7 @@ import { LayerHost } from "@fluentui/react";
 import { FieldValues, useController } from "react-hook-form";
 import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
 import { TextFieldIcon } from "@fluentui/react-icons-mdl2";
+import { spPeoplePickerData } from "../../api/SPSampleUserData";
 
 interface Person {
   Id: number;
@@ -188,6 +189,27 @@ const BACPeoplePicker = <T extends FieldValues>({
         onChange={onItemsChange}
         inputProps={{
           "aria-label": ariaLabel,
+        }}
+        onEmptyResolveSuggestions={() => {
+          /* For some reason the onResolveSuggestions is not working in DEV but this callback does,
+              so if we are in prodction just return an empty array -- look into the future in returning
+              users that would be common for the current user to select from */
+          const newPersonas: IPersonaProps[] = [];
+          if (import.meta.env.DEV) {
+            const results = spPeoplePickerData;
+
+            results?.forEach((person: IPeoplePickerEntity) => {
+              const persona: CustomPersona = {
+                Id: Number(person.EntityData.SPUserID) ?? -1,
+                Title: person.DisplayText,
+                EMail: person.EntityData.Email ?? "",
+                text: person.DisplayText,
+                secondaryText: person.EntityData.Title,
+              };
+              newPersonas.push(persona);
+            });
+          }
+          return newPersonas;
         }}
         componentRef={picker}
         resolveDelay={300}
