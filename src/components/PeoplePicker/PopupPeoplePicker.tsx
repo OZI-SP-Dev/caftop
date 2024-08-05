@@ -7,18 +7,12 @@ import {
   DialogContent,
   DialogBody,
   DialogActions,
-  DialogTrigger,
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { Person } from "api/UserApi";
+import { Person, useCurrentUser } from "api/UserApi";
 import BACPeoplePicker from "./PeoplePicker";
-
-declare const _spPageContextInfo: {
-  userId: number;
-  userDisplayName: string;
-  userEmail: string;
-};
+import { FormProvider, useForm } from "react-hook-form";
 
 interface IPopupPeoplePicker {
   onUpdate: (selected: Person[]) => void;
@@ -26,106 +20,100 @@ interface IPopupPeoplePicker {
 
 export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
   const [selected, setSelected] = useState<Person[]>([]);
+  const currentUser = useCurrentUser();
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  type TPopupPeoplePicker = { user: Person[] };
+
+  const myForm = useForm<TPopupPeoplePicker>({
+    mode: "onChange",
+  });
+
+  const submitSuccess = (data: TPopupPeoplePicker) => {
+    onUpdate(data.user);
+    setOpen(false);
+  };
+
   return (
     <Dialog
+      open={isOpen}
       onOpenChange={(_e, data) => {
         if (data.open === false) {
           setSelected([]);
         }
       }}
     >
-      <DialogTrigger disableButtonEnhancement>
-        <Button appearance="secondary">Populate from GAL</Button>
-      </DialogTrigger>
+      <Button appearance="secondary" onClick={() => setOpen(true)}>
+        Populate from GAL
+      </Button>
+
       <DialogSurface aria-describedby="popupGAL">
-        <form id="popupGALForm">
-          <DialogBody>
-            <DialogTitle
-              action={
-                <DialogTrigger disableButtonEnhancement>
+        <FormProvider {...myForm}>
+          <form id="popupGALForm">
+            <DialogBody>
+              <DialogTitle
+                action={
                   <Button
                     appearance="subtle"
                     aria-label="close"
                     icon={<Dismiss24Regular />}
+                    onClick={() => setOpen(false)}
                   />
-                </DialogTrigger>
-              }
-            >
-              Select user from GAL
-            </DialogTitle>
-            <DialogContent id="popupGAL">
-              <Text>
-                Select by entering either email address, or name in &apos;Last,
-                First&apos; format. You can also click &apos;Set as myself&apos;
-                to have it use your information.
-              </Text>
-              <div>
-                <BACPeoplePicker
-                  name="user"
-                  ariaLabel="User to prepopulate information from"
-                  aria-describedby="userErr"
-                  selectedItems={selected}
-                  rules={{
-                    required:
-                      "You must select a user if you want to prepoulate the information",
-                  }}
-                  updatePeople={(items) => {
-                    if (items?.[0]) {
-                      setSelected(items as Person[]);
-                    } else {
-                      setSelected([]);
-                    }
-                  }}
-                />
-              </div>
-            </DialogContent>
-            <DialogActions>
-              <DialogTrigger disableButtonEnhancement>
+                }
+              >
+                Select user from GAL
+              </DialogTitle>
+              <DialogContent id="popupGAL">
+                <Text>
+                  Select by entering either email address, or name in
+                  &apos;Last, First&apos; format. You can also click &apos;Set
+                  as myself&apos; to have it use your information.
+                </Text>
+                <div>
+                  <BACPeoplePicker
+                    name="user"
+                    ariaLabel="User to prepopulate information from"
+                    aria-describedby="userErr"
+                    selectedItems={selected}
+                    rules={{
+                      required:
+                        "You must select a user if you want to prepoulate the information",
+                    }}
+                    updatePeople={(items) => {
+                      if (items?.[0]) {
+                        setSelected(items as Person[]);
+                      } else {
+                        setSelected([]);
+                      }
+                    }}
+                  />
+                </div>
+              </DialogContent>
+              <DialogActions>
                 <Button
                   appearance="primary"
-                  onClick={() => {
-                    onUpdate(selected);
-                  }}
+                  onClick={(...args) =>
+                    void myForm.handleSubmit(submitSuccess)(...args)
+                  }
                 >
                   Select
                 </Button>
-              </DialogTrigger>
-              <DialogTrigger disableButtonEnhancement>
                 <Button
                   appearance="primary"
                   onClick={() => {
-                    if (!import.meta.env.DEV) {
-                      onUpdate([
-                        {
-                          Id: _spPageContextInfo.userId ?? -1,
-                          Title: _spPageContextInfo.userDisplayName ?? "",
-                          EMail: _spPageContextInfo.userEmail ?? "",
-                          text: _spPageContextInfo.userDisplayName ?? "",
-                          secondaryText: "",
-                        },
-                      ]);
-                    } else {
-                      onUpdate([
-                        {
-                          Id: 1,
-                          Title: "FORREST, GREGORY M CIV USAF AFMC AFLCMC/OZIC",
-                          EMail: "gregory.forrest.1@us.af.mil",
-                          text: "FORREST, GREGORY M CIV USAF AFMC AFLCMC/OZIC",
-                          secondaryText: "",
-                        },
-                      ]);
-                    }
+                    onUpdate([currentUser]);
+                    setOpen(false);
                   }}
                 >
                   Set as myself
                 </Button>
-              </DialogTrigger>
-              <DialogTrigger disableButtonEnhancement>
-                <Button appearance="secondary">Cancel</Button>
-              </DialogTrigger>
-            </DialogActions>
-          </DialogBody>
-        </form>
+                <Button appearance="secondary" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+              </DialogActions>
+            </DialogBody>
+          </form>
+        </FormProvider>
       </DialogSurface>
     </Dialog>
   );

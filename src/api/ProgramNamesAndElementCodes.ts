@@ -7,8 +7,7 @@ type TProgramNamesAndECs = { Title: string; PECs: string }[];
 export const useProgramNamesAndECs = () => {
   return useQuery({
     queryKey: ["ProgramNamesAndECs"],
-    queryFn: getProgramNamesAndECs,
-    select: transformData,
+    queryFn: getProgramNamesAndECs, // This query transforms the data directly since we don't requery, we can do the "expensive" transform here since we don't have to worry about unchanged data
     staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
     cacheTime: Infinity, // and therefore only needs loaded at the start of the application
   });
@@ -23,12 +22,14 @@ const getProgramNamesAndECs = async () => {
       .getByTitle("ProgramNamesAndElementCodes")
       .items.orderBy("Title")
       .select("Title,PECs")
-      .top(5000)<TProgramNamesAndECs>();
+      .top(5000)<TProgramNamesAndECs>()
+      .then(transformData); // Transform the data before caching
   } else {
     return new Promise<TProgramNamesAndECs>((resolve) =>
       setTimeout(
         () =>
           resolve([
+            { Title: "Super Secret Project", PECs: '["12345F]' }, // Example of a Bad SP entry that would be dropped
             { Title: "465L", PECs: '["11316F"]' },
             { Title: "806L", PECs: '["27429F", "78202D"]' },
             { Title: "A010", PECs: '["27131F", "78202D"]' },
@@ -256,7 +257,7 @@ const getProgramNamesAndECs = async () => {
           ]),
         1000
       )
-    );
+    ).then(transformData); // Transform the data before caching
   }
 };
 
@@ -265,8 +266,18 @@ const getProgramNamesAndECs = async () => {
  * @returns Array of Program Names and PECs {Title: "ProgramName", PECs:["PEC1","PEC2"]}
  */
 const transformData = (data: TProgramNamesAndECs) => {
-  return data.map((item) => ({
-    Title: item.Title,
-    PECs: JSON.parse(item.PECs) as string[],
-  }));
+  const programNamesAndECs = data.map((item) => {
+    try {
+      return {
+        Title: item.Title,
+        PECs: JSON.parse(item.PECs) as string[],
+      };
+    } catch {
+      // If any of the PECs don't parse then flag them to be removed
+      return { Title: "ERROR-REMOVE", PECs: ["ERROR"] };
+    }
+  });
+
+  // Remove any Program Names where we flagged as the PECs not being proper JSON
+  return programNamesAndECs.filter((item) => item.Title !== "ERROR-REMOVE");
 };

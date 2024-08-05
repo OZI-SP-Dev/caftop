@@ -1,28 +1,17 @@
 import { useContext, useState, SyntheticEvent } from "react";
-import { CAFTOPFinalStep, CAFTOPWizardSteps } from "./Steps/Steps";
-import { AppHeader } from "./components/AppHeader";
-import { globalContext } from "./stateManagement/GlobalStore";
-import { AlertModal } from "./Steps/AlertModal";
-import { AppLeftNav } from "./components/AppLeftNav";
-import { CAFTOPError } from "./utilities/Utilities";
-import {
-  Dialog,
-  DialogSurface,
-  DialogTitle,
-  Button,
-  DialogBody,
-  DialogContent,
-  DialogActions,
-  DialogTrigger,
-  Spinner,
-} from "@fluentui/react-components";
+import { CAFTOPFinalStep, CAFTOPWizardSteps } from "Steps/Steps";
+import { AppHeader } from "components/AppHeader";
+import { globalContext } from "stateManagement/GlobalStore";
+import { AlertModal } from "Steps/AlertModal";
+import { AppLeftNav } from "components/AppLeftNav";
+
+import { Button, Spinner } from "@fluentui/react-components";
 import "./App.css";
 
 function App() {
   const { globalState, dispatch } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
   const [isChecking, setChecking] = useState(false);
-  const [errors, setErrors] = useState([] as CAFTOPError[]);
 
   let submitButtonText: string;
   if (isLoading) {
@@ -118,35 +107,6 @@ function App() {
       </div>
 
       <AlertModal show={isChecking} close={handleAlert} />
-      <Dialog
-        open={errors.length > 0}
-        onOpenChange={(_evt, data) => {
-          if (data.open === false) () => setErrors([]);
-        }}
-      >
-        <DialogSurface>
-          <DialogBody>
-            <DialogTitle>Incomplete data found!</DialogTitle>
-            <DialogContent>
-              Resolve the following issues:
-              <ul>
-                {errors.map((error, i: number) => (
-                  <li key={i}>
-                    {error.errortext} in CAFTOP {error.caftopindex + 1}
-                  </li>
-                ))}
-              </ul>
-              Click outside this box to continue
-            </DialogContent>
-            <DialogActions>
-              <DialogTrigger disableButtonEnhancement>
-                <Button appearance="secondary">Close</Button>
-              </DialogTrigger>
-              <Button appearance="primary">Do Something</Button>
-            </DialogActions>
-          </DialogBody>
-        </DialogSurface>
-      </Dialog>
     </div>
   );
 }
