@@ -11,6 +11,7 @@ export type CAFTOPInfo = {
   ProgramName: string;
   ProgramElementCode: string;
   LeadCommand: string;
+  Center: string;
   PreparingBase: string;
   PreparingOffice: string;
 } & ProgramManagers &

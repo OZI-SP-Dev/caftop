@@ -6,6 +6,7 @@ const Info: CAFTOPInfo = {
   ProgramName: "",
   ProgramElementCode: "",
   LeadCommand: "",
+  Center: "",
   PreparingBase: "",
   PreparingOffice: "",
   ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],

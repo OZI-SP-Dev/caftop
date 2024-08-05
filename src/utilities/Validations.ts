@@ -1,3 +1,4 @@
+import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
 import { PreparingOfficeRuleFinal } from "Steps/Info/Fields/PreparingOffice";
@@ -30,6 +31,7 @@ export const useInfoPageValidation = () => {
   const schema = ProgramGroupRuleFinal.merge(ProgramNameRuleFinal)
     .merge(ProgramElementCodeRuleFinal)
     .merge(LeadCommandRuleFinal)
+    .merge(CenterRuleFinal)
     .merge(PreparingBaseRuleFinal)
     .merge(PreparingOfficeRuleFinal)
     .merge(ProgramManagersRuleFinal)
