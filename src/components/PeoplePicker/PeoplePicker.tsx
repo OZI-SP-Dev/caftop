@@ -217,7 +217,7 @@ const BACPeoplePicker = <T extends FieldValues>({
         itemLimit={itemLimit ? itemLimit : 1}
       />
       {fieldState?.error && (
-        <Text id="userErr" /*className={classes.errorText}*/>
+        <Text id="userErr" className="fieldErrorText">
           {fieldState.error.message}
         </Text>
       )}

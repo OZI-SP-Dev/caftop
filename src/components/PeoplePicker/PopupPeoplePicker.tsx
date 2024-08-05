@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogBody,
   DialogActions,
-  DialogTrigger,
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { useState } from "react";
@@ -22,34 +21,44 @@ interface IPopupPeoplePicker {
 export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
   const [selected, setSelected] = useState<Person[]>([]);
   const currentUser = useCurrentUser();
-  const myForm = useForm({
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  type TPopupPeoplePicker = { user: Person[] };
+
+  const myForm = useForm<TPopupPeoplePicker>({
     mode: "onChange",
   });
 
+  const submitSuccess = (data: TPopupPeoplePicker) => {
+    onUpdate(data.user);
+    setOpen(false);
+  };
+
   return (
     <Dialog
+      open={isOpen}
       onOpenChange={(_e, data) => {
         if (data.open === false) {
           setSelected([]);
         }
       }}
     >
-      <DialogTrigger disableButtonEnhancement>
-        <Button appearance="secondary">Populate from GAL</Button>
-      </DialogTrigger>
+      <Button appearance="secondary" onClick={() => setOpen(true)}>
+        Populate from GAL
+      </Button>
+
       <DialogSurface aria-describedby="popupGAL">
         <FormProvider {...myForm}>
           <form id="popupGALForm">
             <DialogBody>
               <DialogTitle
                 action={
-                  <DialogTrigger disableButtonEnhancement>
-                    <Button
-                      appearance="subtle"
-                      aria-label="close"
-                      icon={<Dismiss24Regular />}
-                    />
-                  </DialogTrigger>
+                  <Button
+                    appearance="subtle"
+                    aria-label="close"
+                    icon={<Dismiss24Regular />}
+                    onClick={() => setOpen(false)}
+                  />
                 }
               >
                 Select user from GAL
@@ -81,29 +90,26 @@ export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
                 </div>
               </DialogContent>
               <DialogActions>
-                <DialogTrigger disableButtonEnhancement>
-                  <Button
-                    appearance="primary"
-                    onClick={() => {
-                      onUpdate(selected);
-                    }}
-                  >
-                    Select
-                  </Button>
-                </DialogTrigger>
-                <DialogTrigger disableButtonEnhancement>
-                  <Button
-                    appearance="primary"
-                    onClick={() => {
-                      onUpdate([currentUser]);
-                    }}
-                  >
-                    Set as myself
-                  </Button>
-                </DialogTrigger>
-                <DialogTrigger disableButtonEnhancement>
-                  <Button appearance="secondary">Cancel</Button>
-                </DialogTrigger>
+                <Button
+                  appearance="primary"
+                  onClick={(...args) =>
+                    void myForm.handleSubmit(submitSuccess)(...args)
+                  }
+                >
+                  Select
+                </Button>
+                <Button
+                  appearance="primary"
+                  onClick={() => {
+                    onUpdate([currentUser]);
+                    setOpen(false);
+                  }}
+                >
+                  Set as myself
+                </Button>
+                <Button appearance="secondary" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
               </DialogActions>
             </DialogBody>
           </form>
