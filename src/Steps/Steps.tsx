@@ -16,6 +16,9 @@ const Description = lazy(() => descriptionPromise);
 const genericStepPromise = import("Steps/GenericStep");
 const GenericStep = lazy(() => genericStepPromise);
 
+const completePromise = import("Steps/Complete");
+const Complete = lazy(() => completePromise);
+
 export const WizardSteps: WizardStep[] = [
   { id: "Home", name: "Home", jsxObj: <GenericStep /> },
   { id: "Info", name: "CAFTOP Information Page", jsxObj: <Info /> },
@@ -42,7 +45,7 @@ export const WizardSteps: WizardStep[] = [
     name: "Program Approvals",
     jsxObj: <GenericStep />,
   },
-  { id: "Completed", name: "Completed", jsxObj: <GenericStep /> },
+  { id: "Completed", name: "Completed", jsxObj: <Complete /> },
 ];
 
 export const CAFTOPStepNames = WizardSteps.map((step) => step.name);
