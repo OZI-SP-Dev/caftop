@@ -1,5 +1,6 @@
 import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
+import { LaborTypeRuleFinal } from "Steps/Description/Fields/LaborType";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -43,7 +44,9 @@ export const useInfoPageValidation = () => {
 };
 
 export const useDescriptionPageValidation = () => {
-  const schema = DescriptionRuleFinal.merge(IntroductionRuleFinal);
+  const schema = DescriptionRuleFinal.merge(IntroductionRuleFinal).merge(
+    LaborTypeRuleFinal
+  );
 
   return schema;
 };

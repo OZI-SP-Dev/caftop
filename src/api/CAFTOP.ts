@@ -20,4 +20,5 @@ export type CAFTOPInfo = {
 export type CAFTOPDescription = {
   Description: string;
   Introduction: string;
+  LaborType: "contractor" | "organic" | "";
 };

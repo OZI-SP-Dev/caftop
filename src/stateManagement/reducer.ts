@@ -16,6 +16,7 @@ const Info: CAFTOPInfo = {
 const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
+  LaborType: "",
 };
 
 export const initialState: GlobalStateInterface = {

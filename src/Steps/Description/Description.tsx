@@ -65,6 +65,9 @@ const Description = () => {
             <div className="requestFieldContainer">
               <Fields.Introduction />
             </div>
+            <div className="requestFieldContainer">
+              <Fields.LaborType />
+            </div>
           </div>
         </form>
       </FormProvider>
