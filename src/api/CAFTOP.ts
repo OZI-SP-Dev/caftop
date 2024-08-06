@@ -16,3 +16,7 @@ export type CAFTOPInfo = {
   PreparingOffice: string;
 } & ProgramManagers &
   TechOrderManager;
+
+export type CAFTOPDescription = {
+  Description: string;
+};

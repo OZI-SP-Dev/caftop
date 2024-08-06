@@ -10,6 +10,9 @@ type WizardStep = {
 const infoPromise = import("Steps/Info/Info");
 const Info = lazy(() => infoPromise);
 
+const descriptionPromise = import("Steps/Description/Description");
+const Description = lazy(() => descriptionPromise);
+
 const genericStepPromise = import("Steps/GenericStep");
 const GenericStep = lazy(() => genericStepPromise);
 
@@ -19,7 +22,7 @@ export const WizardSteps: WizardStep[] = [
   {
     id: "Description",
     name: "Program Description and General Information",
-    jsxObj: <GenericStep />,
+    jsxObj: <Description />,
   },
   {
     id: "Labor",

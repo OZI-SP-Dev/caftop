@@ -1,8 +1,9 @@
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
 import { Dispatch } from "react";
 
 export interface GlobalStateInterface {
   Info: CAFTOPInfo;
+  Description: CAFTOPDescription;
   wizardStep: number;
   wizardMaxStep: number;
 }

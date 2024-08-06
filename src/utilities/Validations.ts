@@ -1,3 +1,4 @@
+import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -38,4 +39,10 @@ export const useInfoPageValidation = () => {
     .merge(TechOrderManagerRuleFinal);
 
   return useAddlPECValidation(schema);
+};
+
+export const useDescriptionPageValidation = () => {
+  const schema = DescriptionRuleFinal;
+
+  return schema;
 };

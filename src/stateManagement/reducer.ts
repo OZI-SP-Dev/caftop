@@ -1,4 +1,4 @@
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {
@@ -13,8 +13,13 @@ const Info: CAFTOPInfo = {
   TechOrderManager: { FirstName: "", LastName: "", DSN: "", Email: "" },
 };
 
+const Description: CAFTOPDescription = {
+  Description: "",
+};
+
 export const initialState: GlobalStateInterface = {
   Info,
+  Description,
   wizardStep: 0,
   wizardMaxStep: 0,
 };
