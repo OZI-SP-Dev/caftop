@@ -19,4 +19,5 @@ export type CAFTOPInfo = {
 
 export type CAFTOPDescription = {
   Description: string;
+  Introduction: string;
 };

@@ -8,15 +8,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPDescription } from "api/CAFTOP";
 import { useDescriptionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields/Fields";
-import { useDefaultDescription } from "api/DefaultData";
+import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";
 
 const Description = () => {
   const { globalState, dispatch } = useContext(globalContext);
   let currentCAFTOP = { ...globalState.Description };
   const defaultDescription = useDefaultDescription();
+  const defualtIntroduction = useDefaultIntroduction();
 
   if (!currentCAFTOP.Description) {
     currentCAFTOP = { ...currentCAFTOP, Description: defaultDescription };
+  }
+
+  if (!currentCAFTOP.Introduction) {
+    currentCAFTOP = { ...currentCAFTOP, Introduction: defualtIntroduction };
   }
 
   const submitSuccess: SubmitHandler<CAFTOPDescription> = (data, e?) => {
@@ -38,7 +43,7 @@ const Description = () => {
   const schema = useDescriptionPageValidation();
 
   const myForm = useForm<CAFTOPDescription>({
-    defaultValues: currentCAFTOP,
+    values: currentCAFTOP,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
@@ -56,6 +61,9 @@ const Description = () => {
           <div className="requestFormContainer">
             <div className="requestFieldContainer">
               <Fields.Description />
+            </div>
+            <div className="requestFieldContainer">
+              <Fields.Introduction />
             </div>
           </div>
         </form>
