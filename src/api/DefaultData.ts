@@ -46,10 +46,10 @@ const useDefaultData = () => {
    * @returns Map of the Default Data Key/Value
    */
   const transformData = (data: TDefaultData) => {
-    const dataMap = new Map();
+    const dataMap = new Map<string, string>();
     data.forEach((entry) => {
       // Replace {ProgramName} with the selected Program Name
-      let value = entry.Value.replaceAll(
+      const value = entry.Value.replaceAll(
         "{ProgramName}",
         globalState.Info.ProgramName
       );
