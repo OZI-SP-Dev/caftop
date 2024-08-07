@@ -6,6 +6,8 @@ export interface GlobalStateInterface {
   Description: CAFTOPDescription;
   wizardStep: number;
   wizardMaxStep: number;
+  /** Drive how the "Save and Continue" button works -- page checking or full sumbission checking */
+  mode: "save" | "submit";
 }
 
 export type ActionType = {
@@ -14,7 +16,8 @@ export type ActionType = {
     | "NEXT_STEP"
     | "PREV_STEP"
     | "GOTO_STEP"
-    | "PURGE_STATE";
+    | "PURGE_STATE"
+    | "CHANGE_MODE";
   payload?: Partial<GlobalStateInterface>;
 };
 

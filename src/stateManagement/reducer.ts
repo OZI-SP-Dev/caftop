@@ -13,10 +13,12 @@ const Info: CAFTOPInfo = {
   TechOrderManager: { FirstName: "", LastName: "", DSN: "", Email: "" },
 };
 
-const Description: CAFTOPDescription = {
+export const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
   LaborType: "",
+  ContractorSupport: { LaborCost: "" },
+  OrganicSupport: { Office: "" },
 };
 
 export const initialState: GlobalStateInterface = {
@@ -24,6 +26,7 @@ export const initialState: GlobalStateInterface = {
   Description,
   wizardStep: 0,
   wizardMaxStep: 0,
+  mode: "save",
 };
 
 const Reducer = (state: GlobalStateInterface, action: ActionType) => {
@@ -59,6 +62,14 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
     }
     case "PURGE_STATE": {
       return initialState;
+    }
+    case "CHANGE_MODE": {
+      let mode = state.mode;
+      mode = action.payload?.mode ?? mode;
+      return {
+        ...state,
+        mode,
+      };
     }
     default: {
       return state;

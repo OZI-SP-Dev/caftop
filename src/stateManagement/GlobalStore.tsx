@@ -14,6 +14,12 @@ function initializeState() {
   const fromLocalStorage: GlobalStateInterface = JSON.parse(
     localStorage.getItem("caftopGlobalState") as string
   ) as GlobalStateInterface;
+
+  // Return back to save mode on reload of page
+  if (fromLocalStorage?.mode) {
+    fromLocalStorage.mode = "save";
+  }
+
   return fromLocalStorage || initialState;
 }
 

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -48,6 +48,12 @@ const Description = () => {
     mode: "onChange",
   });
 
+  useEffect(() => {
+    if (globalState.mode === "submit") {
+      myForm.trigger();
+    }
+  }, [globalState.mode, myForm.trigger]);
+
   return (
     <>
       <Title1>CAFTOP Description and General Introduction Page</Title1>
@@ -67,6 +73,11 @@ const Description = () => {
             </div>
             <div className="requestFieldContainer">
               <Fields.LaborType />
+            </div>
+            <div className="requestFieldContainer">
+              {/* Display the appropriate component */}
+              <Fields.OrganicSupport />
+              <Fields.ContractorSupport />
             </div>
           </div>
         </form>

@@ -5,14 +5,24 @@ import PizZip from "pizzip";
 import PizZipUtils from "pizzip/utils/index.js";
 import { saveAs } from "file-saver";
 import expressions from "docxtemplater/expressions";
+import { Link } from "@fluentui/react-components";
+import { useCheckComplete } from "utilities/Validations";
 
 const Complete = () => {
-  const { globalState } = useContext(globalContext);
+  const { globalState, dispatch } = useContext(globalContext);
+  const errors = useCheckComplete();
 
   function handleSubmit(e: FormEvent) {
-    // TODO: Add in the logic to validate data is good (BAC-176) for now, assume good
-    generateDocument();
-    e.preventDefault();
+    if (
+      e?.nativeEvent instanceof SubmitEvent &&
+      e.nativeEvent?.submitter?.id === "next"
+    ) {
+      generateDocument();
+      e.preventDefault();
+    } else {
+      dispatch({ type: "PREV_STEP" });
+    }
+    return Promise.resolve();
   }
 
   function generateDocument() {
@@ -56,16 +66,42 @@ const Complete = () => {
     <div className="m-3">
       <h1>CAFTOP Template Steps Complete</h1>
       <form id="innerForm" onSubmit={handleSubmit}></form>
-      <ul className="text-start">
-        <li>
-          When CAFTOP is completed, document can be generated with “Generate
-          Document” selection
-        </li>
-        <li>
-          When finished with CAFTOP Template select “Close and Reset” to clear
-          all user input
-        </li>
-      </ul>
+      {errors.length === 0 && (
+        <div>
+          You have completed all information required to generate a CAFTOP. If
+          you are ready to create the CAFTOP Narrative file, you can do so by
+          clicking &quot;Generate Document&quot; button below.
+        </div>
+      )}
+      {errors.length > 0 && (
+        <>
+          <div>
+            There is missing information, which must be completed before being
+            able to generate the CAFTOP Narrative file. Please click on the
+            below links to enter the missing information.
+          </div>
+          <ul>
+            {errors.map((error) => (
+              <li key={error.errortext + error.pageIndex}>
+                <Link
+                  onClick={() => {
+                    dispatch({
+                      type: "CHANGE_MODE",
+                      payload: { mode: "submit" },
+                    });
+                    dispatch({
+                      type: "GOTO_STEP",
+                      payload: { wizardStep: error.pageIndex },
+                    });
+                  }}
+                >
+                  {error.errortext}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 };

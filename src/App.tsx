@@ -7,11 +7,13 @@ import { AppLeftNav } from "components/AppLeftNav";
 
 import { Button, Spinner } from "@fluentui/react-components";
 import "./App.css";
+import { useCheckComplete } from "utilities/Validations";
 
 function App() {
   const { globalState, dispatch } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
   const [isChecking, setChecking] = useState(false);
+  const errors = useCheckComplete();
 
   let submitButtonText: string;
   if (isLoading) {
@@ -77,7 +79,11 @@ function App() {
               appearance="primary"
               type="submit"
               form="innerForm"
-              disabled={isLoading}
+              disabled={
+                isLoading ||
+                (CAFTOPFinalStep === globalState.wizardStep &&
+                  errors.length > 0)
+              }
               onClick={(e) => {
                 if (submitButtonText === "Start CAFTOP") {
                   e.preventDefault();
