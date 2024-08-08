@@ -11,7 +11,7 @@ const officeFinalRule = z
   .max(20, "Office cannot exceed 20 characters");
 
 const finalRule = z.object({
-  Office: z.object({ Office: officeFinalRule }),
+  Office: officeFinalRule,
 });
 
 export const OrganicSupportRuleFinal = z.discriminatedUnion("LaborType", [
