@@ -11,6 +11,7 @@ import { ProgramName } from "./Fields/ProgramName";
 import { ProgramElementCode } from "./Fields/ProgramElementCode";
 import { useInfoPageValidation } from "utilities/Validations";
 import { LeadCommand } from "./Fields/LeadCommand";
+import { Center } from "./Fields/Center";
 import { PreparingBase } from "./Fields/PreparingBase";
 import { PreparingOffice } from "./Fields/PreparingOffice";
 import { ProgramManagers } from "./Fields/ProgramManagers";
@@ -65,6 +66,9 @@ const Info = () => {
             </div>
             <div className="requestFieldContainer">
               <LeadCommand />
+            </div>
+            <div className="requestFieldContainer">
+              <Center />
             </div>
             <div className="requestFieldContainer">
               <PreparingBase />

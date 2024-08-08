@@ -1,10 +1,13 @@
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
 import { Dispatch } from "react";
 
 export interface GlobalStateInterface {
   Info: CAFTOPInfo;
+  Description: CAFTOPDescription;
   wizardStep: number;
   wizardMaxStep: number;
+  /** Drive how the "Save and Continue" button works -- page checking or full sumbission checking */
+  mode: "save" | "submit";
 }
 
 export type ActionType = {
@@ -13,7 +16,8 @@ export type ActionType = {
     | "NEXT_STEP"
     | "PREV_STEP"
     | "GOTO_STEP"
-    | "PURGE_STATE";
+    | "PURGE_STATE"
+    | "CHANGE_MODE";
   payload?: Partial<GlobalStateInterface>;
 };
 

@@ -1,4 +1,4 @@
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {
@@ -6,16 +6,27 @@ const Info: CAFTOPInfo = {
   ProgramName: "",
   ProgramElementCode: "",
   LeadCommand: "",
+  Center: "",
   PreparingBase: "",
   PreparingOffice: "",
   ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
   TechOrderManager: { FirstName: "", LastName: "", DSN: "", Email: "" },
 };
 
+export const Description: CAFTOPDescription = {
+  Description: "",
+  Introduction: "",
+  LaborType: "",
+  ContractorSupport: { LaborCost: "" },
+  OrganicSupport: { Office: "" },
+};
+
 export const initialState: GlobalStateInterface = {
   Info,
+  Description,
   wizardStep: 0,
   wizardMaxStep: 0,
+  mode: "save",
 };
 
 const Reducer = (state: GlobalStateInterface, action: ActionType) => {
@@ -51,6 +62,14 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
     }
     case "PURGE_STATE": {
       return initialState;
+    }
+    case "CHANGE_MODE": {
+      let mode = state.mode;
+      mode = action.payload?.mode ?? mode;
+      return {
+        ...state,
+        mode,
+      };
     }
     default: {
       return state;
