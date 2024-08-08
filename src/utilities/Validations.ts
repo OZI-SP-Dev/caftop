@@ -5,10 +5,7 @@ import {
 import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
 import { LaborTypeRuleFinal } from "Steps/Description/Fields/LaborType";
-import {
-  OfficeRuleFinal,
-  OfficeRuleSave,
-} from "Steps/Description/Fields/OrganicSupport";
+import { OrganicSupportRuleFinal } from "Steps/Description/Fields/OrganicSupport";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -64,12 +61,12 @@ export const useDescriptionPageValidation = (
     return DescriptionRuleFinal.merge(IntroductionRuleFinal)
       .merge(LaborTypeRuleFinal)
       .and(ContractorSupportRuleSave)
-      .and(OfficeRuleSave);
+      .and(OrganicSupportRuleFinal);
   } else {
     return DescriptionRuleFinal.merge(IntroductionRuleFinal)
       .merge(LaborTypeRuleFinal)
       .and(ContractorSupportRuleFinal)
-      .and(OfficeRuleFinal);
+      .and(OrganicSupportRuleFinal);
   }
 };
 
