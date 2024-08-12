@@ -25,8 +25,8 @@ const dsnRule = z
   .min(1, "DSN is required");
 const finalEmailRule = z
   .string()
-  .email()
   .trim()
+  .email()
   .min(1, "Email is required")
   .max(320, "Email cannot exceed 320 characters");
 
@@ -102,10 +102,18 @@ export const ProgramManagers = () => {
       }
     });
 
-    myForm.setValue(programManager + ".FirstName", firstName);
-    myForm.setValue(programManager + ".LastName", lastName);
-    myForm.setValue(programManager + ".DSN", formatDSN(workPhone));
-    myForm.setValue(programManager + ".Email", person[0].EMail);
+    myForm.setValue(programManager + ".FirstName", firstName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".LastName", lastName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".DSN", formatDSN(workPhone), {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".Email", person[0].EMail, {
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -118,11 +126,16 @@ export const ProgramManagers = () => {
             </Text>
           </legend>
           <div className="requestFieldContainer">
-            <PopupPeoplePicker
-              onUpdate={(person: Person[]) =>
-                void setProgramManagerValues(`ProgramManagers.${index}`, person)
-              }
-            />
+            <div>
+              <PopupPeoplePicker
+                onUpdate={(person: Person[]) =>
+                  void setProgramManagerValues(
+                    `ProgramManagers.${index}`,
+                    person
+                  )
+                }
+              />
+            </div>
           </div>
           <div className="requestFieldContainer">
             <BACInput<CAFTOPInfo>

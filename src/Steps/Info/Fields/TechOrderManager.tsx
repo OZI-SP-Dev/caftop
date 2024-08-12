@@ -25,8 +25,8 @@ const dsnRule = z
   .min(1, "DSN is required");
 const finalEmailRule = z
   .string()
-  .email()
   .trim()
+  .email()
   .min(1, "Email is required")
   .max(320, "Email cannot exceed 320 characters");
 
@@ -92,10 +92,18 @@ export const TechOrderManager = () => {
       }
     });
 
-    myForm.setValue(techOrderManager + ".FirstName", firstName);
-    myForm.setValue(techOrderManager + ".LastName", lastName);
-    myForm.setValue(techOrderManager + ".DSN", formatDSN(workPhone));
-    myForm.setValue(techOrderManager + ".Email", person[0].EMail);
+    myForm.setValue(techOrderManager + ".FirstName", firstName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(techOrderManager + ".LastName", lastName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(techOrderManager + ".DSN", formatDSN(workPhone), {
+      shouldValidate: true,
+    });
+    myForm.setValue(techOrderManager + ".Email", person[0].EMail, {
+      shouldValidate: true,
+    });
   };
 
   return (

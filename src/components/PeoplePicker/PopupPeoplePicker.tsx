@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Person, useCurrentUser } from "api/UserApi";
 import BACPeoplePicker from "./PeoplePicker";
 import { FormProvider, useForm } from "react-hook-form";
+import { ContactIcon } from "@fluentui/react-icons-mdl2";
 
 interface IPopupPeoplePicker {
   onUpdate: (selected: Person[]) => void;
@@ -44,6 +45,7 @@ export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
       }}
     >
       <Button appearance="secondary" onClick={() => setOpen(true)}>
+        <ContactIcon className="fieldIcon" />
         Populate from GAL
       </Button>
 
