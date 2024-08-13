@@ -42,7 +42,7 @@ const Description = (props: ICAFTOPWizardStep) => {
   });
 
   if (globalState.mode === "submit") {
-    myForm.trigger();
+    void myForm.trigger();
   }
 
   return (
@@ -52,7 +52,7 @@ const Description = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess)(...args)
+            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">

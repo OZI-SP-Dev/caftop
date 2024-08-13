@@ -43,7 +43,7 @@ const Info = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess)(...args)
+            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">
