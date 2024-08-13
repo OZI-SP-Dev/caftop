@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -9,8 +9,9 @@ import { CAFTOPDescription } from "api/CAFTOP";
 import { useDescriptionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields/Fields";
 import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";
+import { ICAFTOPWizardStep } from "Steps/Steps";
 
-const Description = () => {
+const Description = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
   let currentCAFTOP = { ...globalState.Description };
   const defaultDescription = useDefaultDescription();
@@ -29,15 +30,7 @@ const Description = () => {
       type: "MERGE_GLOBAL_OPTION",
       payload: { Description: { ...data } },
     });
-    if (
-      e?.nativeEvent instanceof SubmitEvent &&
-      e.nativeEvent?.submitter?.id === "next"
-    ) {
-      dispatch({ type: "NEXT_STEP" });
-    } else {
-      dispatch({ type: "PREV_STEP" });
-    }
-    return Promise.resolve();
+    props.handleSubmit(e);
   };
 
   const schema = useDescriptionPageValidation();
@@ -48,11 +41,9 @@ const Description = () => {
     mode: "onChange",
   });
 
-  useEffect(() => {
-    if (globalState.mode === "submit") {
-      myForm.trigger();
-    }
-  }, [globalState.mode, myForm.trigger]);
+  if (globalState.mode === "submit") {
+    myForm.trigger();
+  }
 
   return (
     <>

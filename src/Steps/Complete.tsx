@@ -7,22 +7,22 @@ import { saveAs } from "file-saver";
 import expressions from "docxtemplater/expressions";
 import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
+import { ICAFTOPWizardStep } from "./Steps";
 
-const Complete = () => {
+const Complete = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
   const errors = useCheckComplete();
 
   function handleSubmit(e: FormEvent) {
+    e.preventDefault();
     if (
       e?.nativeEvent instanceof SubmitEvent &&
       e.nativeEvent?.submitter?.id === "next"
     ) {
       generateDocument();
-      e.preventDefault();
     } else {
-      dispatch({ type: "PREV_STEP" });
+      props.handleSubmit(e);
     }
-    return Promise.resolve();
   }
 
   function generateDocument() {
