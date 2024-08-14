@@ -79,6 +79,7 @@ const BACDropdown = <T extends FieldValues>({
               }
         }
         value={customValue ? customValue(field.value) : field.value}
+        listbox={{ style: { maxHeight: "50vh" } }}
         {...fieldProps}
       >
         {children ?? <></>}

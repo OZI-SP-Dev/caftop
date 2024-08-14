@@ -102,6 +102,7 @@ const BACCombobox = <T extends FieldValues>({
         onChange={onChangeHandler}
         freeform={false}
         clearable={true}
+        listbox={{ style: { maxHeight: "50vh" } }}
       >
         {children ?? <></>}
       </Combobox>
