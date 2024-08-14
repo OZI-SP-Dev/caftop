@@ -167,10 +167,10 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
       <AlertNavWithErrors
         show={isNavErr}
         close={(choice) => {
+          setNavErr(false);
           if (choice) {
             closeFunc();
           }
-          setNavErr(false);
         }}
       />
     </Suspense>

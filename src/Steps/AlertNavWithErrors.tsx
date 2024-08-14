@@ -37,7 +37,13 @@ export const AlertNavWithErrors = (props: IAlertModal) => {
           <Button onClick={() => props.close(false)} appearance="primary">
             Fix errors
           </Button>
-          <Button onClick={() => props.close(true)} appearance="secondary">
+          <Button
+            disabled={props.show === false}
+            onClick={() => {
+              props.close(true);
+            }}
+            appearance="secondary"
+          >
             Navigate without saving changes
           </Button>
         </DialogActions>
