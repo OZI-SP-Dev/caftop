@@ -62,7 +62,13 @@ export const TechOrderManager = () => {
   };
 
   const onDSNInput = (e: SyntheticEvent<HTMLInputElement>) => {
-    e.currentTarget.value = formatDSN(e.currentTarget.value);
+    const formattedDSN = formatDSN(e.currentTarget.value);
+    const start = e.currentTarget.selectionStart ?? 1;
+    const length = e.currentTarget.value.length;
+    e.currentTarget.value = formattedDSN;
+    if (start < length) {
+      e.currentTarget.setSelectionRange(start, start);
+    }
   };
 
   const setTechOrderManagerValues = async (
@@ -137,7 +143,7 @@ export const TechOrderManager = () => {
           name="TechOrderManager.DSN"
           labelText="DSN"
           rules={{ required: true }}
-          fieldProps={{ onInput: onDSNInput }}
+          fieldProps={{ onInput: onDSNInput, type: "tel" }}
         />
       </div>
       <div className="requestFieldContainer">
@@ -147,6 +153,7 @@ export const TechOrderManager = () => {
           rules={{
             required: true,
           }}
+          fieldProps={{ type: "email" }}
         />
       </div>
     </fieldset>
