@@ -114,7 +114,7 @@ export const TechOrderManager = () => {
       <div className="requestFieldContainer">
         <PopupPeoplePicker
           onUpdate={(person: Person[]) =>
-            void setTechOrderManagerValues("TechOrderManager", person)
+            setTechOrderManagerValues("TechOrderManager", person)
           }
         />
       </div>

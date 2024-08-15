@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogBody,
   DialogActions,
+  Spinner,
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { useState } from "react";
@@ -16,13 +17,16 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ContactIcon } from "@fluentui/react-icons-mdl2";
 
 interface IPopupPeoplePicker {
-  onUpdate: (selected: Person[]) => void;
+  onUpdate: (selected: Person[]) => Promise<void>;
 }
 
 export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
   const [selected, setSelected] = useState<Person[]>([]);
   const currentUser = useCurrentUser();
   const [isOpen, setOpen] = useState<boolean>(false);
+  const [updateType, setUpdating] = useState<"none" | "selected" | "self">(
+    "none"
+  );
 
   type TPopupPeoplePicker = { user: Person[] };
 
@@ -30,9 +34,11 @@ export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
     mode: "onChange",
   });
 
-  const submitSuccess = (data: TPopupPeoplePicker) => {
-    onUpdate(data.user);
+  const submitSuccess = async (data: TPopupPeoplePicker) => {
+    setUpdating("selected");
+    await onUpdate(data.user);
     setOpen(false);
+    setUpdating("none");
   };
 
   return (
@@ -88,28 +94,42 @@ export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
                         setSelected([]);
                       }
                     }}
+                    disabled={updateType !== "none"}
                   />
                 </div>
               </DialogContent>
               <DialogActions>
                 <Button
                   appearance="primary"
+                  disabled={updateType !== "none"}
                   onClick={(...args) =>
                     void myForm.handleSubmit(submitSuccess)(...args)
                   }
                 >
+                  {updateType === "selected" && <Spinner size="extra-tiny" />}
                   Select
                 </Button>
                 <Button
                   appearance="primary"
+                  disabled={updateType !== "none"}
                   onClick={() => {
-                    onUpdate([currentUser]);
-                    setOpen(false);
+                    setUpdating("self");
+                    onUpdate([currentUser])
+                      .then(() => {
+                        setOpen(false);
+                        setUpdating("none");
+                      })
+                      .catch(() => setUpdating("none"));
                   }}
                 >
+                  {updateType === "self" && <Spinner size="extra-tiny" />}
                   Set as myself
                 </Button>
-                <Button appearance="secondary" onClick={() => setOpen(false)}>
+                <Button
+                  appearance="secondary"
+                  disabled={updateType !== "none"}
+                  onClick={() => setOpen(false)}
+                >
                   Cancel
                 </Button>
               </DialogActions>
