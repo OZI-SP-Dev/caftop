@@ -25,7 +25,7 @@ export const AppLeftNav = () => {
           }
           style={
             globalState.wizardMaxStep >= i && globalState.wizardStep !== i
-              ? { backgroundColor: "green" }
+              ? { backgroundColor: "green", color: "white" }
               : undefined
           }
         >

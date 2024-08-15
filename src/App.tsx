@@ -102,7 +102,7 @@ function App() {
             appearance="secondary"
             type="reset"
             disabled={isLoading}
-            style={{ color: "red", outlineColor: "red" }}
+            style={{ color: "#ef0000", outlineColor: "#ef0000" }}
             onClick={(e) => handleReset(e)}
           >
             {globalState.wizardStep === CAFTOPFinalStep
