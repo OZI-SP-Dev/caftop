@@ -4,15 +4,18 @@ import { globalContext } from "../stateManagement/GlobalStore";
 import { CAFTOPStepNames } from "../Steps/Steps";
 
 export const AppLeftNav = () => {
-  const { globalState, dispatch } = useContext(globalContext);
+  const { globalState } = useContext(globalContext);
   const steps = CAFTOPStepNames;
 
   return (
     <div style={{ display: "grid" }}>
       {steps.map((element, i) => (
         <Button
+          id={`goto_${i}`}
           key={element}
           disabled={globalState.wizardMaxStep < i}
+          type="submit"
+          form="innerForm"
           appearance={
             globalState.wizardStep === i
               ? "primary"
@@ -22,11 +25,8 @@ export const AppLeftNav = () => {
           }
           style={
             globalState.wizardMaxStep >= i && globalState.wizardStep !== i
-              ? { backgroundColor: "green" }
+              ? { backgroundColor: "green", color: "white" }
               : undefined
-          }
-          onClick={(_e) =>
-            dispatch({ type: "GOTO_STEP", payload: { wizardStep: i } })
           }
         >
           {element}

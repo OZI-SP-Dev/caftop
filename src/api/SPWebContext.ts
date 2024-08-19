@@ -35,8 +35,18 @@ export const getSPUserProfileData = async (email: string) => {
       UserProfileProperties: { Key: string; Value: string }[];
     };
   } else {
-    return getSPUserProfileDataDev(loginName) as {
+    return await new Promise<{
       UserProfileProperties: { Key: string; Value: string }[];
-    };
+    }>((resolve) =>
+      setTimeout(
+        () =>
+          resolve(
+            getSPUserProfileDataDev(loginName) as {
+              UserProfileProperties: { Key: string; Value: string }[];
+            }
+          ),
+        1000
+      )
+    );
   }
 };

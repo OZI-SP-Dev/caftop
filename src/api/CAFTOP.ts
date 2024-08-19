@@ -11,7 +11,16 @@ export type CAFTOPInfo = {
   ProgramName: string;
   ProgramElementCode: string;
   LeadCommand: string;
+  Center: string;
   PreparingBase: string;
   PreparingOffice: string;
 } & ProgramManagers &
   TechOrderManager;
+
+export type CAFTOPDescription = {
+  Description: string;
+  Introduction: string;
+  LaborType: "contractor" | "organic" | "";
+  ContractorSupport: { LaborCost: string };
+  OrganicSupport: { Office: string };
+};

@@ -25,8 +25,8 @@ const dsnRule = z
   .min(1, "DSN is required");
 const finalEmailRule = z
   .string()
-  .email()
   .trim()
+  .email()
   .min(1, "Email is required")
   .max(320, "Email cannot exceed 320 characters");
 
@@ -72,7 +72,13 @@ export const ProgramManagers = () => {
   };
 
   const onDSNInput = (e: SyntheticEvent<HTMLInputElement>) => {
-    e.currentTarget.value = formatDSN(e.currentTarget.value);
+    const formattedDSN = formatDSN(e.currentTarget.value);
+    const start = e.currentTarget.selectionStart ?? 1;
+    const length = e.currentTarget.value.length;
+    e.currentTarget.value = formattedDSN;
+    if (start < length) {
+      e.currentTarget.setSelectionRange(start, start);
+    }
   };
 
   const setProgramManagerValues = async (
@@ -102,10 +108,18 @@ export const ProgramManagers = () => {
       }
     });
 
-    myForm.setValue(programManager + ".FirstName", firstName);
-    myForm.setValue(programManager + ".LastName", lastName);
-    myForm.setValue(programManager + ".DSN", formatDSN(workPhone));
-    myForm.setValue(programManager + ".Email", person[0].EMail);
+    myForm.setValue(programManager + ".FirstName", firstName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".LastName", lastName, {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".DSN", formatDSN(workPhone), {
+      shouldValidate: true,
+    });
+    myForm.setValue(programManager + ".Email", person[0].EMail, {
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -118,11 +132,13 @@ export const ProgramManagers = () => {
             </Text>
           </legend>
           <div className="requestFieldContainer">
-            <PopupPeoplePicker
-              onUpdate={(person: Person[]) =>
-                void setProgramManagerValues(`ProgramManagers.${index}`, person)
-              }
-            />
+            <div>
+              <PopupPeoplePicker
+                onUpdate={(person: Person[]) =>
+                  setProgramManagerValues(`ProgramManagers.${index}`, person)
+                }
+              />
+            </div>
           </div>
           <div className="requestFieldContainer">
             <BACInput<CAFTOPInfo>
@@ -143,7 +159,7 @@ export const ProgramManagers = () => {
               name={`ProgramManagers.${index}.DSN`}
               labelText="DSN"
               rules={{ required: true }}
-              fieldProps={{ onInput: onDSNInput }}
+              fieldProps={{ onInput: onDSNInput, type: "tel" }}
             />
           </div>
           <div className="requestFieldContainer">
@@ -153,6 +169,7 @@ export const ProgramManagers = () => {
               rules={{
                 required: true,
               }}
+              fieldProps={{ type: "email" }}
             />
           </div>
           {fields.length > 1 && (
