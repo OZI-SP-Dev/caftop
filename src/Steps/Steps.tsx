@@ -30,6 +30,9 @@ const Info = lazy(() => infoPromise);
 const descriptionPromise = import("Steps/Description/Description");
 const Description = lazy(() => descriptionPromise);
 
+const technicalOrdersPromise = import("Steps/TechnicalOrders/TechnicalOrders");
+const TechnicalOrders = lazy(() => technicalOrdersPromise);
+
 const genericStepPromise = import("Steps/GenericStep");
 const GenericStep = lazy(() => genericStepPromise);
 
@@ -58,6 +61,11 @@ export const WizardSteps: WizardStep[] = [
     id: "Description",
     name: "Program Description and General Information",
     jsxObj: <Description {...blankdHandlers} />,
+  },
+  {
+    id: "TechnicalOrders",
+    name: "Technical Orders",
+    jsxObj: <TechnicalOrders {...blankdHandlers} />,
   },
   {
     id: "Labor",
@@ -125,9 +133,12 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   };
 
   const handleError: SubmitErrorHandler<CAFTOPInfo | CAFTOPDescription> = (
-    _errors,
+    errors,
     e?: BaseSyntheticEvent
   ) => {
+    if (errors) {
+      console.log(errors);
+    }
     if (e) {
       e.preventDefault();
       if (e?.nativeEvent instanceof SubmitEvent) {

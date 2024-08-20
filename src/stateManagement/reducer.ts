@@ -1,4 +1,8 @@
-import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
+import {
+  CAFTOPInfo,
+  CAFTOPDescription,
+  CAFTOPTechnicalOrders,
+} from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {
@@ -21,9 +25,17 @@ export const Description: CAFTOPDescription = {
   OrganicSupport: { Office: "" },
 };
 
+export const TechnicalOrders: CAFTOPTechnicalOrders = {
+  NumElectronic: "",
+  NumPaper: "",
+  NumCDDVD: "",
+  NumUnpublished: "",
+};
+
 export const initialState: GlobalStateInterface = {
   Info,
   Description,
+  TechnicalOrders,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",

@@ -24,3 +24,10 @@ export type CAFTOPDescription = {
   ContractorSupport: { LaborCost: string };
   OrganicSupport: { Office: string };
 };
+
+export type CAFTOPTechnicalOrders = {
+  NumElectronic: number | "";
+  NumPaper: number | "";
+  NumCDDVD: number | "";
+  NumUnpublished: number | "";
+};

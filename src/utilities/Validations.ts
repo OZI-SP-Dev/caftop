@@ -6,6 +6,10 @@ import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
 import { LaborTypeRuleFinal } from "Steps/Description/Fields/LaborType";
 import { OrganicSupportRuleFinal } from "Steps/Description/Fields/OrganicSupport";
+import {
+  tocountsRuleFinal,
+  tocountsRuleSave,
+} from "Steps/TechnicalOrders/Fields/TOCounts";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -70,6 +74,19 @@ export const useDescriptionPageValidation = (
   }
 };
 
+export const useTechnicalOrdersPageValidation = (
+  mode?: GlobalStateInterface["mode"]
+) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return tocountsRuleSave;
+  } else {
+    return tocountsRuleFinal;
+  }
+};
+
 interface CAFTOPError {
   errortext: string;
   pageIndex: number;
@@ -80,6 +97,7 @@ export const useCheckComplete = () => {
   const { globalState } = useContext(globalContext);
   const info = useInfoPageValidation();
   const description = useDescriptionPageValidation("submit");
+  const technicalorders = useTechnicalOrdersPageValidation("submit");
 
   const result1 = info.safeParse(globalState.Info);
   if (!result1.success) {
@@ -92,6 +110,13 @@ export const useCheckComplete = () => {
   if (!result2.success) {
     result2.error.issues.forEach((issue) =>
       errors.push({ errortext: issue.message, pageIndex: 2 })
+    );
+  }
+
+  const result3 = technicalorders.safeParse(globalState.TechnicalOrders);
+  if (!result3.success) {
+    result3.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 3 })
     );
   }
 
