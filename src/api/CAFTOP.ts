@@ -31,4 +31,5 @@ export type CAFTOPTechnicalOrders = {
   NumPaper: number | "";
   NumCDDVD: number | "";
   NumUnpublished: number | "";
+  NumInAcquisition: number | "";
 };

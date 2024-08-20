@@ -31,6 +31,7 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   NumPaper: "",
   NumCDDVD: "",
   NumUnpublished: "",
+  NumInAcquisition: "",
 };
 
 export const initialState: GlobalStateInterface = {

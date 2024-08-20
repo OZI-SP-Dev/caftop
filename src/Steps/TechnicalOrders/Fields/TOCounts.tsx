@@ -31,6 +31,7 @@ export const tocountsRuleSave = z.object({
   NumPaper: numberRulesSave("Paper"),
   NumCDDVD: numberRulesSave("CD/DVD"),
   NumUnpublished: numberRulesSave("Unpublished"),
+  NumInAcquisition: numberRulesSave("In Acquisition"),
 });
 
 export const tocountsRuleFinal = z.object({
@@ -38,6 +39,7 @@ export const tocountsRuleFinal = z.object({
   NumPaper: numberRulesFinal("Paper"),
   NumCDDVD: numberRulesFinal("CD/DVD"),
   NumUnpublished: numberRulesFinal("Unpublished"),
+  NumInAcquisition: numberRulesFinal("In Acquisition"),
 });
 
 const TOAPMigration = () => {
@@ -74,6 +76,14 @@ const TOAPMigration = () => {
         <BACInput<CAFTOPTechnicalOrders>
           name="NumUnpublished"
           labelText="Unpublished"
+          rules={{ required: true }}
+          fieldProps={{ type: "number" }}
+        />
+      </div>
+      <div className="requestFieldContainer">
+        <BACInput<CAFTOPTechnicalOrders>
+          name="NumInAcquisition"
+          labelText="In Acquistion"
           rules={{ required: true }}
           fieldProps={{ type: "number" }}
         />
