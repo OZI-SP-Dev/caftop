@@ -25,6 +25,10 @@ import { useContext } from "react";
 import { globalContext } from "stateManagement/GlobalStore";
 import { GlobalStateInterface } from "stateManagement/types";
 import { ZodSchema, z } from "zod";
+import {
+  configurationplanRuleFinal,
+  configurationplanRuleSave,
+} from "Steps/Description/Fields/ConfigurationPlan";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -65,12 +69,14 @@ export const useDescriptionPageValidation = (
     return DescriptionRuleFinal.merge(IntroductionRuleFinal)
       .merge(LaborTypeRuleFinal)
       .and(ContractorSupportRuleSave)
-      .and(OrganicSupportRuleFinal);
+      .and(OrganicSupportRuleFinal)
+      .and(configurationplanRuleSave);
   } else {
     return DescriptionRuleFinal.merge(IntroductionRuleFinal)
       .merge(LaborTypeRuleFinal)
       .and(ContractorSupportRuleFinal)
-      .and(OrganicSupportRuleFinal);
+      .and(OrganicSupportRuleFinal)
+      .and(configurationplanRuleFinal);
   }
 };
 

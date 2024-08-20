@@ -70,6 +70,9 @@ const Description = (props: ICAFTOPWizardStep) => {
               <Fields.OrganicSupport />
               <Fields.ContractorSupport />
             </div>
+            <div className="requestFieldContainer">
+              <Fields.ConfigurationPlan />
+            </div>
           </div>
         </form>
       </FormProvider>

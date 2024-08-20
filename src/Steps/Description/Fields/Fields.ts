@@ -4,3 +4,4 @@ export { default as Introduction } from "./Introduction";
 export { default as LaborType } from "./LaborType";
 export { default as OrganicSupport } from "./OrganicSupport";
 export { default as ContractorSupport } from "./ContractorSupport";
+export { default as ConfigurationPlan } from "./ConfigurationPlan";

@@ -23,6 +23,7 @@ export const Description: CAFTOPDescription = {
   LaborType: "",
   ContractorSupport: { LaborCost: "" },
   OrganicSupport: { Office: "" },
+  ConfigurationPlan: "",
 };
 
 export const TechnicalOrders: CAFTOPTechnicalOrders = {
