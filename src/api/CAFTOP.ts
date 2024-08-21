@@ -33,3 +33,8 @@ export type CAFTOPTechnicalOrders = {
   NumUnpublished: number | "";
   NumInAcquisition: number | "";
 };
+
+export type CAFTOPDistribution = {
+  hasDistCost: "yes" | "no" | "";
+  DistCost: number | "";
+};

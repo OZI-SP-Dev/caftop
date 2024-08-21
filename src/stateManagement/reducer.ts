@@ -2,6 +2,7 @@ import {
   CAFTOPInfo,
   CAFTOPDescription,
   CAFTOPTechnicalOrders,
+  CAFTOPDistribution,
 } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
@@ -34,10 +35,16 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   NumInAcquisition: "",
 };
 
+export const Distribution: CAFTOPDistribution = {
+  hasDistCost: "",
+  DistCost: "",
+};
+
 export const initialState: GlobalStateInterface = {
   Info,
   Description,
   TechnicalOrders,
+  Distribution,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",

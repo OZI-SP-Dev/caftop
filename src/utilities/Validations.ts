@@ -29,6 +29,10 @@ import {
   configurationplanRuleFinal,
   configurationplanRuleSave,
 } from "Steps/Description/Fields/ConfigurationPlan";
+import {
+  distcostRuleFinal,
+  distcostRuleSave,
+} from "Steps/Distribution/Fields/DistCost";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -93,6 +97,19 @@ export const useTechnicalOrdersPageValidation = (
   }
 };
 
+export const useDistributionPageValidation = (
+  mode?: GlobalStateInterface["mode"]
+) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return distcostRuleSave;
+  } else {
+    return distcostRuleFinal;
+  }
+};
+
 interface CAFTOPError {
   errortext: string;
   pageIndex: number;
@@ -104,6 +121,7 @@ export const useCheckComplete = () => {
   const info = useInfoPageValidation();
   const description = useDescriptionPageValidation("submit");
   const technicalorders = useTechnicalOrdersPageValidation("submit");
+  const distribution = useDistributionPageValidation("submit");
 
   const result1 = info.safeParse(globalState.Info);
   if (!result1.success) {
@@ -123,6 +141,13 @@ export const useCheckComplete = () => {
   if (!result3.success) {
     result3.error.issues.forEach((issue) =>
       errors.push({ errortext: issue.message, pageIndex: 3 })
+    );
+  }
+
+  const result5 = distribution.safeParse(globalState.Distribution);
+  if (!result5.success) {
+    result5.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 5 })
     );
   }
 

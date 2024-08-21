@@ -2,6 +2,7 @@ import {
   CAFTOPInfo,
   CAFTOPDescription,
   CAFTOPTechnicalOrders,
+  CAFTOPDistribution,
 } from "api/CAFTOP";
 import { Dispatch } from "react";
 
@@ -9,6 +10,7 @@ export interface GlobalStateInterface {
   Info: CAFTOPInfo;
   Description: CAFTOPDescription;
   TechnicalOrders: CAFTOPTechnicalOrders;
+  Distribution: CAFTOPDistribution;
   wizardStep: number;
   wizardMaxStep: number;
   /** Drive how the "Save and Continue" button works -- page checking or full sumbission checking */

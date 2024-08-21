@@ -33,6 +33,9 @@ const Description = lazy(() => descriptionPromise);
 const technicalOrdersPromise = import("Steps/TechnicalOrders/TechnicalOrders");
 const TechnicalOrders = lazy(() => technicalOrdersPromise);
 
+const distributionPromise = import("Steps/Distribution/Distribution");
+const Distribution = lazy(() => distributionPromise);
+
 const genericStepPromise = import("Steps/GenericStep");
 const GenericStep = lazy(() => genericStepPromise);
 
@@ -75,7 +78,7 @@ export const WizardSteps: WizardStep[] = [
   {
     id: "Distribution",
     name: "Distribution",
-    jsxObj: <GenericStep {...blankdHandlers} />,
+    jsxObj: <Distribution {...blankdHandlers} />,
   },
   {
     id: "Improvements",
