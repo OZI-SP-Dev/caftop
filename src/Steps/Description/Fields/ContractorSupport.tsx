@@ -3,18 +3,27 @@ import BACInput from "components/BaseFormFields/BACInput";
 import { CAFTOPDescription } from "api/CAFTOP";
 import { useWatch } from "react-hook-form";
 import { Description } from "stateManagement/reducer";
+import { Text } from "@fluentui/react-components";
 
-const laborCostBaseRule = z
-  .string()
-  .trim()
-  .regex(/^\d*$/, "Labor cost can only contain dollar values");
+const laborCostBaseRule = z.union([
+  z.literal(""),
+  z.coerce
+    .number()
+    .nonnegative()
+    .safe()
+    .step(1, "Labor Cost must be a whole dollar value"),
+]);
 
 const saveRule = z.object({
   LaborCost: laborCostBaseRule,
 });
 
 const finalRule = z.object({
-  LaborCost: laborCostBaseRule.min(1, "You must enter a Labor Cost"),
+  LaborCost: laborCostBaseRule.pipe(
+    z.number({
+      invalid_type_error: "Labor Cost must be greater than or equal to 0",
+    })
+  ),
 });
 
 export const ContractorSupportRuleSave = z.discriminatedUnion("LaborType", [
@@ -60,6 +69,12 @@ const ContractorSupport = () => {
         name="ContractorSupport.LaborCost"
         labelText="Labor Cost (if none, enter 0)"
         rules={{ required: true }}
+        fieldProps={{
+          type: "number",
+          step: "1",
+          min: "0",
+          contentBefore: <Text>$</Text>,
+        }}
       />
     );
   } else {
