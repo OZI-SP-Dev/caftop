@@ -35,6 +35,47 @@ const Complete = (props: ICAFTOPWizardStep) => {
       ".docx",
     ].join("_");
 
+    const totalCount =
+      (globalState.TechnicalOrders.NumAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumNotAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumNotAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumUnpublished !== ""
+        ? globalState.TechnicalOrders.NumUnpublished
+        : 0);
+
+    const approvedWaiverDate = globalState.TechnicalOrders.ApprovedWaiverDate
+      ? globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
+          "en-US",
+          { day: "2-digit" }
+        ) +
+        " " +
+        globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
+          "en-US",
+          { month: "long" }
+        ) +
+        " " +
+        globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
+          "en-US",
+          { year: "numeric" }
+        )
+      : "";
+
+    const technicalOrders = {
+      ...globalState.TechnicalOrders,
+      TotalCount: totalCount,
+      ApprovedWaiverDate: approvedWaiverDate,
+    };
+    const dataForDocument = {
+      ...globalState,
+      TechnicalOrders: technicalOrders,
+    };
+
     PizZipUtils.getBinaryContent(
       ".\\CAFTOP_Template.docx",
       function (error: Error, content: string) {
@@ -49,7 +90,7 @@ const Complete = (props: ICAFTOPWizardStep) => {
         });
 
         // render the document
-        doc.render(globalState);
+        doc.render(dataForDocument);
 
         const out = doc.getZip().generate({
           type: "blob",
