@@ -10,6 +10,10 @@ import {
   tocountsRuleFinal,
   tocountsRuleSave,
 } from "Steps/TechnicalOrders/Fields/TOCounts";
+import {
+  toapRuleFinal,
+  toapRuleSave,
+} from "Steps/TechnicalOrders/Fields/TOAPMigration";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -91,9 +95,9 @@ export const useTechnicalOrdersPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return tocountsRuleSave;
+    return tocountsRuleSave.and(toapRuleSave);
   } else {
-    return tocountsRuleFinal;
+    return tocountsRuleFinal.and(toapRuleFinal);
   }
 };
 

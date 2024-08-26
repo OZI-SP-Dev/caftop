@@ -40,6 +40,14 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   NumCDDVD: "",
   NumUnpublished: "",
   NumInAcquisition: "",
+  AuthoredInTOAPType: "",
+  ApprovedWaiver: "",
+  ApprovedWaiverDate: null,
+  NumAuthoredInTOAP: "",
+  NumNotAuthoredInTOAP: "",
+  NumWillNotBeAuthoredInTOAP: "",
+  Explanation: "",
+  PlanToConvert: "",
 };
 
 export const Distribution: CAFTOPDistribution = {

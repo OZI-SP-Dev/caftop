@@ -48,6 +48,9 @@ const TechnicalOrders = (props: ICAFTOPWizardStep) => {
             <div className="requestFieldContainer">
               <Fields.TOCounts />
             </div>
+            <div className="requestFieldContainer">
+              <Fields.TOAPMigration />
+            </div>
           </div>
         </form>
       </FormProvider>

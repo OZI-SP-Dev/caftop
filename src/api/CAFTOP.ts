@@ -39,6 +39,14 @@ export type CAFTOPTechnicalOrders = {
   NumCDDVD: number | "";
   NumUnpublished: number | "";
   NumInAcquisition: number | "";
+  AuthoredInTOAPType: "fully" | "partially" | "no" | "";
+  ApprovedWaiver: "yes" | "no" | "";
+  ApprovedWaiverDate: Date | null;
+  NumAuthoredInTOAP: number | "";
+  NumNotAuthoredInTOAP: number | "";
+  NumWillNotBeAuthoredInTOAP: number | "";
+  Explanation: string;
+  PlanToConvert: string;
 };
 
 export type CAFTOPDistribution = {
