@@ -31,7 +31,7 @@ export const OrganicSupportRuleFinal = z.discriminatedUnion("LaborType", [
 ]);
 
 const OrganicSupport = () => {
-  const laborType = useWatch<Pick<CAFTOPDescription, "LaborType">>({
+  const laborType = useWatch<CAFTOPDescription, "LaborType">({
     name: "LaborType",
   });
 

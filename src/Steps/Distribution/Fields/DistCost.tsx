@@ -56,7 +56,7 @@ export const distcostRuleFinal = z.discriminatedUnion(
 );
 
 const DistCost = () => {
-  const hasDistCost = useWatch<Pick<CAFTOPDistribution, "hasDistCost">>({
+  const hasDistCost = useWatch<CAFTOPDistribution, "hasDistCost">({
     name: "hasDistCost",
   });
 
