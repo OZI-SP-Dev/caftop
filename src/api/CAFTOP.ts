@@ -21,7 +21,14 @@ export type CAFTOPDescription = {
   Description: string;
   Introduction: string;
   LaborType: "contractor" | "organic" | "";
-  ContractorSupport: { LaborCost: string };
+  ContractorSupport: {
+    LaborCost: string;
+    TDSSe: "yes" | "no" | "";
+    TDSSeRobins: "yes" | "no" | "";
+    ContractorName: string;
+    ContractNumber: string;
+    ContractExpiration: Date | null;
+  };
   OrganicSupport: { Office: string };
   ConfigurationPlan: string;
 };

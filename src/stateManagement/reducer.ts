@@ -22,7 +22,14 @@ export const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
   LaborType: "",
-  ContractorSupport: { LaborCost: "" },
+  ContractorSupport: {
+    LaborCost: "",
+    TDSSe: "",
+    TDSSeRobins: "",
+    ContractorName: "",
+    ContractNumber: "",
+    ContractExpiration: null,
+  },
   OrganicSupport: { Office: "" },
   ConfigurationPlan: "",
 };

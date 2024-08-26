@@ -37,15 +37,17 @@ const OrganicSupport = () => {
 
   if (laborType === "organic") {
     return (
-      <BACInput<CAFTOPDescription>
-        name="OrganicSupport.Office"
-        labelText="Office"
-        labelInfo="examples AFLCMC/LZPTR, 406 SCMS/GUEEB, SSC/SZGL"
-        rules={{ required: true }}
-        fieldProps={{
-          placeholder: "examples AFLCMC/LZPTR, 406 SCMS/GUEEB, SSC/SZGL",
-        }}
-      />
+      <div className="requestFieldContainer">
+        <BACInput<CAFTOPDescription>
+          name="OrganicSupport.Office"
+          labelText="Office"
+          labelInfo="examples AFLCMC/LZPTR, 406 SCMS/GUEEB, SSC/SZGL"
+          rules={{ required: true }}
+          fieldProps={{
+            placeholder: "examples AFLCMC/LZPTR, 406 SCMS/GUEEB, SSC/SZGL",
+          }}
+        />
+      </div>
     );
   } else {
     return <></>;

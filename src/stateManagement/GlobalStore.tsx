@@ -15,6 +15,14 @@ function initializeState() {
     localStorage.getItem("caftopGlobalState") as string
   ) as GlobalStateInterface;
 
+  // Convert the date string back to a Date object
+  if (fromLocalStorage?.Description?.ContractorSupport?.ContractExpiration) {
+    fromLocalStorage.Description.ContractorSupport.ContractExpiration =
+      new Date(
+        fromLocalStorage.Description.ContractorSupport.ContractExpiration
+      );
+  }
+
   // Return back to save mode on reload of page
   if (fromLocalStorage?.mode) {
     fromLocalStorage.mode = "save";
