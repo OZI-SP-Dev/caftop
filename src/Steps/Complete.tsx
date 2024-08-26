@@ -9,6 +9,16 @@ import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
 
+const formatDate = (date: Date | null) => {
+  return date
+    ? date.toLocaleDateString("en-US", { day: "2-digit" }) +
+        " " +
+        date.toLocaleDateString("en-US", { month: "long" }) +
+        " " +
+        date.toLocaleDateString("en-US", { year: "numeric" })
+    : "";
+};
+
 const Complete = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
   const errors = useCheckComplete();
@@ -49,31 +59,31 @@ const Complete = (props: ICAFTOPWizardStep) => {
         ? globalState.TechnicalOrders.NumUnpublished
         : 0);
 
-    const approvedWaiverDate = globalState.TechnicalOrders.ApprovedWaiverDate
-      ? globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
-          "en-US",
-          { day: "2-digit" }
-        ) +
-        " " +
-        globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
-          "en-US",
-          { month: "long" }
-        ) +
-        " " +
-        globalState.TechnicalOrders.ApprovedWaiverDate.toLocaleDateString(
-          "en-US",
-          { year: "numeric" }
-        )
-      : "";
+    const approvedWaiverDate = formatDate(
+      globalState.TechnicalOrders.ApprovedWaiverDate
+    );
+
+    const ctrExpirationDate = formatDate(
+      globalState.Description.ContractorSupport.ContractExpiration
+    );
 
     const technicalOrders = {
       ...globalState.TechnicalOrders,
       TotalCount: totalCount,
       ApprovedWaiverDate: approvedWaiverDate,
     };
+
+    const description = {
+      ...globalState.Description,
+      ContractorSupport: {
+        ...globalState.Description.ContractorSupport,
+        ContractExpiration: ctrExpirationDate,
+      },
+    };
     const dataForDocument = {
       ...globalState,
       TechnicalOrders: technicalOrders,
+      Description: description,
     };
 
     PizZipUtils.getBinaryContent(
