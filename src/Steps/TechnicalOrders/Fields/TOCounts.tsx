@@ -53,7 +53,7 @@ const TOAPMigration = () => {
           name="NumElectronic"
           labelText="Electronic WA-1 or WA-2"
           rules={{ required: true }}
-          fieldProps={{ type: "number" }}
+          fieldProps={{ type: "number", min: 0, step: 1 }}
         />
       </div>
       <div className="requestFieldContainer">
@@ -61,7 +61,7 @@ const TOAPMigration = () => {
           name="NumPaper"
           labelText="Paper"
           rules={{ required: true }}
-          fieldProps={{ type: "number" }}
+          fieldProps={{ type: "number", min: 0, step: 1 }}
         />
       </div>
       <div className="requestFieldContainer">
@@ -69,7 +69,7 @@ const TOAPMigration = () => {
           name="NumCDDVD"
           labelText="CD/DVD"
           rules={{ required: true }}
-          fieldProps={{ type: "number" }}
+          fieldProps={{ type: "number", min: 0, step: 1 }}
         />
       </div>
       <div className="requestFieldContainer">
@@ -77,7 +77,7 @@ const TOAPMigration = () => {
           name="NumUnpublished"
           labelText="Unpublished"
           rules={{ required: true }}
-          fieldProps={{ type: "number" }}
+          fieldProps={{ type: "number", min: 0, step: 1 }}
         />
       </div>
       <div className="requestFieldContainer">
@@ -85,7 +85,7 @@ const TOAPMigration = () => {
           name="NumInAcquisition"
           labelText="In Acquistion"
           rules={{ required: true }}
-          fieldProps={{ type: "number" }}
+          fieldProps={{ type: "number", min: 0, step: 1 }}
         />
       </div>
     </fieldset>
