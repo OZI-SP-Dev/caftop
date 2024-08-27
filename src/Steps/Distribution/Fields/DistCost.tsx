@@ -47,7 +47,7 @@ export const distcostRuleFinal = z.discriminatedUnion(
       if (issue.code === z.ZodIssueCode.invalid_union_discriminator) {
         return {
           message:
-            "You must select whether there is are Distribution Costs or not",
+            "You must select whether there are Distribution Costs or not",
         };
       }
       return { message: ctx.defaultError };
