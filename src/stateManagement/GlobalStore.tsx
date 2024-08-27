@@ -16,11 +16,10 @@ function initializeState() {
   ) as GlobalStateInterface;
 
   // Convert the date string back to a Date object
-  if (fromLocalStorage?.Description?.ContractorSupport?.ContractExpiration) {
-    fromLocalStorage.Description.ContractorSupport.ContractExpiration =
-      new Date(
-        fromLocalStorage.Description.ContractorSupport.ContractExpiration
-      );
+  if (fromLocalStorage?.Labor?.ContractorSupport?.ContractExpiration) {
+    fromLocalStorage.Labor.ContractorSupport.ContractExpiration = new Date(
+      fromLocalStorage.Labor.ContractorSupport.ContractExpiration
+    );
   }
 
   // Convert the date string back to a Date object

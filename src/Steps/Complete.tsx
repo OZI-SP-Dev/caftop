@@ -64,7 +64,7 @@ const Complete = (props: ICAFTOPWizardStep) => {
     );
 
     const ctrExpirationDate = formatDate(
-      globalState.Description.ContractorSupport.ContractExpiration
+      globalState.Labor.ContractorSupport.ContractExpiration
     );
 
     const technicalOrders = {
@@ -73,17 +73,18 @@ const Complete = (props: ICAFTOPWizardStep) => {
       ApprovedWaiverDate: approvedWaiverDate,
     };
 
-    const description = {
-      ...globalState.Description,
+    const labor = {
+      ...globalState.Labor,
       ContractorSupport: {
-        ...globalState.Description.ContractorSupport,
+        ...globalState.Labor.ContractorSupport,
         ContractExpiration: ctrExpirationDate,
       },
     };
+
     const dataForDocument = {
       ...globalState,
       TechnicalOrders: technicalOrders,
-      Description: description,
+      Labor: labor,
     };
 
     PizZipUtils.getBinaryContent(

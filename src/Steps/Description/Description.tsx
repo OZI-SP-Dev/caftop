@@ -63,12 +63,6 @@ const Description = (props: ICAFTOPWizardStep) => {
               <Fields.Introduction />
             </div>
             <div className="requestFieldContainer">
-              <Fields.LaborType />
-            </div>
-            {/* Display the appropriate component */}
-            <Fields.OrganicSupport />
-            <Fields.ContractorSupport />
-            <div className="requestFieldContainer">
               <Fields.ConfigurationPlan />
             </div>
           </div>

@@ -61,7 +61,7 @@ const AdditionalLabor = () => {
   });
 
   return (
-    <div className="requestFieldContainer">
+    <>
       <div className="requestFieldContainer">
         <BACRadioGroup<CAFTOPLabor>
           name="HasAdditionalLabor"
@@ -134,7 +134,7 @@ const AdditionalLabor = () => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

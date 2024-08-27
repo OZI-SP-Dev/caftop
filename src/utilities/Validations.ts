@@ -1,11 +1,11 @@
 import {
   ContractorSupportRuleFinal,
   ContractorSupportRuleSave,
-} from "Steps/Description/Fields/ContractorSupport";
+} from "Steps/Labor/Fields/ContractorSupport";
 import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
-import { LaborTypeRuleFinal } from "Steps/Description/Fields/LaborType";
-import { OrganicSupportRuleFinal } from "Steps/Description/Fields/OrganicSupport";
+import { LaborTypeRuleFinal } from "Steps/Labor/Fields/LaborType";
+import { OrganicSupportRuleFinal } from "Steps/Labor/Fields/OrganicSupport";
 import {
   tocountsRuleFinal,
   tocountsRuleSave,
@@ -75,17 +75,13 @@ export const useDescriptionPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return DescriptionRuleFinal.merge(IntroductionRuleFinal)
-      .merge(LaborTypeRuleFinal)
-      .and(ContractorSupportRuleSave)
-      .and(OrganicSupportRuleFinal)
-      .and(configurationplanRuleSave);
+    return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
+      configurationplanRuleSave
+    );
   } else {
-    return DescriptionRuleFinal.merge(IntroductionRuleFinal)
-      .merge(LaborTypeRuleFinal)
-      .and(ContractorSupportRuleFinal)
-      .and(OrganicSupportRuleFinal)
-      .and(configurationplanRuleFinal);
+    return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
+      configurationplanRuleFinal
+    );
   }
 };
 
@@ -107,9 +103,13 @@ export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return additionalLaborRuleFinal;
+    return LaborTypeRuleFinal.and(ContractorSupportRuleSave)
+      .and(OrganicSupportRuleFinal)
+      .and(additionalLaborRuleFinal);
   } else {
-    return additionalLaborRuleFinal;
+    return LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
+      .and(OrganicSupportRuleFinal)
+      .and(additionalLaborRuleFinal);
   }
 };
 

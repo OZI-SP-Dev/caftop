@@ -1,8 +1,8 @@
 import { z } from "zod";
 import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP";
 import { useWatch } from "react-hook-form";
-import { Description } from "stateManagement/reducer";
+import { Labor } from "stateManagement/reducer";
 
 const officeFinalRule = z
   .string()
@@ -25,20 +25,20 @@ export const OrganicSupportRuleFinal = z.discriminatedUnion("LaborType", [
     OrganicSupport: z
       .object({ Office: z.optional(z.string()) })
       .transform((_obj) => {
-        return { ...Description.OrganicSupport };
+        return { ...Labor.OrganicSupport };
       }),
   }),
 ]);
 
 const OrganicSupport = () => {
-  const laborType = useWatch<CAFTOPDescription, "LaborType">({
+  const laborType = useWatch<CAFTOPLabor, "LaborType">({
     name: "LaborType",
   });
 
   if (laborType === "organic") {
     return (
       <div className="requestFieldContainer">
-        <BACInput<CAFTOPDescription>
+        <BACInput<CAFTOPLabor>
           name="OrganicSupport.Office"
           labelText="Office"
           labelInfo="examples AFLCMC/LZPTR, 406 SCMS/GUEEB, SSC/SZGL"

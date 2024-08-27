@@ -33,10 +33,15 @@ const Labor = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">
+            <div className="requestFieldContainer">
+              <Fields.LaborType />
+            </div>
+            <Fields.OrganicSupport />
+            <Fields.ContractorSupport />
             <Fields.AdditionalLabor />
           </div>
         </form>

@@ -20,16 +20,6 @@ export type CAFTOPInfo = {
 export type CAFTOPDescription = {
   Description: string;
   Introduction: string;
-  LaborType: "contractor" | "organic" | "";
-  ContractorSupport: {
-    LaborCost: string;
-    TDSSe: "yes" | "no" | "";
-    TDSSeRobins: "yes" | "no" | "";
-    ContractorName: string;
-    ContractNumber: string;
-    ContractExpiration: Date | null;
-  };
-  OrganicSupport: { Office: string };
   ConfigurationPlan: string;
 };
 
@@ -50,6 +40,16 @@ export type CAFTOPTechnicalOrders = {
 };
 
 export type CAFTOPLabor = {
+  LaborType: "contractor" | "organic" | "";
+  ContractorSupport: {
+    LaborCost: string;
+    TDSSe: "yes" | "no" | "";
+    TDSSeRobins: "yes" | "no" | "";
+    ContractorName: string;
+    ContractNumber: string;
+    ContractExpiration: Date | null;
+  };
+  OrganicSupport: { Office: string };
   HasAdditionalLabor: "yes" | "no" | "";
   AdditionalLabor: { Title: string; Description: string; Impact: string }[];
 };

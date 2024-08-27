@@ -22,16 +22,6 @@ const Info: CAFTOPInfo = {
 export const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
-  LaborType: "",
-  ContractorSupport: {
-    LaborCost: "",
-    TDSSe: "",
-    TDSSeRobins: "",
-    ContractorName: "",
-    ContractNumber: "",
-    ContractExpiration: null,
-  },
-  OrganicSupport: { Office: "" },
   ConfigurationPlan: "",
 };
 
@@ -52,6 +42,16 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
 };
 
 export const Labor: CAFTOPLabor = {
+  LaborType: "",
+  ContractorSupport: {
+    LaborCost: "",
+    TDSSe: "",
+    TDSSeRobins: "",
+    ContractorName: "",
+    ContractNumber: "",
+    ContractExpiration: null,
+  },
+  OrganicSupport: { Office: "" },
   HasAdditionalLabor: "",
   AdditionalLabor: [],
 };

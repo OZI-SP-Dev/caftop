@@ -1,15 +1,15 @@
 import { z } from "zod";
 import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP";
 import { useWatch } from "react-hook-form";
-import { Description } from "stateManagement/reducer";
+import { Labor } from "stateManagement/reducer";
 import { Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Radio } from "@fluentui/react-components";
 import BACDatePicker from "components/BaseFormFields/BACDatePicker";
 
 const populateWithDefaultValue = (
-  value: string | CAFTOPDescription["ContractorSupport"]
+  value: string | CAFTOPLabor["ContractorSupport"]
 ) => z.any().transform((_obj) => value);
 
 const laborCostBaseRule = z.union([
@@ -32,11 +32,9 @@ const tdsseCtr =
 const tdsseBaseRule = z.discriminatedUnion("TDSSe", [
   z.object({
     TDSSe: z.literal(""),
-    TDSSeRobins: populateWithDefaultValue(
-      Description.ContractorSupport.TDSSeRobins
-    ),
+    TDSSeRobins: populateWithDefaultValue(Labor.ContractorSupport.TDSSeRobins),
     ContractorName: populateWithDefaultValue(
-      Description.ContractorSupport.TDSSeRobins
+      Labor.ContractorSupport.TDSSeRobins
     ),
   }),
   z.object({
@@ -46,9 +44,7 @@ const tdsseBaseRule = z.discriminatedUnion("TDSSe", [
   }),
   z.object({
     TDSSe: z.literal("no"),
-    TDSSeRobins: populateWithDefaultValue(
-      Description.ContractorSupport.TDSSeRobins
-    ),
+    TDSSeRobins: populateWithDefaultValue(Labor.ContractorSupport.TDSSeRobins),
     ContractorName: contractornameBaseRule,
   }),
 ]);
@@ -66,7 +62,7 @@ const tdsseFinalRule = z.discriminatedUnion(
     z.object({
       TDSSe: z.literal("no"),
       TDSSeRobins: populateWithDefaultValue(
-        Description.ContractorSupport.TDSSeRobins
+        Labor.ContractorSupport.TDSSeRobins
       ),
       ContractorName: contractornameBaseRule.min(
         1,
@@ -120,7 +116,7 @@ export const ContractorSupportRuleSave = z.discriminatedUnion("LaborType", [
     LaborType: z.literal("organic"),
     // If we are organic, then populate the ContractoSupport with the default blank values
     ContractorSupport: populateWithDefaultValue({
-      ...Description.ContractorSupport,
+      ...Labor.ContractorSupport,
     }),
   }),
   z.object({
@@ -134,7 +130,7 @@ export const ContractorSupportRuleFinal = z.discriminatedUnion("LaborType", [
     LaborType: z.literal("organic"),
     // If we are organic, then populate the ContractoSupport with the default blank values
     ContractorSupport: populateWithDefaultValue({
-      ...Description.ContractorSupport,
+      ...Labor.ContractorSupport,
     }),
   }),
   z.object({
@@ -144,14 +140,11 @@ export const ContractorSupportRuleFinal = z.discriminatedUnion("LaborType", [
 ]);
 
 const ContractorSupport = () => {
-  const laborType = useWatch<CAFTOPDescription, "LaborType">({
+  const laborType = useWatch<CAFTOPLabor, "LaborType">({
     name: "LaborType",
   });
 
-  const ctrSupportTDSSe = useWatch<
-    CAFTOPDescription,
-    "ContractorSupport.TDSSe"
-  >({
+  const ctrSupportTDSSe = useWatch<CAFTOPLabor, "ContractorSupport.TDSSe">({
     name: "ContractorSupport.TDSSe",
   });
 
@@ -159,7 +152,7 @@ const ContractorSupport = () => {
     return (
       <>
         <div className="requestFieldContainer">
-          <BACInput<CAFTOPDescription>
+          <BACInput<CAFTOPLabor>
             name="ContractorSupport.LaborCost"
             labelText="Labor Cost (if none, enter 0)"
             rules={{ required: true }}
@@ -172,7 +165,7 @@ const ContractorSupport = () => {
           />
         </div>
         <div className="requestFieldContainer">
-          <BACRadioGroup<CAFTOPDescription>
+          <BACRadioGroup<CAFTOPLabor>
             name="ContractorSupport.TDSSe"
             labelText="Is support provided by TDSSe?"
             rules={{ required: true }}
@@ -184,7 +177,7 @@ const ContractorSupport = () => {
         </div>
         {ctrSupportTDSSe === "yes" && (
           <div className="requestFieldContainer">
-            <BACRadioGroup<CAFTOPDescription>
+            <BACRadioGroup<CAFTOPLabor>
               name="ContractorSupport.TDSSeRobins"
               labelText="Is this part of the Robins Home Office?"
               rules={{ required: true }}
@@ -197,7 +190,7 @@ const ContractorSupport = () => {
         )}
         {ctrSupportTDSSe === "no" && (
           <div className="requestFieldContainer">
-            <BACInput<CAFTOPDescription>
+            <BACInput<CAFTOPLabor>
               name="ContractorSupport.ContractorName"
               labelText="Contractor Name"
               rules={{ required: true }}
@@ -205,7 +198,7 @@ const ContractorSupport = () => {
           </div>
         )}
         <div className="requestFieldContainer">
-          <BACInput<CAFTOPDescription>
+          <BACInput<CAFTOPLabor>
             name="ContractorSupport.ContractNumber"
             labelText="Contract Number"
             labelInfo="example FA8124-24-D-0003"
@@ -214,7 +207,7 @@ const ContractorSupport = () => {
           />
         </div>
         <div className="requestFieldContainer">
-          <BACDatePicker<CAFTOPDescription>
+          <BACDatePicker<CAFTOPLabor>
             name="ContractorSupport.ContractExpiration"
             labelText="Contract Expiration"
             rules={{ required: true }}
