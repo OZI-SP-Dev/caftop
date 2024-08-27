@@ -161,7 +161,7 @@ export const useCheckComplete = () => {
     );
   }
 
-  const result4 = labor.safeParse(globalState.Distribution);
+  const result4 = labor.safeParse(globalState.Labor);
   if (!result4.success) {
     result4.error.issues.forEach((issue) =>
       errors.push({ errortext: issue.message, pageIndex: 4 })

@@ -31,7 +31,7 @@ export const additionalLaborRuleFinal = z.discriminatedUnion(
   "HasAdditionalLabor",
   [
     z.object({
-      HasAdditionalLabor: z.enum(["no"]),
+      HasAdditionalLabor: z.literal("no"),
       AdditionalLabor: z.any().transform((_obj) => Labor.AdditionalLabor),
     }),
     z.object({
