@@ -3,6 +3,7 @@ import {
   CAFTOPDescription,
   CAFTOPTechnicalOrders,
   CAFTOPDistribution,
+  CAFTOPLabor,
 } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
@@ -50,6 +51,11 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   PlanToConvert: "",
 };
 
+export const Labor: CAFTOPLabor = {
+  HasAdditionalLabor: "",
+  AdditionalLabor: [],
+};
+
 export const Distribution: CAFTOPDistribution = {
   hasDistCost: "",
   DistCost: "",
@@ -59,6 +65,7 @@ export const initialState: GlobalStateInterface = {
   Info,
   Description,
   TechnicalOrders,
+  Labor,
   Distribution,
   wizardStep: 0,
   wizardMaxStep: 0,

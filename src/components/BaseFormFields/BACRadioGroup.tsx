@@ -3,10 +3,12 @@ import {
   InfoLabel,
   Text,
   RadioGroupProps,
+  RadioGroupOnChangeData,
 } from "@fluentui/react-components";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
 import { RadioButtonFilled } from "@fluentui/react-icons";
+import { FormEvent } from "react";
 
 const BACRadioGroup = <T extends FieldValues>({
   name,
@@ -14,8 +16,15 @@ const BACRadioGroup = <T extends FieldValues>({
   labelInfo,
   rules,
   fieldProps,
+  customOnChange,
   children,
-}: BaseFormField<T> & { fieldProps?: Partial<RadioGroupProps> }) => {
+}: BaseFormField<T> & {
+  fieldProps?: Partial<RadioGroupProps>;
+  customOnChange?: (
+    ev: FormEvent<HTMLDivElement>,
+    data: RadioGroupOnChangeData
+  ) => void;
+}) => {
   const form = useFormContext<T>();
 
   const { field, fieldState } = useController<T>({
@@ -45,6 +54,14 @@ const BACRadioGroup = <T extends FieldValues>({
         aria-invalid={fieldState.error ? "true" : "false"}
         {...field}
         {...fieldProps}
+        onChange={
+          customOnChange
+            ? (ev, data) => {
+                customOnChange(ev, data);
+                field.onChange(ev);
+              }
+            : field.onChange
+        }
       >
         {children ?? <></>}
       </RadioGroup>

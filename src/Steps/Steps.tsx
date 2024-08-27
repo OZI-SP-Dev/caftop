@@ -33,6 +33,9 @@ const Description = lazy(() => descriptionPromise);
 const technicalOrdersPromise = import("Steps/TechnicalOrders/TechnicalOrders");
 const TechnicalOrders = lazy(() => technicalOrdersPromise);
 
+const laborPromise = import("Steps/Labor/Labor");
+const Labor = lazy(() => laborPromise);
+
 const distributionPromise = import("Steps/Distribution/Distribution");
 const Distribution = lazy(() => distributionPromise);
 
@@ -73,7 +76,7 @@ export const WizardSteps: WizardStep[] = [
   {
     id: "Labor",
     name: "Labor",
-    jsxObj: <GenericStep {...blankdHandlers} />,
+    jsxObj: <Labor {...blankdHandlers} />,
   },
   {
     id: "Distribution",
@@ -139,6 +142,7 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
     errors,
     e?: BaseSyntheticEvent
   ) => {
+    // TODO -- Remove this
     if (errors) {
       console.log(errors);
     }

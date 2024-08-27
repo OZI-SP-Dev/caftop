@@ -49,6 +49,11 @@ export type CAFTOPTechnicalOrders = {
   PlanToConvert: string;
 };
 
+export type CAFTOPLabor = {
+  HasAdditionalLabor: "yes" | "no" | "";
+  AdditionalLabor: { Title: string; Description: string; Impact: string }[];
+};
+
 export type CAFTOPDistribution = {
   hasDistCost: "yes" | "no" | "";
   DistCost: number | "";

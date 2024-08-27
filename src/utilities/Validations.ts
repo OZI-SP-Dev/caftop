@@ -37,6 +37,7 @@ import {
   distcostRuleFinal,
   distcostRuleSave,
 } from "Steps/Distribution/Fields/DistCost";
+import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -101,6 +102,17 @@ export const useTechnicalOrdersPageValidation = (
   }
 };
 
+export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return additionalLaborRuleFinal;
+  } else {
+    return additionalLaborRuleFinal;
+  }
+};
+
 export const useDistributionPageValidation = (
   mode?: GlobalStateInterface["mode"]
 ) => {
@@ -125,6 +137,7 @@ export const useCheckComplete = () => {
   const info = useInfoPageValidation();
   const description = useDescriptionPageValidation("submit");
   const technicalorders = useTechnicalOrdersPageValidation("submit");
+  const labor = useLaborPageValidation("submit");
   const distribution = useDistributionPageValidation("submit");
 
   const result1 = info.safeParse(globalState.Info);
@@ -145,6 +158,13 @@ export const useCheckComplete = () => {
   if (!result3.success) {
     result3.error.issues.forEach((issue) =>
       errors.push({ errortext: issue.message, pageIndex: 3 })
+    );
+  }
+
+  const result4 = labor.safeParse(globalState.Distribution);
+  if (!result4.success) {
+    result4.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 4 })
     );
   }
 
