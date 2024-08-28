@@ -2,3 +2,4 @@
 export { default as Description } from "./Description";
 export { default as Introduction } from "./Introduction";
 export { default as ConfigurationPlan } from "./ConfigurationPlan";
+export { default as SystemMissionDescription } from "./SystemMissionDescription";

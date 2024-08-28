@@ -23,6 +23,7 @@ export const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
   ConfigurationPlan: "",
+  SystemMissionDescription: "",
 };
 
 export const TechnicalOrders: CAFTOPTechnicalOrders = {

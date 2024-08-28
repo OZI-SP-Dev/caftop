@@ -21,6 +21,7 @@ export type CAFTOPDescription = {
   Description: string;
   Introduction: string;
   ConfigurationPlan: string;
+  SystemMissionDescription: string;
 };
 
 export type CAFTOPTechnicalOrders = {

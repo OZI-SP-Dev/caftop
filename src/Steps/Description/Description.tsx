@@ -65,6 +65,9 @@ const Description = (props: ICAFTOPWizardStep) => {
             <div className="requestFieldContainer">
               <Fields.ConfigurationPlan />
             </div>
+            <div className="requestFieldContainer">
+              <Fields.SystemMissionDescription />
+            </div>
           </div>
         </form>
       </FormProvider>

@@ -38,6 +38,10 @@ import {
   distcostRuleSave,
 } from "Steps/Distribution/Fields/DistCost";
 import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor";
+import {
+  systemmissiondescriptionRuleFinal,
+  systemmissiondescriptionRuleSave,
+} from "Steps/Description/Fields/SystemMissionDescription";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -76,11 +80,11 @@ export const useDescriptionPageValidation = (
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
     return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
-      configurationplanRuleSave
+      configurationplanRuleSave.and(systemmissiondescriptionRuleSave)
     );
   } else {
     return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
-      configurationplanRuleFinal
+      configurationplanRuleFinal.and(systemmissiondescriptionRuleFinal)
     );
   }
 };
