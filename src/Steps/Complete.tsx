@@ -59,6 +59,20 @@ const Complete = (props: ICAFTOPWizardStep) => {
         ? globalState.TechnicalOrders.NumUnpublished
         : 0);
 
+    const totalTypeCount =
+      (globalState.TechnicalOrders.NumPaper !== ""
+        ? globalState.TechnicalOrders.NumPaper
+        : 0) +
+      (globalState.TechnicalOrders.NumElectronic !== ""
+        ? globalState.TechnicalOrders.NumElectronic
+        : 0) +
+      (globalState.TechnicalOrders.NumCDDVD !== ""
+        ? globalState.TechnicalOrders.NumCDDVD
+        : 0) +
+      (globalState.TechnicalOrders.NumUnpublished !== ""
+        ? globalState.TechnicalOrders.NumUnpublished
+        : 0);
+
     const approvedWaiverDate = formatDate(
       globalState.TechnicalOrders.ApprovedWaiverDate
     );
@@ -70,6 +84,7 @@ const Complete = (props: ICAFTOPWizardStep) => {
     const technicalOrders = {
       ...globalState.TechnicalOrders,
       TotalCount: totalCount,
+      TotalTypeCount: totalTypeCount,
       ApprovedWaiverDate: approvedWaiverDate,
     };
 
