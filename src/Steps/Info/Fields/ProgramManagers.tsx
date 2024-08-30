@@ -180,14 +180,16 @@ export const ProgramManagers = () => {
         </fieldset>
       ))}
       {fields.length < 8 && (
-        <Button
-          appearance="primary"
-          onClick={() =>
-            append({ FirstName: "", LastName: "", DSN: "", Email: "" })
-          }
-        >
-          Add Program Manager
-        </Button>
+        <div>
+          <Button
+            appearance="primary"
+            onClick={() =>
+              append({ FirstName: "", LastName: "", DSN: "", Email: "" })
+            }
+          >
+            Add Program Manager
+          </Button>
+        </div>
       )}
     </>
   );
