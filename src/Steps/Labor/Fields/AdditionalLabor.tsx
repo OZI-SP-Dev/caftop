@@ -125,12 +125,16 @@ const AdditionalLabor = () => {
             </fieldset>
           ))}
           {fields.length < 10 && (
-            <Button
-              appearance="primary"
-              onClick={() => append({ Title: "", Description: "", Impact: "" })}
-            >
-              Add Additional Labor
-            </Button>
+            <div>
+              <Button
+                appearance="primary"
+                onClick={() =>
+                  append({ Title: "", Description: "", Impact: "" })
+                }
+              >
+                Add Additional Labor
+              </Button>
+            </div>
           )}
         </>
       )}
