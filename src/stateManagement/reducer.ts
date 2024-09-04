@@ -60,6 +60,7 @@ export const Labor: CAFTOPLabor = {
 export const Distribution: CAFTOPDistribution = {
   hasDistCost: "",
   DistCost: "",
+  hasDSO: "",
 };
 
 export const initialState: GlobalStateInterface = {

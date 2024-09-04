@@ -1,5 +1,6 @@
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
 import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
+import { GlobalStateInterface } from "stateManagement/types";
 import { z } from "zod";
 
 // Generate the type definition from the Zod rules
@@ -58,4 +59,17 @@ export type CAFTOPLabor = {
 export type CAFTOPDistribution = {
   hasDistCost: "yes" | "no" | "";
   DistCost: number | "";
+  hasDSO: "yes" | "no" | "";
+};
+
+/** Function to determine if the CAFTOP is not Electronic Only (aka has Paper and/or CD/DVD)
+ * @param data The CAFTOP data
+ * @returns boolean If the CAFTOP has Paper and/or CD/DVD TOs
+ */
+export const isNotElectronicOnly = (data: GlobalStateInterface) => {
+  return (
+    (data.TechnicalOrders.NumCDDVD || 0) +
+      (data.TechnicalOrders.NumPaper || 0) >
+    0
+  );
 };

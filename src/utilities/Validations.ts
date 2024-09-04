@@ -23,7 +23,7 @@ import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
 import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo, isNotElectronicOnly } from "api/CAFTOP";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
 import { globalContext } from "stateManagement/GlobalStore";
@@ -42,6 +42,11 @@ import {
   systemmissiondescriptionRuleFinal,
   systemmissiondescriptionRuleSave,
 } from "Steps/Description/Fields/SystemMissionDescription";
+import {
+  dsoRuleFinal,
+  dsoRuleNA,
+  dsoRuleSave,
+} from "Steps/Distribution/Fields/DSO";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -121,12 +126,13 @@ export const useDistributionPageValidation = (
   mode?: GlobalStateInterface["mode"]
 ) => {
   const { globalState } = useContext(globalContext);
+  const notElectronicOnly = isNotElectronicOnly(globalState);
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return distcostRuleSave;
+    return distcostRuleSave.and(notElectronicOnly ? dsoRuleSave : dsoRuleNA);
   } else {
-    return distcostRuleFinal;
+    return distcostRuleFinal.and(notElectronicOnly ? dsoRuleFinal : dsoRuleNA);
   }
 };
 
