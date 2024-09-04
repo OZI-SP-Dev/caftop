@@ -16,7 +16,9 @@ export const ProgramElementCodeRuleFinal = z.object({
 
 export const ProgramElementCode = () => {
   const ProgramNames = useProgramNamesAndECs();
-  const programName = useWatch<CAFTOPInfo>({ name: "ProgramName" });
+  const programName = useWatch<CAFTOPInfo, "ProgramName">({
+    name: "ProgramName",
+  });
   const availablePECS =
     ProgramNames?.data?.find((item) => item.Title === programName)?.PECs ?? [];
   return (

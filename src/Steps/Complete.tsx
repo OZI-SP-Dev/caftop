@@ -9,6 +9,16 @@ import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
 
+const formatDate = (date: Date | null) => {
+  return date
+    ? date.toLocaleDateString("en-US", { day: "2-digit" }) +
+        " " +
+        date.toLocaleDateString("en-US", { month: "long" }) +
+        " " +
+        date.toLocaleDateString("en-US", { year: "numeric" })
+    : "";
+};
+
 const Complete = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
   const errors = useCheckComplete();
@@ -35,6 +45,63 @@ const Complete = (props: ICAFTOPWizardStep) => {
       ".docx",
     ].join("_");
 
+    const totalCount =
+      (globalState.TechnicalOrders.NumAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumNotAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumNotAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
+        ? globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP
+        : 0) +
+      (globalState.TechnicalOrders.NumUnpublished !== ""
+        ? globalState.TechnicalOrders.NumUnpublished
+        : 0);
+
+    const totalTypeCount =
+      (globalState.TechnicalOrders.NumPaper !== ""
+        ? globalState.TechnicalOrders.NumPaper
+        : 0) +
+      (globalState.TechnicalOrders.NumElectronic !== ""
+        ? globalState.TechnicalOrders.NumElectronic
+        : 0) +
+      (globalState.TechnicalOrders.NumCDDVD !== ""
+        ? globalState.TechnicalOrders.NumCDDVD
+        : 0) +
+      (globalState.TechnicalOrders.NumUnpublished !== ""
+        ? globalState.TechnicalOrders.NumUnpublished
+        : 0);
+
+    const approvedWaiverDate = formatDate(
+      globalState.TechnicalOrders.ApprovedWaiverDate
+    );
+
+    const ctrExpirationDate = formatDate(
+      globalState.Labor.ContractorSupport.ContractExpiration
+    );
+
+    const technicalOrders = {
+      ...globalState.TechnicalOrders,
+      TotalCount: totalCount,
+      TotalTypeCount: totalTypeCount,
+      ApprovedWaiverDate: approvedWaiverDate,
+    };
+
+    const labor = {
+      ...globalState.Labor,
+      ContractorSupport: {
+        ...globalState.Labor.ContractorSupport,
+        ContractExpiration: ctrExpirationDate,
+      },
+    };
+
+    const dataForDocument = {
+      ...globalState,
+      TechnicalOrders: technicalOrders,
+      Labor: labor,
+    };
+
     PizZipUtils.getBinaryContent(
       ".\\CAFTOP_Template.docx",
       function (error: Error, content: string) {
@@ -49,7 +116,7 @@ const Complete = (props: ICAFTOPWizardStep) => {
         });
 
         // render the document
-        doc.render(globalState);
+        doc.render(dataForDocument);
 
         const out = doc.getZip().generate({
           type: "blob",

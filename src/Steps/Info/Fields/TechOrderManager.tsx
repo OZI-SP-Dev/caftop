@@ -118,11 +118,13 @@ export const TechOrderManager = () => {
         <Text weight="semibold">Tech Order Manager</Text>
       </legend>
       <div className="requestFieldContainer">
-        <PopupPeoplePicker
-          onUpdate={(person: Person[]) =>
-            setTechOrderManagerValues("TechOrderManager", person)
-          }
-        />
+        <div>
+          <PopupPeoplePicker
+            onUpdate={(person: Person[]) =>
+              setTechOrderManagerValues("TechOrderManager", person)
+            }
+          />
+        </div>
       </div>
       <div className="requestFieldContainer">
         <BACInput<CAFTOPInfo>

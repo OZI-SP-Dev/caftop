@@ -1,6 +1,6 @@
 import { z } from "zod";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP";
 import { Radio } from "@fluentui/react-components";
 
 const finalRule = z.string().trim().min(1, "You must select a Labor Type");
@@ -11,7 +11,7 @@ export const LaborTypeRuleFinal = z.object({
 
 const LaborType = () => {
   return (
-    <BACRadioGroup<CAFTOPDescription>
+    <BACRadioGroup<CAFTOPLabor>
       name="LaborType"
       labelText="Labor Type"
       rules={{ required: true }}

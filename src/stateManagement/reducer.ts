@@ -1,4 +1,10 @@
-import { CAFTOPInfo, CAFTOPDescription } from "api/CAFTOP";
+import {
+  CAFTOPInfo,
+  CAFTOPDescription,
+  CAFTOPTechnicalOrders,
+  CAFTOPDistribution,
+  CAFTOPLabor,
+} from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {
@@ -16,14 +22,52 @@ const Info: CAFTOPInfo = {
 export const Description: CAFTOPDescription = {
   Description: "",
   Introduction: "",
+  ConfigurationPlan: "",
+  SystemMissionDescription: "",
+};
+
+export const TechnicalOrders: CAFTOPTechnicalOrders = {
+  NumElectronic: "",
+  NumPaper: "",
+  NumCDDVD: "",
+  NumUnpublished: "",
+  NumInAcquisition: "",
+  AuthoredInTOAPType: "",
+  ApprovedWaiver: "",
+  ApprovedWaiverDate: null,
+  NumAuthoredInTOAP: "",
+  NumNotAuthoredInTOAP: "",
+  NumWillNotBeAuthoredInTOAP: "",
+  Explanation: "",
+  PlanToConvert: "",
+};
+
+export const Labor: CAFTOPLabor = {
   LaborType: "",
-  ContractorSupport: { LaborCost: "" },
+  ContractorSupport: {
+    LaborCost: "",
+    TDSSe: "",
+    TDSSeRobins: "",
+    ContractorName: "",
+    ContractNumber: "",
+    ContractExpiration: null,
+  },
   OrganicSupport: { Office: "" },
+  HasAdditionalLabor: "",
+  AdditionalLabor: [],
+};
+
+export const Distribution: CAFTOPDistribution = {
+  hasDistCost: "",
+  DistCost: "",
 };
 
 export const initialState: GlobalStateInterface = {
   Info,
   Description,
+  TechnicalOrders,
+  Labor,
+  Distribution,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",

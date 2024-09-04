@@ -30,6 +30,15 @@ const Info = lazy(() => infoPromise);
 const descriptionPromise = import("Steps/Description/Description");
 const Description = lazy(() => descriptionPromise);
 
+const technicalOrdersPromise = import("Steps/TechnicalOrders/TechnicalOrders");
+const TechnicalOrders = lazy(() => technicalOrdersPromise);
+
+const laborPromise = import("Steps/Labor/Labor");
+const Labor = lazy(() => laborPromise);
+
+const distributionPromise = import("Steps/Distribution/Distribution");
+const Distribution = lazy(() => distributionPromise);
+
 const genericStepPromise = import("Steps/GenericStep");
 const GenericStep = lazy(() => genericStepPromise);
 
@@ -60,14 +69,19 @@ export const WizardSteps: WizardStep[] = [
     jsxObj: <Description {...blankdHandlers} />,
   },
   {
+    id: "TechnicalOrders",
+    name: "Technical Orders",
+    jsxObj: <TechnicalOrders {...blankdHandlers} />,
+  },
+  {
     id: "Labor",
     name: "Labor",
-    jsxObj: <GenericStep {...blankdHandlers} />,
+    jsxObj: <Labor {...blankdHandlers} />,
   },
   {
     id: "Distribution",
     name: "Distribution",
-    jsxObj: <GenericStep {...blankdHandlers} />,
+    jsxObj: <Distribution {...blankdHandlers} />,
   },
   {
     id: "Improvements",
@@ -125,9 +139,13 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   };
 
   const handleError: SubmitErrorHandler<CAFTOPInfo | CAFTOPDescription> = (
-    _errors,
+    errors,
     e?: BaseSyntheticEvent
   ) => {
+    // TODO -- Remove this
+    if (errors) {
+      console.log(errors);
+    }
     if (e) {
       e.preventDefault();
       if (e?.nativeEvent instanceof SubmitEvent) {

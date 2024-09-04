@@ -1,11 +1,19 @@
 import {
   ContractorSupportRuleFinal,
   ContractorSupportRuleSave,
-} from "Steps/Description/Fields/ContractorSupport";
+} from "Steps/Labor/Fields/ContractorSupport";
 import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
 import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
-import { LaborTypeRuleFinal } from "Steps/Description/Fields/LaborType";
-import { OrganicSupportRuleFinal } from "Steps/Description/Fields/OrganicSupport";
+import { LaborTypeRuleFinal } from "Steps/Labor/Fields/LaborType";
+import { OrganicSupportRuleFinal } from "Steps/Labor/Fields/OrganicSupport";
+import {
+  tocountsRuleFinal,
+  tocountsRuleSave,
+} from "Steps/TechnicalOrders/Fields/TOCounts";
+import {
+  toapRuleFinal,
+  toapRuleSave,
+} from "Steps/TechnicalOrders/Fields/TOAPMigration";
 import { CenterRuleFinal } from "Steps/Info/Fields/Center";
 import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
 import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
@@ -21,6 +29,19 @@ import { useContext } from "react";
 import { globalContext } from "stateManagement/GlobalStore";
 import { GlobalStateInterface } from "stateManagement/types";
 import { ZodSchema, z } from "zod";
+import {
+  configurationplanRuleFinal,
+  configurationplanRuleSave,
+} from "Steps/Description/Fields/ConfigurationPlan";
+import {
+  distcostRuleFinal,
+  distcostRuleSave,
+} from "Steps/Distribution/Fields/DistCost";
+import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor";
+import {
+  systemmissiondescriptionRuleFinal,
+  systemmissiondescriptionRuleSave,
+} from "Steps/Description/Fields/SystemMissionDescription";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -58,15 +79,54 @@ export const useDescriptionPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return DescriptionRuleFinal.merge(IntroductionRuleFinal)
-      .merge(LaborTypeRuleFinal)
-      .and(ContractorSupportRuleSave)
-      .and(OrganicSupportRuleFinal);
+    return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
+      configurationplanRuleSave.and(systemmissiondescriptionRuleSave)
+    );
   } else {
-    return DescriptionRuleFinal.merge(IntroductionRuleFinal)
-      .merge(LaborTypeRuleFinal)
-      .and(ContractorSupportRuleFinal)
-      .and(OrganicSupportRuleFinal);
+    return DescriptionRuleFinal.merge(IntroductionRuleFinal).and(
+      configurationplanRuleFinal.and(systemmissiondescriptionRuleFinal)
+    );
+  }
+};
+
+export const useTechnicalOrdersPageValidation = (
+  mode?: GlobalStateInterface["mode"]
+) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return tocountsRuleSave.and(toapRuleSave);
+  } else {
+    return tocountsRuleFinal.and(toapRuleFinal);
+  }
+};
+
+export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return LaborTypeRuleFinal.and(ContractorSupportRuleSave)
+      .and(OrganicSupportRuleFinal)
+      .and(additionalLaborRuleFinal);
+  } else {
+    return LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
+      .and(OrganicSupportRuleFinal)
+      .and(additionalLaborRuleFinal);
+  }
+};
+
+export const useDistributionPageValidation = (
+  mode?: GlobalStateInterface["mode"]
+) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return distcostRuleSave;
+  } else {
+    return distcostRuleFinal;
   }
 };
 
@@ -80,6 +140,9 @@ export const useCheckComplete = () => {
   const { globalState } = useContext(globalContext);
   const info = useInfoPageValidation();
   const description = useDescriptionPageValidation("submit");
+  const technicalorders = useTechnicalOrdersPageValidation("submit");
+  const labor = useLaborPageValidation("submit");
+  const distribution = useDistributionPageValidation("submit");
 
   const result1 = info.safeParse(globalState.Info);
   if (!result1.success) {
@@ -92,6 +155,27 @@ export const useCheckComplete = () => {
   if (!result2.success) {
     result2.error.issues.forEach((issue) =>
       errors.push({ errortext: issue.message, pageIndex: 2 })
+    );
+  }
+
+  const result3 = technicalorders.safeParse(globalState.TechnicalOrders);
+  if (!result3.success) {
+    result3.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 3 })
+    );
+  }
+
+  const result4 = labor.safeParse(globalState.Labor);
+  if (!result4.success) {
+    result4.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 4 })
+    );
+  }
+
+  const result5 = distribution.safeParse(globalState.Distribution);
+  if (!result5.success) {
+    result5.error.issues.forEach((issue) =>
+      errors.push({ errortext: issue.message, pageIndex: 5 })
     );
   }
 

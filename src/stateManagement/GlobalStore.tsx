@@ -15,6 +15,20 @@ function initializeState() {
     localStorage.getItem("caftopGlobalState") as string
   ) as GlobalStateInterface;
 
+  // Convert the date string back to a Date object
+  if (fromLocalStorage?.Labor?.ContractorSupport?.ContractExpiration) {
+    fromLocalStorage.Labor.ContractorSupport.ContractExpiration = new Date(
+      fromLocalStorage.Labor.ContractorSupport.ContractExpiration
+    );
+  }
+
+  // Convert the date string back to a Date object
+  if (fromLocalStorage?.TechnicalOrders?.ApprovedWaiverDate) {
+    fromLocalStorage.TechnicalOrders.ApprovedWaiverDate = new Date(
+      fromLocalStorage.TechnicalOrders.ApprovedWaiverDate
+    );
+  }
+
   // Return back to save mode on reload of page
   if (fromLocalStorage?.mode) {
     fromLocalStorage.mode = "save";
