@@ -49,9 +49,12 @@ const Distribution = (props: ICAFTOPWizardStep) => {
             <Fields.DistCost />
           </div>
           {notElectronicOnly && (
-            <div className="requestFieldContainer">
-              <Fields.DSO />
-            </div>
+            <>
+              <div className="requestFieldContainer">
+                <Fields.DSO />
+              </div>
+              <Fields.OutsideDSO />
+            </>
           )}
         </form>
       </FormProvider>

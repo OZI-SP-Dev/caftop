@@ -47,6 +47,11 @@ import {
   dsoRuleNA,
   dsoRuleSave,
 } from "Steps/Distribution/Fields/DSO";
+import {
+  outsidedsoRuleFinal,
+  outsidedsoRuleNA,
+  outsidedsoRuleSave,
+} from "Steps/Distribution/Fields/OutsideDSO";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -130,9 +135,13 @@ export const useDistributionPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return distcostRuleSave.and(notElectronicOnly ? dsoRuleSave : dsoRuleNA);
+    return distcostRuleSave
+      .and(notElectronicOnly ? dsoRuleSave : dsoRuleNA)
+      .and(notElectronicOnly ? outsidedsoRuleSave : outsidedsoRuleNA);
   } else {
-    return distcostRuleFinal.and(notElectronicOnly ? dsoRuleFinal : dsoRuleNA);
+    return distcostRuleFinal
+      .and(notElectronicOnly ? dsoRuleFinal : dsoRuleNA)
+      .and(notElectronicOnly ? outsidedsoRuleFinal : outsidedsoRuleNA);
   }
 };
 

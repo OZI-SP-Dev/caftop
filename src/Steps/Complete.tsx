@@ -77,6 +77,10 @@ const Complete = (props: ICAFTOPWizardStep) => {
       globalState.TechnicalOrders.ApprovedWaiverDate
     );
 
+    const approvedDSOWaiverDate = formatDate(
+      globalState.Distribution.ApprovedWaiverDate
+    );
+
     const ctrExpirationDate = formatDate(
       globalState.Labor.ContractorSupport.ContractExpiration
     );
@@ -86,6 +90,11 @@ const Complete = (props: ICAFTOPWizardStep) => {
       TotalCount: totalCount,
       TotalTypeCount: totalTypeCount,
       ApprovedWaiverDate: approvedWaiverDate,
+    };
+
+    const distribution = {
+      ...globalState.Distribution,
+      ApprovedWaiverDate: approvedDSOWaiverDate,
     };
 
     const labor = {
@@ -100,6 +109,7 @@ const Complete = (props: ICAFTOPWizardStep) => {
       ...globalState,
       TechnicalOrders: technicalOrders,
       Labor: labor,
+      Distribution: distribution,
     };
 
     PizZipUtils.getBinaryContent(

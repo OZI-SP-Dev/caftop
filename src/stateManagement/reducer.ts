@@ -61,6 +61,9 @@ export const Distribution: CAFTOPDistribution = {
   hasDistCost: "",
   DistCost: "",
   hasDSO: "",
+  hasOutsideDSO: "",
+  ApprovedWaiver: "",
+  ApprovedWaiverDate: null,
 };
 
 export const initialState: GlobalStateInterface = {

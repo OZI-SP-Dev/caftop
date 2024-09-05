@@ -60,6 +60,9 @@ export type CAFTOPDistribution = {
   hasDistCost: "yes" | "no" | "";
   DistCost: number | "";
   hasDSO: "yes" | "no" | "";
+  hasOutsideDSO: "yes" | "no" | "";
+  ApprovedWaiver: "yes" | "no" | "";
+  ApprovedWaiverDate: Date | null;
 };
 
 /** Function to determine if the CAFTOP is not Electronic Only (aka has Paper and/or CD/DVD)

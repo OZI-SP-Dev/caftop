@@ -29,6 +29,13 @@ function initializeState() {
     );
   }
 
+  // Convert the date string back to a Date object
+  if (fromLocalStorage?.Distribution?.ApprovedWaiverDate) {
+    fromLocalStorage.Distribution.ApprovedWaiverDate = new Date(
+      fromLocalStorage.Distribution.ApprovedWaiverDate
+    );
+  }
+
   // Return back to save mode on reload of page
   if (fromLocalStorage?.mode) {
     fromLocalStorage.mode = "save";
