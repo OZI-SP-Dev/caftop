@@ -23,7 +23,7 @@ const DSO = () => {
   return (
     <BACRadioGroup<CAFTOPDistribution>
       name="hasDSO"
-      labelText="Does the program utilize Document Services Online (DSO)??"
+      labelText="Does the program utilize Document Services Online (DSO)?"
       rules={{ required: true }}
       fieldProps={{ layout: "horizontal" }}
     >
