@@ -42,6 +42,7 @@ const Labor = (props: ICAFTOPWizardStep) => {
             </div>
             <Fields.OrganicSupport />
             <Fields.ContractorSupport />
+            <Fields.MILSTD3048 />
             <Fields.AdditionalLabor />
           </div>
         </form>

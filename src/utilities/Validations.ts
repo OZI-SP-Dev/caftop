@@ -7,6 +7,10 @@ import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
 import { LaborTypeRuleFinal } from "Steps/Labor/Fields/LaborType";
 import { OrganicSupportRuleFinal } from "Steps/Labor/Fields/OrganicSupport";
 import {
+  milstd3048RuleFinal,
+  milstd3048RuleSave,
+} from "Steps/Labor/Fields/MILSTD3048";
+import {
   tocountsRuleFinal,
   tocountsRuleSave,
 } from "Steps/TechnicalOrders/Fields/TOCounts";
@@ -119,11 +123,13 @@ export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
   if (globalState.mode === "save" && mode !== "submit") {
     return LaborTypeRuleFinal.and(ContractorSupportRuleSave)
       .and(OrganicSupportRuleFinal)
-      .and(additionalLaborRuleFinal);
+      .and(additionalLaborRuleFinal)
+      .and(milstd3048RuleSave);
   } else {
     return LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
       .and(OrganicSupportRuleFinal)
-      .and(additionalLaborRuleFinal);
+      .and(additionalLaborRuleFinal)
+      .and(milstd3048RuleFinal);
   }
 };
 

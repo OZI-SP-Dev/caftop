@@ -52,6 +52,10 @@ export type CAFTOPLabor = {
     ContractExpiration: Date | null;
   };
   OrganicSupport: { Office: string };
+  MILSTD3048Status: "current" | "plan" | "noplan" | "";
+  MILSTD3048Location: "withinTDSSe" | "withinOther" | "outside" | "";
+  MILSTD3048Contractor: string;
+  MILSTD3048SourceData: string;
   HasAdditionalLabor: "yes" | "no" | "";
   AdditionalLabor: { Title: string; Description: string; Impact: string }[];
 };

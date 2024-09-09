@@ -53,6 +53,10 @@ export const Labor: CAFTOPLabor = {
     ContractExpiration: null,
   },
   OrganicSupport: { Office: "" },
+  MILSTD3048Status: "",
+  MILSTD3048Location: "",
+  MILSTD3048Contractor: "",
+  MILSTD3048SourceData: "",
   HasAdditionalLabor: "",
   AdditionalLabor: [],
 };
