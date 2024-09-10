@@ -6,10 +6,7 @@ import { TechnicalOrders } from "stateManagement/reducer";
 import { useWatch } from "react-hook-form";
 import TOAPMigrationPartially from "./TOAPMigration.Partially";
 import TOAPMigrationNo from "./TOAPMigration.No";
-
-const populateWithDefaultValue = (value: string | number | null | Date) => {
-  return z.any().transform((_obj) => value);
-};
+import { populateWithDefaultValue } from "utilities/Validations";
 
 const numberRulesSave = (fieldName: string) => {
   return z.union([
@@ -31,10 +28,10 @@ const numberRulesFinal = (fieldName: string) => {
 };
 
 const blankApprovedWaiver = z.object({
-  ApprovedWaiver: z.any().transform((_obj) => TechnicalOrders.ApprovedWaiver),
-  ApprovedWaiverDate: z
-    .any()
-    .transform((_obj) => TechnicalOrders.ApprovedWaiverDate),
+  ApprovedWaiver: populateWithDefaultValue(TechnicalOrders.ApprovedWaiver),
+  ApprovedWaiverDate: populateWithDefaultValue(
+    TechnicalOrders.ApprovedWaiverDate
+  ),
 });
 
 const blankTOCounts = z.object({

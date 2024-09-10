@@ -5,6 +5,7 @@ import { useWatch } from "react-hook-form";
 import { Radio, Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Distribution } from "stateManagement/reducer";
+import { populateWithDefaultValue } from "utilities/Validations";
 
 const distcostBaseRule = z.union([
   z.literal(""),
@@ -18,7 +19,7 @@ const distcostBaseRule = z.union([
 export const distcostRuleSave = z.discriminatedUnion("hasDistCost", [
   z.object({
     hasDistCost: z.enum(["no", ""]),
-    DistCost: z.any().transform((_obj) => Distribution.DistCost),
+    DistCost: populateWithDefaultValue(Distribution.DistCost),
   }),
   z.object({
     hasDistCost: z.literal("yes"),
@@ -31,7 +32,7 @@ export const distcostRuleFinal = z.discriminatedUnion(
   [
     z.object({
       hasDistCost: z.enum(["no"]),
-      DistCost: z.any().transform((_obj) => Distribution.DistCost),
+      DistCost: populateWithDefaultValue(Distribution.DistCost),
     }),
     z.object({
       hasDistCost: z.literal("yes"),
