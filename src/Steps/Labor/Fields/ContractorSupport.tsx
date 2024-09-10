@@ -7,6 +7,7 @@ import { Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Radio } from "@fluentui/react-components";
 import BACDatePicker from "components/BaseFormFields/BACDatePicker";
+import { formatDate } from "utilities/Date";
 
 const populateWithDefaultValue = (
   value: string | CAFTOPLabor["ContractorSupport"]
@@ -212,19 +213,7 @@ const ContractorSupport = () => {
             labelText="Contract Expiration"
             rules={{ required: true }}
             fieldProps={{
-              formatDate: (date) => {
-                if (date) {
-                  return (
-                    date.toLocaleDateString("en-US", { day: "2-digit" }) +
-                    " " +
-                    date.toLocaleDateString("en-US", { month: "long" }) +
-                    " " +
-                    date.toLocaleDateString("en-US", { year: "numeric" })
-                  );
-                } else {
-                  return "";
-                }
-              },
+              formatDate: formatDate,
               minDate: new Date(Date.now()),
             }}
           />

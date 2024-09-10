@@ -8,16 +8,7 @@ import expressions from "docxtemplater/expressions";
 import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
-
-const formatDate = (date: Date | null) => {
-  return date
-    ? date.toLocaleDateString("en-US", { day: "2-digit" }) +
-        " " +
-        date.toLocaleDateString("en-US", { month: "long" }) +
-        " " +
-        date.toLocaleDateString("en-US", { year: "numeric" })
-    : "";
-};
+import { formatDate } from "utilities/Date";
 
 const Complete = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
@@ -74,15 +65,15 @@ const Complete = (props: ICAFTOPWizardStep) => {
         : 0);
 
     const approvedWaiverDate = formatDate(
-      globalState.TechnicalOrders.ApprovedWaiverDate
+      globalState.TechnicalOrders.ApprovedWaiverDate ?? undefined
     );
 
     const approvedDSOWaiverDate = formatDate(
-      globalState.Distribution.ApprovedWaiverDate
+      globalState.Distribution.ApprovedWaiverDate ?? undefined
     );
 
     const ctrExpirationDate = formatDate(
-      globalState.Labor.ContractorSupport.ContractExpiration
+      globalState.Labor.ContractorSupport.ContractExpiration ?? undefined
     );
 
     const technicalOrders = {
