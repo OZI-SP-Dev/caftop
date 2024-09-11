@@ -5,7 +5,7 @@ import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Distribution } from "stateManagement/reducer";
 import OutsideDSOWaiver from "./OutsideDSO.Waiver";
 import { useWatch } from "react-hook-form";
-import { populateWithDefaultValue } from "utilities/Validations";
+import { populateWithDefaultValue } from "utilities/Validation";
 
 /** Rule for when the Outside DSO is Not Applicable */
 export const outsidedsoRuleNA = z.object({

@@ -8,7 +8,7 @@ import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Radio } from "@fluentui/react-components";
 import BACDatePicker from "components/BaseFormFields/BACDatePicker";
 import { formatDate } from "utilities/Date";
-import { populateWithDefaultValue } from "utilities/Validations";
+import { populateWithDefaultValue } from "utilities/Validation";
 
 const laborCostBaseRule = z.union([
   z.literal(""),

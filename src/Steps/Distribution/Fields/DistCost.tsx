@@ -5,7 +5,7 @@ import { useWatch } from "react-hook-form";
 import { Radio, Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Distribution } from "stateManagement/reducer";
-import { populateWithDefaultValue } from "utilities/Validations";
+import { populateWithDefaultValue } from "utilities/Validation";
 
 const distcostBaseRule = z.union([
   z.literal(""),

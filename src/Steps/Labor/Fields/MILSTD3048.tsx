@@ -5,7 +5,7 @@ import { Radio, Text } from "@fluentui/react-components";
 import { Labor } from "stateManagement/reducer";
 import { useWatch } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
-import { populateWithDefaultValue } from "utilities/Validations";
+import { populateWithDefaultValue } from "utilities/Validation";
 
 const contractornameBaseRule = z
   .string()
