@@ -288,7 +288,7 @@ const LRDP = () => {
               ))}
             </TableBody>
           </Table>
-          {fields.length < 8 && (
+          {fields.length < 10 && (
             <div>
               <Button
                 appearance="primary"
