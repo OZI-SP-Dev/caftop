@@ -4,6 +4,7 @@ import {
   CAFTOPTechnicalOrders,
   CAFTOPDistribution,
   CAFTOPLabor,
+  CAFTOPLRDP,
 } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
@@ -70,12 +71,18 @@ export const Distribution: CAFTOPDistribution = {
   ApprovedWaiverDate: null,
 };
 
+export const LRDP: CAFTOPLRDP = {
+  hasLRDP: "",
+  LRDP: [],
+};
+
 export const initialState: GlobalStateInterface = {
   Info,
   Description,
   TechnicalOrders,
   Labor,
   Distribution,
+  LRDP,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",

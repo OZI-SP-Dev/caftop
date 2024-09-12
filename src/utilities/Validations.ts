@@ -56,6 +56,7 @@ import {
   outsidedsoRuleNA,
   outsidedsoRuleSave,
 } from "Steps/Distribution/Fields/OutsideDSO";
+import { lrdpRuleFinal, lrdpRuleSave } from "Steps/LRDP/Fields/LRDP";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -151,6 +152,17 @@ export const useDistributionPageValidation = (
   }
 };
 
+export const useLRDPPageValidation = (mode?: GlobalStateInterface["mode"]) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return lrdpRuleSave;
+  } else {
+    return lrdpRuleFinal;
+  }
+};
+
 interface CAFTOPError {
   errortext: string;
   pageIndex: number;
@@ -159,46 +171,43 @@ interface CAFTOPError {
 export const useCheckComplete = () => {
   const errors = [] as CAFTOPError[];
   const { globalState } = useContext(globalContext);
-  const info = useInfoPageValidation();
-  const description = useDescriptionPageValidation("submit");
-  const technicalorders = useTechnicalOrdersPageValidation("submit");
-  const labor = useLaborPageValidation("submit");
-  const distribution = useDistributionPageValidation("submit");
+  const checks = [
+    { pageIndex: 1, check: useInfoPageValidation(), data: globalState.Info },
+    {
+      pageIndex: 2,
+      check: useDescriptionPageValidation("submit"),
+      data: globalState.Description,
+    },
+    {
+      pageIndex: 3,
+      check: useTechnicalOrdersPageValidation("submit"),
+      data: globalState.TechnicalOrders,
+    },
+    {
+      pageIndex: 4,
+      check: useLaborPageValidation("submit"),
+      data: globalState.Labor,
+    },
+    {
+      pageIndex: 5,
+      check: useDistributionPageValidation("submit"),
+      data: globalState.Distribution,
+    },
+    {
+      pageIndex: 8,
+      check: useLRDPPageValidation("submit"),
+      data: globalState.LRDP,
+    },
+  ];
 
-  const result1 = info.safeParse(globalState.Info);
-  if (!result1.success) {
-    result1.error.issues.forEach((issue) =>
-      errors.push({ errortext: issue.message, pageIndex: 1 })
-    );
-  }
-
-  const result2 = description.safeParse(globalState.Description);
-  if (!result2.success) {
-    result2.error.issues.forEach((issue) =>
-      errors.push({ errortext: issue.message, pageIndex: 2 })
-    );
-  }
-
-  const result3 = technicalorders.safeParse(globalState.TechnicalOrders);
-  if (!result3.success) {
-    result3.error.issues.forEach((issue) =>
-      errors.push({ errortext: issue.message, pageIndex: 3 })
-    );
-  }
-
-  const result4 = labor.safeParse(globalState.Labor);
-  if (!result4.success) {
-    result4.error.issues.forEach((issue) =>
-      errors.push({ errortext: issue.message, pageIndex: 4 })
-    );
-  }
-
-  const result5 = distribution.safeParse(globalState.Distribution);
-  if (!result5.success) {
-    result5.error.issues.forEach((issue) =>
-      errors.push({ errortext: issue.message, pageIndex: 5 })
-    );
-  }
+  checks.forEach((item) => {
+    const result = item.check.safeParse(item.data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) =>
+        errors.push({ errortext: issue.message, pageIndex: item.pageIndex })
+      );
+    }
+  });
 
   return errors;
 };

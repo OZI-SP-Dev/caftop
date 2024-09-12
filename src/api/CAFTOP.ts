@@ -69,6 +69,11 @@ export type CAFTOPDistribution = {
   ApprovedWaiverDate: Date | null;
 };
 
+export type CAFTOPLRDP = {
+  hasLRDP: "yes" | "no" | "";
+  LRDP: { Name: string; SeqNum: string }[];
+};
+
 /** Function to determine if the CAFTOP is not Electronic Only (aka has Paper and/or CD/DVD)
  * @param data The CAFTOP data
  * @returns boolean If the CAFTOP has Paper and/or CD/DVD TOs
