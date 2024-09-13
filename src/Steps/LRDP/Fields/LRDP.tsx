@@ -1,7 +1,7 @@
 import { z } from "zod";
 import BACInput from "components/BaseFormFields/BACInput";
 import { CAFTOPLRDP } from "api/CAFTOP";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { useFieldArray, useWatch } from "react-hook-form";
 import {
   Button,
   Radio,
@@ -23,7 +23,7 @@ import {
   ArrowDown16Regular,
   DragRegular,
 } from "@fluentui/react-icons";
-import { SyntheticEvent, DragEvent, useEffect } from "react";
+import { SyntheticEvent, DragEvent } from "react";
 import { populateWithDefaultValue } from "utilities/Validation";
 
 const lrdpName = z.string().trim().max(50, "Name cannot exceed 50 characters");
@@ -37,25 +37,17 @@ const checkForDuplicates = (items: CAFTOPLRDP, ctx: z.RefinementCtx) => {
   const uniqueValuesName = new Map<string, number>();
   const uniqueValuesSeqNum = new Map<string, number>();
   items.LRDP.forEach((item, idx) => {
-    const firstAppearanceNameIndex = uniqueValuesName.get(item.Name);
+    const lowerCaseName = item.Name.toLowerCase().trim(); // Make case insensitive and remove spacing
+    const firstAppearanceNameIndex = uniqueValuesName.get(lowerCaseName);
     const firstAppearanceSeqNumIndex = uniqueValuesSeqNum.get(item.SeqNum);
-    if (firstAppearanceNameIndex !== undefined && item.Name !== "") {
+    if (firstAppearanceNameIndex !== undefined && lowerCaseName !== "") {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: `Name must be unique`,
         path: ["LRDP", idx, "Name"],
       });
-      // If it wasn't flagged as already adding the first conflict, then add it and flag as added
-      if (firstAppearanceNameIndex !== -1) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Name must be unique`,
-          path: ["LRDP", firstAppearanceNameIndex, "Name"],
-        });
-        uniqueValuesName.set(item.Name, -1);
-      }
     } else {
-      uniqueValuesName.set(item.Name, idx);
+      uniqueValuesName.set(lowerCaseName, idx);
     }
     if (firstAppearanceSeqNumIndex !== undefined && item.SeqNum !== "") {
       ctx.addIssue({
@@ -63,15 +55,6 @@ const checkForDuplicates = (items: CAFTOPLRDP, ctx: z.RefinementCtx) => {
         message: `Sequence Number must be unique`,
         path: ["LRDP", idx, "SeqNum"],
       });
-      if (firstAppearanceSeqNumIndex !== -1) {
-        // If it wasn't flagged as already adding the first conflict, then add it and flag as added
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: `Sequence Number must be unique`,
-          path: ["LRDP", firstAppearanceSeqNumIndex, "SeqNum"],
-        });
-        uniqueValuesSeqNum.set(item.SeqNum, -1);
-      }
     } else {
       uniqueValuesSeqNum.set(item.SeqNum, idx);
     }
@@ -133,23 +116,13 @@ function drag(e: DragEvent<HTMLTableRowElement>, rowId: number) {
 }
 
 const LRDP = () => {
-  const { trigger } = useFormContext<CAFTOPLRDP>();
-
   const hasLRDP = useWatch<CAFTOPLRDP, "hasLRDP">({
     name: "hasLRDP",
-  });
-
-  const LRDPArray = useWatch<CAFTOPLRDP, "LRDP">({
-    name: "LRDP",
   });
 
   const { fields, append, remove, move } = useFieldArray({
     name: "LRDP",
   });
-
-  useEffect(() => {
-    void trigger();
-  }, [LRDPArray]);
 
   const keyboardNavAttr = useArrowNavigationGroup({
     axis: "grid",
