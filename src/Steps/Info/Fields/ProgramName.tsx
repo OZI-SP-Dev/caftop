@@ -1,17 +1,7 @@
-import { z } from "zod";
 import BACCombobox from "components/BaseFormFields/BACCombobox";
 import { CAFTOPInfo } from "api/CAFTOP";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useFormContext } from "react-hook-form";
-
-const finalRule = z
-  .string()
-  .trim()
-  .min(1, "You must select a Program Name from the list");
-
-export const ProgramNameRuleFinal = z.object({
-  ProgramName: finalRule,
-});
 
 export const ProgramName = () => {
   const ProgramNames = useProgramNamesAndECs();

@@ -1,5 +1,5 @@
-import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
-import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
+import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
+import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
 import { GlobalStateInterface } from "stateManagement/types";
 import { z } from "zod";
 

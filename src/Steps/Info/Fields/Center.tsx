@@ -1,17 +1,7 @@
-import { z } from "zod";
 import BACDropdown from "components/BaseFormFields/BACDropdown";
 import { CAFTOPInfo } from "api/CAFTOP";
 import { Option } from "@fluentui/react-components";
 import { useCenters } from "api/Centers";
-
-const finalRule = z
-  .string()
-  .trim()
-  .min(1, "You must select a Center from the list");
-
-export const CenterRuleFinal = z.object({
-  Center: finalRule,
-});
 
 export const Center = () => {
   const Centers = useCenters();

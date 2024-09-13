@@ -1,32 +1,32 @@
 import {
   ContractorSupportRuleFinal,
   ContractorSupportRuleSave,
-} from "Steps/Labor/Fields/ContractorSupport";
-import { DescriptionRuleFinal } from "Steps/Description/Fields/Description";
-import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction";
-import { LaborTypeRuleFinal } from "Steps/Labor/Fields/LaborType";
-import { OrganicSupportRuleFinal } from "Steps/Labor/Fields/OrganicSupport";
+} from "Steps/Labor/Fields/ContractorSupport.Validation";
+import { DescriptionRuleFinal } from "Steps/Description/Fields/Description.Validation";
+import { IntroductionRuleFinal } from "Steps/Description/Fields/Introduction.Validation";
+import { LaborTypeRuleFinal } from "Steps/Labor/Fields/LaborType.Validation";
+import { OrganicSupportRuleFinal } from "Steps/Labor/Fields/OrganicSupport.Validation";
 import {
   milstd3048RuleFinal,
   milstd3048RuleSave,
-} from "Steps/Labor/Fields/MILSTD3048";
+} from "Steps/Labor/Fields/MILSTD3048.Validation";
 import {
   tocountsRuleFinal,
   tocountsRuleSave,
-} from "Steps/TechnicalOrders/Fields/TOCounts";
+} from "Steps/TechnicalOrders/Fields/TOCounts.Validation";
 import {
   toapRuleFinal,
   toapRuleSave,
-} from "Steps/TechnicalOrders/Fields/TOAPMigration";
-import { CenterRuleFinal } from "Steps/Info/Fields/Center";
-import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand";
-import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase";
-import { PreparingOfficeRuleFinal } from "Steps/Info/Fields/PreparingOffice";
-import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCode";
-import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup";
-import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
-import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName";
-import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
+} from "Steps/TechnicalOrders/Fields/TOAPMigration.Validation";
+import { CenterRuleFinal } from "Steps/Info/Fields/Center.Validation";
+import { LeadCommandRuleFinal } from "Steps/Info/Fields/LeadCommand.Validation";
+import { PreparingBaseRuleFinal } from "Steps/Info/Fields/PreparingBase.Validation";
+import { PreparingOfficeRuleFinal } from "Steps/Info/Fields/PreparingOffice.Validation";
+import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCode.Validation";
+import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup.Validation";
+import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
+import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName.Validation";
+import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
 import { CAFTOPInfo, isNotElectronicOnly } from "api/CAFTOP";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
@@ -36,27 +36,27 @@ import { ZodSchema, z } from "zod";
 import {
   configurationplanRuleFinal,
   configurationplanRuleSave,
-} from "Steps/Description/Fields/ConfigurationPlan";
+} from "Steps/Description/Fields/ConfigurationPlan.Validation";
 import {
   distcostRuleFinal,
   distcostRuleSave,
-} from "Steps/Distribution/Fields/DistCost";
-import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor";
+} from "Steps/Distribution/Fields/DistCost.Validation";
+import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor.Validation";
 import {
   systemmissiondescriptionRuleFinal,
   systemmissiondescriptionRuleSave,
-} from "Steps/Description/Fields/SystemMissionDescription";
+} from "Steps/Description/Fields/SystemMissionDescription.Validation";
 import {
   dsoRuleFinal,
   dsoRuleNA,
   dsoRuleSave,
-} from "Steps/Distribution/Fields/DSO";
+} from "Steps/Distribution/Fields/DSO.Validation";
 import {
   outsidedsoRuleFinal,
   outsidedsoRuleNA,
   outsidedsoRuleSave,
-} from "Steps/Distribution/Fields/OutsideDSO";
-import { lrdpRuleFinal, lrdpRuleSave } from "Steps/LRDP/Fields/LRDP";
+} from "Steps/Distribution/Fields/OutsideDSO.Validation";
+import { lrdpRuleFinal, lrdpRuleSave } from "Steps/LRDP/Fields/LRDP.Validation";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
