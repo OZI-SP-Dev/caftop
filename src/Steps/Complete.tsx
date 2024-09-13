@@ -59,9 +59,6 @@ const Complete = (props: ICAFTOPWizardStep) => {
         : 0) +
       (globalState.TechnicalOrders.NumCDDVD !== ""
         ? globalState.TechnicalOrders.NumCDDVD
-        : 0) +
-      (globalState.TechnicalOrders.NumUnpublished !== ""
-        ? globalState.TechnicalOrders.NumUnpublished
         : 0);
 
     const approvedWaiverDate = formatDate(
