@@ -136,9 +136,11 @@ export const toapRuleSave = z
         .object({
           AuthoredInTOAPType: z.literal("partially"),
           NumAuthoredInTOAP: numberRulesSave("TOs authored in TOAP"),
-          NumNotAuthoredInTOAP: numberRulesSave("TOs not authored in TOAP"),
+          NumNotAuthoredInTOAP: numberRulesSave(
+            "TOs to be authored in TOAP through attrition"
+          ),
           NumWillNotBeAuthoredInTOAP: numberRulesSave(
-            "TOs that will not be authored in TOAP"
+            "TOs currently not planned for TOAP"
           ),
           Explanation: z.any(),
         })
@@ -186,9 +188,11 @@ export const toapRuleFinal = z
         .object({
           AuthoredInTOAPType: z.literal("partially"),
           NumAuthoredInTOAP: numberRulesFinal("TOs authored in TOAP"),
-          NumNotAuthoredInTOAP: numberRulesFinal("TOs not authored in TOAP"),
+          NumNotAuthoredInTOAP: numberRulesFinal(
+            "TOs to be authored in TOAP through attrition"
+          ),
           NumWillNotBeAuthoredInTOAP: numberRulesFinal(
-            "TOs that will not be authored in TOAP"
+            "TOs currently not planned for TOAP"
           ),
           Explanation: z.any(),
         })

@@ -26,7 +26,7 @@ export const TOAPMigrationPartially = () => {
       <div className="requestFieldContainer">
         <BACInput<CAFTOPTechnicalOrders>
           name="NumNotAuthoredInTOAP"
-          labelText="Number of TOs not authored in TOAP"
+          labelText="Number of TOs to be authored in TOAP through attrition"
           rules={{ required: true }}
           fieldProps={{ type: "number", min: 0, step: 1 }}
         />
@@ -34,7 +34,7 @@ export const TOAPMigrationPartially = () => {
       <div className="requestFieldContainer">
         <BACInput<CAFTOPTechnicalOrders>
           name="NumWillNotBeAuthoredInTOAP"
-          labelText="Number of TOs that will not be authored in TOAP"
+          labelText="Number of TOs currently not planned for TOAP"
           rules={{ required: true }}
           fieldProps={{ type: "number", min: 0, step: 1 }}
         />
