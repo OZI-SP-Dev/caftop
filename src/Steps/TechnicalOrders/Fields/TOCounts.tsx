@@ -11,7 +11,7 @@ export const TOCounts = () => {
       <div className="requestFieldContainer">
         <BACInput<CAFTOPTechnicalOrders>
           name="NumElectronic"
-          labelText="Electronic WA-1 or WA-2"
+          labelText="Electronic WA-1 and WA-2"
           rules={{ required: true }}
           fieldProps={{ type: "number", min: 0, step: 1 }}
         />
