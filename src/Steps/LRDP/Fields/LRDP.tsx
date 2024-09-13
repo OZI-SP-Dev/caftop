@@ -30,7 +30,7 @@ const lrdpName = z.string().trim().max(50, "Name cannot exceed 50 characters");
 const lrdpSeqNumFinal = z
   .string()
   .trim()
-  .regex(/^\d{5}$/, "This must be a 5 digit number");
+  .regex(/^\d{5}$/, "This must be a 5 digits");
 const lrdpSeqNumSave = z.union([z.literal(""), lrdpSeqNumFinal]);
 
 const checkForDuplicates = (items: CAFTOPLRDP, ctx: z.RefinementCtx) => {
@@ -128,7 +128,7 @@ function allowDrop(e: SyntheticEvent) {
   e.preventDefault();
 }
 
-function drag(e: DragEvent<HTMLButtonElement>, rowId: number) {
+function drag(e: DragEvent<HTMLTableRowElement>, rowId: number) {
   e.dataTransfer.setData("rowId", rowId.toString());
 }
 
@@ -170,11 +170,15 @@ const LRDP = () => {
   const priorityCount = fields.length;
 
   const columns = [
-    { columnKey: "priority", label: "Priority", width: "100px" },
-    { columnKey: "name", label: "Name", width: "375px" },
-    { columnKey: "seqNum", label: "Sequence Number", width: "200px" },
-    { columnKey: "actions", width: "75px" },
+    { columnKey: "priority", label: "Priority", width: 95 },
+    { columnKey: "name", label: "Name", width: 375 },
+    { columnKey: "seqNum", label: "Sequence Number", width: 125 },
+    { columnKey: "actions", width: 60 },
   ];
+
+  const tableWidth = columns.reduce((prevVal, curValue) => {
+    return prevVal + curValue.width;
+  }, 0);
 
   return (
     <>
@@ -202,10 +206,8 @@ const LRDP = () => {
             role="grid"
             aria-label="LRDP Priorities"
             style={{
-              minWidth: "700px",
               tableLayout: "fixed",
-              maxWidth: "700px",
-              width: "700px",
+              width: tableWidth + "px",
             }}
             size="small"
           >
@@ -214,10 +216,10 @@ const LRDP = () => {
                 {columns.map((column) => (
                   <TableHeaderCell
                     key={column.columnKey}
-                    style={{ width: column.width }}
+                    style={{ width: column.width + "px" }}
                   >
-                    <TableCellLayout style={{ width: "375px" }}>
-                      {column.label}
+                    <TableCellLayout>
+                      <Text weight="bold">{column.label}</Text>
                     </TableCellLayout>
                   </TableHeaderCell>
                 ))}
@@ -229,10 +231,23 @@ const LRDP = () => {
                   key={item.id}
                   onDrop={(e) => drop(e, index)}
                   onDragOver={allowDrop}
+                  onDragStart={(e) => drag(e, index)}
+                  draggable={priorityCount !== 1}
                 >
                   <TableCell role="gridcell">
                     <TableCellLayout appearance="primary">
-                      <Text>{index + 1}</Text> {"   "}
+                      <Text
+                        weight="bold"
+                        style={{
+                          width: "20px",
+                          paddingRight: "8px",
+                          justifyContent: "right",
+                          display: "inline-flex",
+                        }}
+                        aria-label={`Priority ${index + 1}`}
+                      >
+                        {index + 1}
+                      </Text>
                       <Button
                         aria-label="Move up priority"
                         icon={<ArrowUp16Regular />}
@@ -252,16 +267,33 @@ const LRDP = () => {
                     </TableCellLayout>
                   </TableCell>
                   <TableCell role="gridcell">
-                    <TableCellLayout style={{ width: "375px" }}>
+                    <TableCellLayout>
                       <BACInput<CAFTOPLRDP>
                         name={`LRDP.${index}.Name`}
-                        fieldProps={{ width: "375px" }}
+                        fieldProps={{
+                          style: { width: columns[1].width + "px" },
+                          draggable: true,
+                          onDragStart: (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                          },
+                        }}
                       />
                     </TableCellLayout>
                   </TableCell>
                   <TableCell role="gridcell">
                     <TableCellLayout style={{ display: "grid" }}>
-                      <BACInput<CAFTOPLRDP> name={`LRDP.${index}.SeqNum`} />
+                      <BACInput<CAFTOPLRDP>
+                        name={`LRDP.${index}.SeqNum`}
+                        fieldProps={{
+                          style: { width: columns[2].width },
+                          draggable: true,
+                          onDragStart: (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                          },
+                        }}
+                      />
                     </TableCellLayout>
                   </TableCell>
                   <TableCell role="gridcell">
@@ -274,13 +306,10 @@ const LRDP = () => {
                           remove(index);
                         }}
                       />
-                      <Button
+                      <DragRegular
                         aria-label="Drag to change priority"
-                        appearance="transparent"
-                        disabled={priorityCount === 1}
-                        icon={<DragRegular />}
-                        onDragStart={(e) => drag(e, index)}
-                        draggable={priorityCount !== 1}
+                        fontSize={20}
+                        style={{ paddingLeft: "8px", verticalAlign: "middle" }}
                       />
                     </TableCellLayout>
                   </TableCell>
