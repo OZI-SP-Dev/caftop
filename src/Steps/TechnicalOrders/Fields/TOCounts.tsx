@@ -2,7 +2,7 @@ import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import { Text } from "@fluentui/react-components";
 import BACInput from "components/BaseFormFields/BACInput";
 
-const TOAPMigration = () => {
+export const TOCounts = () => {
   return (
     <fieldset>
       <legend>
@@ -51,5 +51,3 @@ const TOAPMigration = () => {
     </fieldset>
   );
 };
-
-export default TOAPMigration;

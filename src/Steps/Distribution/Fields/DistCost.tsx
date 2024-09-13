@@ -4,7 +4,7 @@ import { useWatch } from "react-hook-form";
 import { Radio, Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 
-const DistCost = () => {
+export const DistCost = () => {
   const hasDistCost = useWatch<CAFTOPDistribution, "hasDistCost">({
     name: "hasDistCost",
   });
@@ -40,5 +40,3 @@ const DistCost = () => {
     </>
   );
 };
-
-export default DistCost;

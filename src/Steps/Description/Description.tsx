@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPDescription } from "api/CAFTOP";
 import { useDescriptionPageValidation } from "utilities/Validations";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 

@@ -5,7 +5,7 @@ import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { useWatch } from "react-hook-form";
 import { formatDate } from "utilities/Date";
 
-const TOAPMigrationWaiver = () => {
+export const TOAPMigrationWaiver = () => {
   const approvedWaiver = useWatch<CAFTOPTechnicalOrders, "ApprovedWaiver">({
     name: "ApprovedWaiver",
   });
@@ -39,5 +39,3 @@ const TOAPMigrationWaiver = () => {
     </>
   );
 };
-
-export default TOAPMigrationWaiver;

@@ -1,10 +1,10 @@
 import { CAFTOPDistribution } from "api/CAFTOP";
 import { Radio } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
-import OutsideDSOWaiver from "./OutsideDSO.Waiver";
+import { OutsideDSOWaiver } from "./OutsideDSO.Waiver";
 import { useWatch } from "react-hook-form";
 
-const OutsideDSO = () => {
+export const OutsideDSO = () => {
   const hasOutsideDSO = useWatch<CAFTOPDistribution, "hasOutsideDSO">({
     name: "hasOutsideDSO",
   });
@@ -26,5 +26,3 @@ const OutsideDSO = () => {
     </>
   );
 };
-
-export default OutsideDSO;

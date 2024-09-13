@@ -1,7 +1,7 @@
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import { CAFTOPDescription } from "api/CAFTOP";
 
-const Description = () => {
+export const Description = () => {
   return (
     <BACTextarea<CAFTOPDescription>
       name="Description"
@@ -14,5 +14,3 @@ const Description = () => {
     />
   );
 };
-
-export default Description;

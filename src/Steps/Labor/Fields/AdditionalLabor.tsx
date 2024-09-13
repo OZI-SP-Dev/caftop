@@ -5,7 +5,7 @@ import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import BACInput from "components/BaseFormFields/BACInput";
 
-const AdditionalLabor = () => {
+export const AdditionalLabor = () => {
   const hasAdditionalLabor = useWatch<CAFTOPLabor, "HasAdditionalLabor">({
     name: "HasAdditionalLabor",
   });
@@ -95,5 +95,3 @@ const AdditionalLabor = () => {
     </>
   );
 };
-
-export default AdditionalLabor;

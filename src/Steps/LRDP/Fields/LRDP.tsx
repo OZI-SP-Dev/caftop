@@ -31,7 +31,7 @@ function drag(e: DragEvent<HTMLTableRowElement>, rowId: number) {
   e.dataTransfer.setData("rowId", rowId.toString());
 }
 
-const LRDP = () => {
+export const LRDP = () => {
   const hasLRDP = useWatch<CAFTOPLRDP, "hasLRDP">({
     name: "hasLRDP",
   });
@@ -221,5 +221,3 @@ const LRDP = () => {
     </>
   );
 };
-
-export default LRDP;

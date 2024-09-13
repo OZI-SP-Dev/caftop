@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPLRDP } from "api/CAFTOP";
 import { useLRDPPageValidation } from "utilities/Validations";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
 const LRDP = (props: ICAFTOPWizardStep) => {

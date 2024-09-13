@@ -2,7 +2,7 @@ import BACInput from "components/BaseFormFields/BACInput";
 import { CAFTOPLabor } from "api/CAFTOP";
 import { useWatch } from "react-hook-form";
 
-const OrganicSupport = () => {
+export const OrganicSupport = () => {
   const laborType = useWatch<CAFTOPLabor, "LaborType">({
     name: "LaborType",
   });
@@ -25,5 +25,3 @@ const OrganicSupport = () => {
     return <></>;
   }
 };
-
-export default OrganicSupport;

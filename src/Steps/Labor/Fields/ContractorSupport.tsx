@@ -7,7 +7,7 @@ import { Radio } from "@fluentui/react-components";
 import BACDatePicker from "components/BaseFormFields/BACDatePicker";
 import { formatDate } from "utilities/Date";
 
-const ContractorSupport = () => {
+export const ContractorSupport = () => {
   const laborType = useWatch<CAFTOPLabor, "LaborType">({
     name: "LaborType",
   });
@@ -91,5 +91,3 @@ const ContractorSupport = () => {
     return <></>;
   }
 };
-
-export default ContractorSupport;

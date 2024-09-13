@@ -4,7 +4,7 @@ import { Radio, Text } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
 
-const MILSTD3048 = () => {
+export const MILSTD3048 = () => {
   const milstd3048Status = useWatch<CAFTOPLabor, "MILSTD3048Status">({
     name: "MILSTD3048Status",
   });
@@ -84,5 +84,3 @@ const MILSTD3048 = () => {
     </div>
   );
 };
-
-export default MILSTD3048;

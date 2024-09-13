@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import { useTechnicalOrdersPageValidation } from "utilities/Validations";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
 const TechnicalOrders = (props: ICAFTOPWizardStep) => {

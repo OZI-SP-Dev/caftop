@@ -2,10 +2,10 @@ import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Radio, Text } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";
-import TOAPMigrationPartially from "./TOAPMigration.Partially";
-import TOAPMigrationNo from "./TOAPMigration.No";
+import { TOAPMigrationPartially } from "./TOAPMigration.Partially";
+import { TOAPMigrationNo } from "./TOAPMigration.No";
 
-const TOAPMigration = () => {
+export const TOAPMigration = () => {
   const authoredInTOAPType = useWatch<
     CAFTOPTechnicalOrders,
     "AuthoredInTOAPType"
@@ -37,5 +37,3 @@ const TOAPMigration = () => {
     </fieldset>
   );
 };
-
-export default TOAPMigration;

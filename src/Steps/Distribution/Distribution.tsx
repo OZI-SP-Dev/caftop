@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP";
 import { useDistributionPageValidation } from "utilities/Validations";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
 const Distribution = (props: ICAFTOPWizardStep) => {

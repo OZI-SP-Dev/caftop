@@ -5,7 +5,7 @@ import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { useWatch } from "react-hook-form";
 import { formatDate } from "utilities/Date";
 
-const OutsideDSOWaiver = () => {
+export const OutsideDSOWaiver = () => {
   const approvedWaiver = useWatch<CAFTOPDistribution, "ApprovedWaiver">({
     name: "ApprovedWaiver",
   });
@@ -39,5 +39,3 @@ const OutsideDSOWaiver = () => {
     </>
   );
 };
-
-export default OutsideDSOWaiver;

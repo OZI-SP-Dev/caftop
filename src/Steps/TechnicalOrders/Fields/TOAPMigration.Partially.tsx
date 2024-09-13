@@ -2,9 +2,9 @@ import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import BACInput from "components/BaseFormFields/BACInput";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import { useWatch } from "react-hook-form";
-import TOAPMigrationWaiver from "./TOAPMigration.Waiver";
+import { TOAPMigrationWaiver } from "./TOAPMigration.Waiver";
 
-const TOAPMigrationPartially = () => {
+export const TOAPMigrationPartially = () => {
   const numWillNotBeAuthoredInTOAP = useWatch<
     CAFTOPTechnicalOrders,
     "NumWillNotBeAuthoredInTOAP"
@@ -55,5 +55,3 @@ const TOAPMigrationPartially = () => {
     </>
   );
 };
-
-export default TOAPMigrationPartially;

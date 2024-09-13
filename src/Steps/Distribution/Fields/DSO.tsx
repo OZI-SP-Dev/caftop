@@ -2,7 +2,7 @@ import { CAFTOPDistribution } from "api/CAFTOP";
 import { Radio } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 
-const DSO = () => {
+export const DSO = () => {
   return (
     <BACRadioGroup<CAFTOPDistribution>
       name="hasDSO"
@@ -15,5 +15,3 @@ const DSO = () => {
     </BACRadioGroup>
   );
 };
-
-export default DSO;
