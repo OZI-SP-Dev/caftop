@@ -5,16 +5,8 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPInfo } from "api/CAFTOP";
-import { ProgramGroup } from "./Fields/ProgramGroup";
-import { ProgramName } from "./Fields/ProgramName";
-import { ProgramElementCode } from "./Fields/ProgramElementCode";
+import * as Fields from "./Fields";
 import { useInfoPageValidation } from "utilities/Validations";
-import { LeadCommand } from "./Fields/LeadCommand";
-import { Center } from "./Fields/Center";
-import { PreparingBase } from "./Fields/PreparingBase";
-import { PreparingOffice } from "./Fields/PreparingOffice";
-import { ProgramManagers } from "./Fields/ProgramManagers";
-import { TechOrderManager } from "./Fields/TechOrderManager";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
 const Info = (props: ICAFTOPWizardStep) => {
@@ -48,31 +40,31 @@ const Info = (props: ICAFTOPWizardStep) => {
         >
           <div className="requestFormContainer">
             <div className="requestFieldContainer">
-              <ProgramGroup />
+              <Fields.ProgramGroup />
             </div>
             <div className="requestFieldContainer">
-              <ProgramName />
+              <Fields.ProgramName />
             </div>
             <div className="requestFieldContainer">
-              <ProgramElementCode />
+              <Fields.ProgramElementCode />
             </div>
             <div className="requestFieldContainer">
-              <LeadCommand />
+              <Fields.LeadCommand />
             </div>
             <div className="requestFieldContainer">
-              <Center />
+              <Fields.Center />
             </div>
             <div className="requestFieldContainer">
-              <PreparingBase />
+              <Fields.PreparingBase />
             </div>
             <div className="requestFieldContainer">
-              <PreparingOffice />
+              <Fields.PreparingOffice />
             </div>
             <div className="requestFieldContainer">
-              <ProgramManagers />
+              <Fields.ProgramManagers />
             </div>
             <div className="requestFieldContainer">
-              <TechOrderManager />
+              <Fields.TechOrderManager />
             </div>
           </div>
         </form>

@@ -5,14 +5,15 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPDistribution } from "api/CAFTOP";
+import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP";
 import { useDistributionPageValidation } from "utilities/Validations";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
 const Distribution = (props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
   const currentCAFTOP = { ...globalState.Distribution };
+  const notElectronicOnly = isNotElectronicOnly(globalState);
 
   const submitSuccess: SubmitHandler<CAFTOPDistribution> = (data, e?) => {
     dispatch({
@@ -47,6 +48,14 @@ const Distribution = (props: ICAFTOPWizardStep) => {
           <div className="requestFormContainer">
             <Fields.DistCost />
           </div>
+          {notElectronicOnly && (
+            <>
+              <div className="requestFieldContainer">
+                <Fields.DSO />
+              </div>
+              <Fields.OutsideDSO />
+            </>
+          )}
         </form>
       </FormProvider>
     </>

@@ -1,8 +1,8 @@
 import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
-import TOAPMigrationWaiver from "./TOAPMigration.Waiver";
+import { TOAPMigrationWaiver } from "./TOAPMigration.Waiver";
 
-const TOAPMigrationNo = () => {
+export const TOAPMigrationNo = () => {
   return (
     <>
       <TOAPMigrationWaiver />
@@ -21,5 +21,3 @@ const TOAPMigrationNo = () => {
     </>
   );
 };
-
-export default TOAPMigrationNo;

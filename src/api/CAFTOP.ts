@@ -1,5 +1,6 @@
-import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers";
-import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager";
+import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
+import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
+import { GlobalStateInterface } from "stateManagement/types";
 import { z } from "zod";
 
 // Generate the type definition from the Zod rules
@@ -51,6 +52,10 @@ export type CAFTOPLabor = {
     ContractExpiration: Date | null;
   };
   OrganicSupport: { Office: string };
+  MILSTD3048Status: "current" | "plan" | "noplan" | "";
+  MILSTD3048Location: "withinTDSSe" | "withinOther" | "outside" | "";
+  MILSTD3048Contractor: string;
+  MILSTD3048SourceData: string;
   HasAdditionalLabor: "yes" | "no" | "";
   AdditionalLabor: { Title: string; Description: string; Impact: string }[];
 };
@@ -58,4 +63,25 @@ export type CAFTOPLabor = {
 export type CAFTOPDistribution = {
   hasDistCost: "yes" | "no" | "";
   DistCost: number | "";
+  hasDSO: "yes" | "no" | "";
+  hasOutsideDSO: "yes" | "no" | "";
+  ApprovedWaiver: "yes" | "no" | "";
+  ApprovedWaiverDate: Date | null;
+};
+
+export type CAFTOPLRDP = {
+  hasLRDP: "yes" | "no" | "";
+  LRDP: { Name: string; SeqNum: string }[];
+};
+
+/** Function to determine if the CAFTOP is not Electronic Only (aka has Paper and/or CD/DVD)
+ * @param data The CAFTOP data
+ * @returns boolean If the CAFTOP has Paper and/or CD/DVD TOs
+ */
+export const isNotElectronicOnly = (data: GlobalStateInterface) => {
+  return (
+    (data.TechnicalOrders.NumCDDVD || 0) +
+      (data.TechnicalOrders.NumPaper || 0) >
+    0
+  );
 };

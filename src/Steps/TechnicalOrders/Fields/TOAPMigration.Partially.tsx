@@ -2,9 +2,9 @@ import { CAFTOPTechnicalOrders } from "api/CAFTOP";
 import BACInput from "components/BaseFormFields/BACInput";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import { useWatch } from "react-hook-form";
-import TOAPMigrationWaiver from "./TOAPMigration.Waiver";
+import { TOAPMigrationWaiver } from "./TOAPMigration.Waiver";
 
-const TOAPMigrationPartially = () => {
+export const TOAPMigrationPartially = () => {
   const numWillNotBeAuthoredInTOAP = useWatch<
     CAFTOPTechnicalOrders,
     "NumWillNotBeAuthoredInTOAP"
@@ -26,7 +26,7 @@ const TOAPMigrationPartially = () => {
       <div className="requestFieldContainer">
         <BACInput<CAFTOPTechnicalOrders>
           name="NumNotAuthoredInTOAP"
-          labelText="Number of TOs not authored in TOAP"
+          labelText="Number of TOs to be authored in TOAP through attrition"
           rules={{ required: true }}
           fieldProps={{ type: "number", min: 0, step: 1 }}
         />
@@ -34,7 +34,7 @@ const TOAPMigrationPartially = () => {
       <div className="requestFieldContainer">
         <BACInput<CAFTOPTechnicalOrders>
           name="NumWillNotBeAuthoredInTOAP"
-          labelText="Number of TOs that will not be authored in TOAP"
+          labelText="Number of TOs currently not planned for TOAP"
           rules={{ required: true }}
           fieldProps={{ type: "number", min: 0, step: 1 }}
         />
@@ -55,5 +55,3 @@ const TOAPMigrationPartially = () => {
     </>
   );
 };
-
-export default TOAPMigrationPartially;

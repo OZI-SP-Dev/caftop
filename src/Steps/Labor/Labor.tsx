@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPLabor } from "api/CAFTOP";
-import * as Fields from "./Fields/Fields";
+import * as Fields from "./Fields";
 import { useLaborPageValidation } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "Steps/Steps";
 
@@ -42,6 +42,7 @@ const Labor = (props: ICAFTOPWizardStep) => {
             </div>
             <Fields.OrganicSupport />
             <Fields.ContractorSupport />
+            <Fields.MILSTD3048 />
             <Fields.AdditionalLabor />
           </div>
         </form>

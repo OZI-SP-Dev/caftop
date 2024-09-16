@@ -1,18 +1,7 @@
-import { z } from "zod";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import { CAFTOPDescription } from "api/CAFTOP";
 
-const baseRule = z.string().trim();
-
-export const configurationplanRuleSave = z.object({
-  ConfigurationPlan: baseRule,
-});
-
-export const configurationplanRuleFinal = z.object({
-  ConfigurationPlan: baseRule.min(1, "You must enter a Configuration Plan"),
-});
-
-const ConfigurationPlan = () => {
+export const ConfigurationPlan = () => {
   return (
     <BACTextarea<CAFTOPDescription>
       name="ConfigurationPlan"
@@ -26,5 +15,3 @@ const ConfigurationPlan = () => {
     />
   );
 };
-
-export default ConfigurationPlan;

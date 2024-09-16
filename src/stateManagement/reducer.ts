@@ -4,6 +4,7 @@ import {
   CAFTOPTechnicalOrders,
   CAFTOPDistribution,
   CAFTOPLabor,
+  CAFTOPLRDP,
 } from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
@@ -53,6 +54,10 @@ export const Labor: CAFTOPLabor = {
     ContractExpiration: null,
   },
   OrganicSupport: { Office: "" },
+  MILSTD3048Status: "",
+  MILSTD3048Location: "",
+  MILSTD3048Contractor: "",
+  MILSTD3048SourceData: "",
   HasAdditionalLabor: "",
   AdditionalLabor: [],
 };
@@ -60,6 +65,15 @@ export const Labor: CAFTOPLabor = {
 export const Distribution: CAFTOPDistribution = {
   hasDistCost: "",
   DistCost: "",
+  hasDSO: "",
+  hasOutsideDSO: "",
+  ApprovedWaiver: "",
+  ApprovedWaiverDate: null,
+};
+
+export const LRDP: CAFTOPLRDP = {
+  hasLRDP: "",
+  LRDP: [],
 };
 
 export const initialState: GlobalStateInterface = {
@@ -68,6 +82,7 @@ export const initialState: GlobalStateInterface = {
   TechnicalOrders,
   Labor,
   Distribution,
+  LRDP,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",
