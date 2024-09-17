@@ -22,11 +22,16 @@ const finalEmailRule = z
   .min(1, "Email is required")
   .max(320, "Email cannot exceed 320 characters");
 
-export const TechOrderManagerRuleFinal = z.object({
-  TechOrderManager: z.object({
-    FirstName: firstNameRule,
-    LastName: lastNameRule,
-    DSN: dsnRule,
-    Email: finalEmailRule,
-  }),
+export const TechOrderManagersRuleFinal = z.object({
+  TechOrderManagers: z
+    .array(
+      z.object({
+        FirstName: firstNameRule,
+        LastName: lastNameRule,
+        DSN: dsnRule,
+        Email: finalEmailRule,
+      })
+    )
+    .max(8, "No more than 8 Technical Order Managers are allowed")
+    .min(1, "At least 1 Technical Order Manager must be selected"),
 });

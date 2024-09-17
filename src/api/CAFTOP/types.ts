@@ -1,11 +1,11 @@
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
-import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
+import { TechOrderManagersRuleFinal } from "Steps/Info/Fields/TechOrderManagers.Validation";
 import { GlobalStateInterface } from "stateManagement/types";
 import { z } from "zod";
 
 // Generate the type definition from the Zod rules
 type ProgramManagers = z.infer<typeof ProgramManagersRuleFinal>;
-type TechOrderManager = z.infer<typeof TechOrderManagerRuleFinal>;
+type TechOrderManagers = z.infer<typeof TechOrderManagersRuleFinal>;
 
 export type CAFTOPInfo = {
   ProgramGroup: string;
@@ -16,7 +16,7 @@ export type CAFTOPInfo = {
   PreparingBase: string;
   PreparingOffice: string;
 } & ProgramManagers &
-  TechOrderManager;
+  TechOrderManagers;
 
 export type CAFTOPDescription = {
   Description: string;

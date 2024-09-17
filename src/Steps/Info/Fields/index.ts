@@ -7,4 +7,4 @@ export * from "./ProgramElementCode";
 export * from "./ProgramGroup";
 export * from "./ProgramManagers";
 export * from "./ProgramName";
-export * from "./TechOrderManager";
+export * from "./TechOrderManagers";

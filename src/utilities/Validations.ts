@@ -26,7 +26,7 @@ import { ProgramElementCodeRuleFinal } from "Steps/Info/Fields/ProgramElementCod
 import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup.Validation";
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName.Validation";
-import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
+import { TechOrderManagersRuleFinal } from "Steps/Info/Fields/TechOrderManagers.Validation";
 import { CAFTOPInfo, isNotElectronicOnly } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
@@ -82,7 +82,7 @@ export const useInfoPageValidation = () => {
     .merge(PreparingBaseRuleFinal)
     .merge(PreparingOfficeRuleFinal)
     .merge(ProgramManagersRuleFinal)
-    .merge(TechOrderManagerRuleFinal);
+    .merge(TechOrderManagersRuleFinal);
 
   return useAddlPECValidation(schema);
 };

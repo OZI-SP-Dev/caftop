@@ -64,7 +64,7 @@ const Info = (props: ICAFTOPWizardStep) => {
               <Fields.ProgramManagers />
             </div>
             <div className="requestFieldContainer">
-              <Fields.TechOrderManager />
+              <Fields.TechOrderManagers />
             </div>
           </div>
         </form>
