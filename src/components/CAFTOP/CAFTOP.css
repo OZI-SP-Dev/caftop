@@ -1,0 +1,35 @@
+.caftopContainer {
+    display: grid;
+    grid-template-columns: 20em 1fr;
+    grid-template-areas:
+        "navBar formContainer";
+    column-gap: 0.5em;
+    row-gap: 0.5em;
+    margin: 0em;
+    height: calc(100vh - 4.5em);
+}
+
+.navBar {
+    grid-area: navBar;
+    position: relative;
+    height: auto;
+    margin: 0.5em;
+}
+
+.formContainer {
+    grid-area: formContainer;
+    display: flex;
+    flex-direction: column;
+    overflow: auto
+}
+
+.formContent {
+    flex-direction: column;
+    padding: "16px";
+    position: "relative";
+}
+
+.formButtons {
+    display: flex;
+    flex-direction: row;
+}

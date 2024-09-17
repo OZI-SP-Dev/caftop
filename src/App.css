@@ -1,40 +1,20 @@
 .appContainer {
     display: grid;
-    grid-template-columns: 20em 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
-        "header header"
-        "navBar formContainer";
-    column-gap: 0.5em;
+        "header"
+        "contentArea";
     row-gap: 0.5em;
     margin: 0em;
     height: 100vh;
-}
-
-.navBar {
-    grid-area: navBar;
-    position: relative;
-    height: calc(100vh - 4.5em);
-    margin: 0.5em;
 }
 
 .appHeader {
     grid-area: header;
 }
 
-.formContainer {
-    grid-area: formContainer;
-    display: flex;
-    flex-direction: column;
-    overflow: auto
-}
-
-.formContent {
-    flex-direction: column;
-    padding: "16px";
-    position: "relative";
-}
-
-.formButtons {
-    display: flex;
-    flex-direction: row;
+.appContent {
+    grid-area: contentArea;
+    height: calc(100vh - 4.5em);
+    overflow: auto;
 }
