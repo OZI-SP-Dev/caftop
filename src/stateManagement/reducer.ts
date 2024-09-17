@@ -16,8 +16,8 @@ const Info: CAFTOPInfo = {
   Center: "",
   PreparingBase: "",
   PreparingOffice: "",
-  ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
-  TechOrderManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
+  ProgramManagers: [{ FirstName: "", LastName: "", Phone: "", Email: "" }],
+  TechOrderManagers: [{ FirstName: "", LastName: "", Phone: "", Email: "" }],
 };
 
 export const Description: CAFTOPDescription = {

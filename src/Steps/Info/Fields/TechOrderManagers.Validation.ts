@@ -10,11 +10,11 @@ const lastNameRule = z
   .trim()
   .min(1, "Last Name is required")
   .max(80, "Last Name cannot exceed 80 characters");
-const dsnRule = z
+const phoneRule = z
   .string()
   .trim()
-  .regex(/\(\d{3}\)\s\d{3}-\d{4}/, "DSN must be in the format (###) ###-####")
-  .min(1, "DSN is required");
+  .regex(/\(\d{3}\)\s\d{3}-\d{4}/, "Phone must be in the format (###) ###-####")
+  .min(1, "Phone is required");
 const finalEmailRule = z
   .string()
   .trim()
@@ -28,7 +28,7 @@ export const TechOrderManagersRuleFinal = z.object({
       z.object({
         FirstName: firstNameRule,
         LastName: lastNameRule,
-        DSN: dsnRule,
+        Phone: phoneRule,
         Email: finalEmailRule,
       })
     )

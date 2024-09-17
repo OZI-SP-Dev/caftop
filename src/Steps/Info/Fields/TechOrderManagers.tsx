@@ -2,10 +2,10 @@ import { Text, Button } from "@fluentui/react-components";
 import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
-import { SyntheticEvent } from "react";
 import { PopupPeoplePicker } from "components/PeoplePicker/PopupPeoplePicker";
 import { getSPUserProfileData } from "api/SPWebContext";
 import { Person } from "api/UserApi";
+import { formatPhone, onPhoneInput } from "utilities/Phone";
 
 export const TechOrderManagers = () => {
   const myForm = useFormContext();
@@ -14,35 +14,6 @@ export const TechOrderManagers = () => {
     name: "TechOrderManagers",
     control: myForm.control,
   });
-
-  const formatDSN = (dsn: string) => {
-    let endsDash = false;
-    let retVal = dsn;
-    if (dsn.match(/-$/)) {
-      endsDash = true;
-    }
-    retVal = dsn.replace(/\D/g, "");
-    const size = retVal.length;
-    if (size > 3 || endsDash) {
-      // If we have more than 3 numbers, or we have either (###) or (###) ###-
-      // The second condition allows them to type a dash, otherwise the code would "reject" it
-      retVal = "(" + retVal.slice(0, 3) + ") " + retVal.slice(3, 10);
-    }
-    if (size > 6 || (size > 5 && endsDash)) {
-      retVal = retVal.slice(0, 9) + "-" + retVal.slice(9);
-    }
-    return retVal;
-  };
-
-  const onDSNInput = (e: SyntheticEvent<HTMLInputElement>) => {
-    const formattedDSN = formatDSN(e.currentTarget.value);
-    const start = e.currentTarget.selectionStart ?? 1;
-    const length = e.currentTarget.value.length;
-    e.currentTarget.value = formattedDSN;
-    if (start < length) {
-      e.currentTarget.setSelectionRange(start, start);
-    }
-  };
 
   const setTechOrderManagerValues = async (
     techOrderManager: string,
@@ -77,7 +48,7 @@ export const TechOrderManagers = () => {
     myForm.setValue(techOrderManager + ".LastName", lastName, {
       shouldValidate: true,
     });
-    myForm.setValue(techOrderManager + ".DSN", formatDSN(workPhone), {
+    myForm.setValue(techOrderManager + ".Phone", formatPhone(workPhone), {
       shouldValidate: true,
     });
     myForm.setValue(techOrderManager + ".Email", person[0].EMail, {
@@ -122,10 +93,10 @@ export const TechOrderManagers = () => {
           </div>
           <div className="requestFieldContainer">
             <BACInput<CAFTOPInfo>
-              name={`TechOrderManagers.${index}.DSN`}
-              labelText="DSN"
+              name={`TechOrderManagers.${index}.Phone`}
+              labelText="Phone"
               rules={{ required: true }}
-              fieldProps={{ onInput: onDSNInput, type: "tel" }}
+              fieldProps={{ onInput: onPhoneInput, type: "tel" }}
             />
           </div>
           <div className="requestFieldContainer">
@@ -150,7 +121,7 @@ export const TechOrderManagers = () => {
           <Button
             appearance="primary"
             onClick={() =>
-              append({ FirstName: "", LastName: "", DSN: "", Email: "" })
+              append({ FirstName: "", LastName: "", Phone: "", Email: "" })
             }
           >
             Add Technical Order Manager
