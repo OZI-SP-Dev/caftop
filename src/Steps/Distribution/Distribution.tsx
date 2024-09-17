@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP";
+import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP/types";
 import { useDistributionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";

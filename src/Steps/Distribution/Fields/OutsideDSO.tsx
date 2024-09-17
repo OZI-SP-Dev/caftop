@@ -1,4 +1,4 @@
-import { CAFTOPDistribution } from "api/CAFTOP";
+import { CAFTOPDistribution } from "api/CAFTOP/types";
 import { Radio } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { OutsideDSOWaiver } from "./OutsideDSO.Waiver";

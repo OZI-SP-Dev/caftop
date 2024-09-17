@@ -27,7 +27,7 @@ import { ProgramGroupRuleFinal } from "Steps/Info/Fields/ProgramGroup.Validation
 import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
 import { ProgramNameRuleFinal } from "Steps/Info/Fields/ProgramName.Validation";
 import { TechOrderManagerRuleFinal } from "Steps/Info/Fields/TechOrderManager.Validation";
-import { CAFTOPInfo, isNotElectronicOnly } from "api/CAFTOP";
+import { CAFTOPInfo, isNotElectronicOnly } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
 import { globalContext } from "stateManagement/GlobalStore";

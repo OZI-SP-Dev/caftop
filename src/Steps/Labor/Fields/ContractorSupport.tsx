@@ -1,5 +1,5 @@
 import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPLabor } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP/types";
 import { useWatch } from "react-hook-form";
 import { Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";

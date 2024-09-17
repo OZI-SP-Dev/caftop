@@ -1,4 +1,4 @@
-import { CAFTOPTechnicalOrders } from "api/CAFTOP";
+import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { Radio, Text } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";

@@ -1,5 +1,5 @@
 import BACDropdown from "components/BaseFormFields/BACDropdown";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { Option } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";

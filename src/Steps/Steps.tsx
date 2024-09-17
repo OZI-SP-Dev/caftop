@@ -1,4 +1,4 @@
-import { CAFTOPDescription, CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPDescription, CAFTOPInfo } from "api/CAFTOP/types";
 import {
   ReactElement,
   Suspense,

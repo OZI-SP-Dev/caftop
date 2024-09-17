@@ -1,5 +1,5 @@
 import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useFormContext } from "react-hook-form";
 

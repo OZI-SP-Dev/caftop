@@ -4,7 +4,7 @@ import { globalContext } from "stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import * as Fields from "./Fields";
 import { useInfoPageValidation } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "Steps/Steps";

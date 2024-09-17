@@ -5,7 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPDescription } from "api/CAFTOP/types";
 import { useDescriptionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields";
 import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";

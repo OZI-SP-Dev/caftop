@@ -5,7 +5,7 @@ import {
   CAFTOPDistribution,
   CAFTOPLabor,
   CAFTOPLRDP,
-} from "api/CAFTOP";
+} from "api/CAFTOP/types";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
 const Info: CAFTOPInfo = {

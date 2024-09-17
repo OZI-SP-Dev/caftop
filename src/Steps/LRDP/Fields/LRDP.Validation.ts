@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CAFTOPLRDP } from "api/CAFTOP";
+import { CAFTOPLRDP } from "api/CAFTOP/types";
 import { LRDP as LRDPDefault } from "stateManagement/reducer";
 import { populateWithDefaultValue } from "utilities/Validation";
 

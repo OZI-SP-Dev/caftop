@@ -1,5 +1,5 @@
 import { Text, Button } from "@fluentui/react-components";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import BACInput from "components/BaseFormFields/BACInput";
 import { SyntheticEvent } from "react";

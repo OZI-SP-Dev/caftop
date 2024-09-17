@@ -1,5 +1,5 @@
 import BACTextarea from "components/BaseFormFields/BACTextarea";
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPDescription } from "api/CAFTOP/types";
 
 export const Introduction = () => {
   return (

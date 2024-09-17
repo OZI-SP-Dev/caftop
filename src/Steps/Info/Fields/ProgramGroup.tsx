@@ -1,5 +1,5 @@
 import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramGroups } from "api/ProgramGroups";
 
 export const ProgramGroup = () => {
