@@ -69,6 +69,11 @@ export type CAFTOPDistribution = {
   ApprovedWaiverDate: Date | null;
 };
 
+export type CAFTOPImprovements = {
+  HasImprovements: "yes" | "no" | "";
+  Improvements: { Title: string; Description: string; Impact: string }[];
+};
+
 export type CAFTOPLRDP = {
   hasLRDP: "yes" | "no" | "";
   LRDP: { Name: string; SeqNum: string }[];

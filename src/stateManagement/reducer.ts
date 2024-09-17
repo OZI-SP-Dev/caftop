@@ -3,6 +3,7 @@ import {
   CAFTOPDescription,
   CAFTOPTechnicalOrders,
   CAFTOPDistribution,
+  CAFTOPImprovements,
   CAFTOPLabor,
   CAFTOPLRDP,
 } from "api/CAFTOP/types";
@@ -71,6 +72,11 @@ export const Distribution: CAFTOPDistribution = {
   ApprovedWaiverDate: null,
 };
 
+export const Improvements: CAFTOPImprovements = {
+  HasImprovements: "",
+  Improvements: [],
+};
+
 export const LRDP: CAFTOPLRDP = {
   hasLRDP: "",
   LRDP: [],
@@ -82,6 +88,7 @@ export const initialState: GlobalStateInterface = {
   TechnicalOrders,
   Labor,
   Distribution,
+  Improvements,
   LRDP,
   wizardStep: 0,
   wizardMaxStep: 0,

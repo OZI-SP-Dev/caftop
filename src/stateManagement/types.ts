@@ -5,6 +5,7 @@ import {
   CAFTOPLabor,
   CAFTOPDistribution,
   CAFTOPLRDP,
+  CAFTOPImprovements,
 } from "api/CAFTOP/types";
 import { Dispatch } from "react";
 
@@ -14,6 +15,7 @@ export interface GlobalStateInterface {
   TechnicalOrders: CAFTOPTechnicalOrders;
   Labor: CAFTOPLabor;
   Distribution: CAFTOPDistribution;
+  Improvements: CAFTOPImprovements;
   LRDP: CAFTOPLRDP;
   wizardStep: number;
   wizardMaxStep: number;

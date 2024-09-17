@@ -41,6 +41,7 @@ import {
   distcostRuleFinal,
   distcostRuleSave,
 } from "Steps/Distribution/Fields/DistCost.Validation";
+import { improvementsRuleFinal } from "Steps/Improvements/Fields/Improvements.Validation";
 import { additionalLaborRuleFinal } from "Steps/Labor/Fields/AdditionalLabor.Validation";
 import {
   systemmissiondescriptionRuleFinal,
@@ -134,6 +135,19 @@ export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
   }
 };
 
+export const useImprovementsPageValidation = (
+  mode?: GlobalStateInterface["mode"]
+) => {
+  const { globalState } = useContext(globalContext);
+
+  // If we are in save mode OR if we didn't call validation with the "submit" mode
+  if (globalState.mode === "save" && mode !== "submit") {
+    return improvementsRuleFinal;
+  } else {
+    return improvementsRuleFinal;
+  }
+};
+
 export const useDistributionPageValidation = (
   mode?: GlobalStateInterface["mode"]
 ) => {
@@ -192,6 +206,11 @@ export const useCheckComplete = () => {
       pageIndex: 5,
       check: useDistributionPageValidation("submit"),
       data: globalState.Distribution,
+    },
+    {
+      pageIndex: 6,
+      check: useImprovementsPageValidation("submit"),
+      data: globalState.Improvements,
     },
     {
       pageIndex: 8,
