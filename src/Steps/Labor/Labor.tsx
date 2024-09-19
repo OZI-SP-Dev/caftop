@@ -26,6 +26,10 @@ const Labor = (props: ICAFTOPWizardStep) => {
     mode: "onChange",
   });
 
+  if (globalState.mode === "submit") {
+    void myForm.trigger();
+  }
+
   return (
     <>
       <Title1>Labor</Title1>
