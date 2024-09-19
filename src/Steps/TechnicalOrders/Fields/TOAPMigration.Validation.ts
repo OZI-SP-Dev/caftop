@@ -22,9 +22,9 @@ const numberRulesFinal = (fieldName: string) => {
 };
 
 const blankApprovedWaiver = z.object({
-  ApprovedWaiver: populateWithDefaultValue(TechnicalOrders.ApprovedWaiver),
-  ApprovedWaiverDate: populateWithDefaultValue(
-    TechnicalOrders.ApprovedWaiverDate
+  TOApprovedWaiver: populateWithDefaultValue(TechnicalOrders.TOApprovedWaiver),
+  TOApprovedWaiverDate: populateWithDefaultValue(
+    TechnicalOrders.TOApprovedWaiverDate
   ),
 });
 
@@ -68,60 +68,60 @@ const toapFullyAuthoredRuleFinal = z
   .merge(blankTOExplanation)
   .merge(blankTOPlanToConvert);
 
-const approvedWaiverUnionSave = z.discriminatedUnion("ApprovedWaiver", [
+const approvedWaiverUnionSave = z.discriminatedUnion("TOApprovedWaiver", [
   z
     .object({
-      ApprovedWaiver: z.literal("yes"),
-      ApprovedWaiverDate: z.date().or(z.null()),
+      TOApprovedWaiver: z.literal("yes"),
+      TOApprovedWaiverDate: z.date().or(z.null()),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.enum(["", "no"]),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        TechnicalOrders.ApprovedWaiverDate
+      TOApprovedWaiver: z.enum(["", "no"]),
+      TOApprovedWaiverDate: populateWithDefaultValue(
+        TechnicalOrders.TOApprovedWaiverDate
       ),
     })
     .passthrough(),
 ]);
 
-const approvedWaiverUnionFinal = z.discriminatedUnion("ApprovedWaiver", [
+const approvedWaiverUnionFinal = z.discriminatedUnion("TOApprovedWaiver", [
   z
     .object({
-      ApprovedWaiver: z.literal("yes"),
-      ApprovedWaiverDate: z.date({
+      TOApprovedWaiver: z.literal("yes"),
+      TOApprovedWaiverDate: z.date({
         invalid_type_error: "You must select an Approved Waiver date",
       }),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.literal("no"),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        TechnicalOrders.ApprovedWaiverDate
+      TOApprovedWaiver: z.literal("no"),
+      TOApprovedWaiverDate: populateWithDefaultValue(
+        TechnicalOrders.TOApprovedWaiverDate
       ),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.literal(""),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        TechnicalOrders.ApprovedWaiverDate
+      TOApprovedWaiver: z.literal(""),
+      TOApprovedWaiverDate: populateWithDefaultValue(
+        TechnicalOrders.TOApprovedWaiverDate
       ),
     })
     .passthrough(),
 ]);
 
 const approvedWaiverSave = z.object({
-  ApprovedWaiver: z.enum(["yes", "no", ""]),
-  ApprovedWaiverDate: z.any(),
+  TOApprovedWaiver: z.enum(["yes", "no", ""]),
+  TOApprovedWaiverDate: z.any(),
 });
 
 const approvedWaiverFinal = z.object({
-  ApprovedWaiver: z.enum(["yes", "no"], {
+  TOApprovedWaiver: z.enum(["yes", "no"], {
     message: "You must select whether there is an approved waiver",
   }),
-  ApprovedWaiverDate: z.any(),
+  TOApprovedWaiverDate: z.any(),
 });
 
 export const toapRuleSave = z

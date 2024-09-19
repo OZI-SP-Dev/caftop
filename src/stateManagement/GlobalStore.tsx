@@ -23,16 +23,16 @@ function initializeState() {
   }
 
   // Convert the date string back to a Date object
-  if (fromLocalStorage?.TechnicalOrders?.ApprovedWaiverDate) {
-    fromLocalStorage.TechnicalOrders.ApprovedWaiverDate = new Date(
-      fromLocalStorage.TechnicalOrders.ApprovedWaiverDate
+  if (fromLocalStorage?.TechnicalOrders?.TOApprovedWaiverDate) {
+    fromLocalStorage.TechnicalOrders.TOApprovedWaiverDate = new Date(
+      fromLocalStorage.TechnicalOrders.TOApprovedWaiverDate
     );
   }
 
   // Convert the date string back to a Date object
-  if (fromLocalStorage?.Distribution?.ApprovedWaiverDate) {
-    fromLocalStorage.Distribution.ApprovedWaiverDate = new Date(
-      fromLocalStorage.Distribution.ApprovedWaiverDate
+  if (fromLocalStorage?.Distribution?.ODSOApprovedWaiverDate) {
+    fromLocalStorage.Distribution.ODSOApprovedWaiverDate = new Date(
+      fromLocalStorage.Distribution.ODSOApprovedWaiverDate
     );
   }
 

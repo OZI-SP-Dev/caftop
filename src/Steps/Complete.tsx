@@ -61,28 +61,28 @@ const Complete = (props: ICAFTOPWizardStep) => {
         ? globalState.TechnicalOrders.NumCDDVD
         : 0);
 
-    const approvedWaiverDate = formatDate(
-      globalState.TechnicalOrders.ApprovedWaiverDate ?? undefined
+    const approvedTOWaiverDate = formatDate(
+      globalState.TechnicalOrders.TOApprovedWaiverDate ?? undefined
     );
 
-    const approvedDSOWaiverDate = formatDate(
-      globalState.Distribution.ApprovedWaiverDate ?? undefined
+    const approvedODSOWaiverDate = formatDate(
+      globalState.Distribution.ODSOApprovedWaiverDate ?? undefined
     );
 
     const ctrExpirationDate = formatDate(
       globalState.Labor.ContractorSupport.ContractExpiration ?? undefined
     );
 
-    const technicalOrders = {
+    const technicalOrders = () => ({
       ...globalState.TechnicalOrders,
       TotalCount: totalCount,
       TotalTypeCount: totalTypeCount,
-      ApprovedWaiverDate: approvedWaiverDate,
-    };
+      TOApprovedWaiverDate: approvedTOWaiverDate,
+    });
 
     const distribution = {
       ...globalState.Distribution,
-      ApprovedWaiverDate: approvedDSOWaiverDate,
+      ODSOApprovedWaiverDate: approvedODSOWaiverDate,
     };
 
     const labor = {

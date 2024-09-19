@@ -35,8 +35,8 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   NumUnpublished: "",
   NumInAcquisition: "",
   AuthoredInTOAPType: "",
-  ApprovedWaiver: "",
-  ApprovedWaiverDate: null,
+  TOApprovedWaiver: "",
+  TOApprovedWaiverDate: null,
   NumAuthoredInTOAP: "",
   NumNotAuthoredInTOAP: "",
   NumWillNotBeAuthoredInTOAP: "",
@@ -68,8 +68,8 @@ export const Distribution: CAFTOPDistribution = {
   DistCost: "",
   hasDSO: "",
   hasOutsideDSO: "",
-  ApprovedWaiver: "",
-  ApprovedWaiverDate: null,
+  ODSOApprovedWaiver: "",
+  ODSOApprovedWaiverDate: null,
 };
 
 export const Improvements: CAFTOPImprovements = {

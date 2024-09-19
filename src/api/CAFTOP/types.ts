@@ -32,8 +32,8 @@ export type CAFTOPTechnicalOrders = {
   NumUnpublished: number | "";
   NumInAcquisition: number | "";
   AuthoredInTOAPType: "fully" | "partially" | "no" | "";
-  ApprovedWaiver: "yes" | "no" | "";
-  ApprovedWaiverDate: Date | null;
+  TOApprovedWaiver: "yes" | "no" | "";
+  TOApprovedWaiverDate: Date | null;
   NumAuthoredInTOAP: number | "";
   NumNotAuthoredInTOAP: number | "";
   NumWillNotBeAuthoredInTOAP: number | "";
@@ -65,8 +65,8 @@ export type CAFTOPDistribution = {
   DistCost: number | "";
   hasDSO: "yes" | "no" | "";
   hasOutsideDSO: "yes" | "no" | "";
-  ApprovedWaiver: "yes" | "no" | "";
-  ApprovedWaiverDate: Date | null;
+  ODSOApprovedWaiver: "yes" | "no" | "";
+  ODSOApprovedWaiverDate: Date | null;
 };
 
 export type CAFTOPImprovements = {

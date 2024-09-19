@@ -5,49 +5,51 @@ import { populateWithDefaultValue } from "utilities/Validation";
 /** Rule for when the Outside DSO is Not Applicable */
 export const outsidedsoRuleNA = z.object({
   hasOutsideDSO: populateWithDefaultValue(Distribution.hasOutsideDSO),
-  ApprovedWaiver: populateWithDefaultValue(Distribution.ApprovedWaiver),
-  ApprovedWaiverDate: populateWithDefaultValue(Distribution.ApprovedWaiverDate),
+  ODSOApprovedWaiver: populateWithDefaultValue(Distribution.ODSOApprovedWaiver),
+  ODSOApprovedWaiverDate: populateWithDefaultValue(
+    Distribution.ODSOApprovedWaiverDate
+  ),
 });
 
-const approvedWaiverUnionSave = z.discriminatedUnion("ApprovedWaiver", [
+const approvedWaiverUnionSave = z.discriminatedUnion("ODSOApprovedWaiver", [
   z
     .object({
-      ApprovedWaiver: z.literal("yes"),
-      ApprovedWaiverDate: z.date().or(z.null()),
+      ODSOApprovedWaiver: z.literal("yes"),
+      ODSOApprovedWaiverDate: z.date().or(z.null()),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.enum(["", "no"]),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        Distribution.ApprovedWaiverDate
+      ODSOApprovedWaiver: z.enum(["", "no"]),
+      ODSOApprovedWaiverDate: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiverDate
       ),
     })
     .passthrough(),
 ]);
 
-const approvedWaiverUnionFinal = z.discriminatedUnion("ApprovedWaiver", [
+const approvedWaiverUnionFinal = z.discriminatedUnion("ODSOApprovedWaiver", [
   z
     .object({
-      ApprovedWaiver: z.literal("yes"),
-      ApprovedWaiverDate: z.date({
+      ODSOApprovedWaiver: z.literal("yes"),
+      ODSOApprovedWaiverDate: z.date({
         invalid_type_error: "You must select an Approved Waiver date",
       }),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.literal("no"),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        Distribution.ApprovedWaiverDate
+      ODSOApprovedWaiver: z.literal("no"),
+      ODSOApprovedWaiverDate: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiverDate
       ),
     })
     .passthrough(),
   z
     .object({
-      ApprovedWaiver: z.literal(""),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        Distribution.ApprovedWaiverDate
+      ODSOApprovedWaiver: z.literal(""),
+      ODSOApprovedWaiverDate: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiverDate
       ),
     })
     .passthrough(),
@@ -57,15 +59,17 @@ export const outsidedsoRuleSave = z
   .discriminatedUnion("hasOutsideDSO", [
     z.object({
       hasOutsideDSO: z.enum(["no", ""]),
-      ApprovedWaiver: populateWithDefaultValue(Distribution.ApprovedWaiver),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        Distribution.ApprovedWaiverDate
+      ODSOApprovedWaiver: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiver
+      ),
+      ODSOApprovedWaiverDate: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiverDate
       ),
     }),
     z.object({
       hasOutsideDSO: z.enum(["yes"]),
-      ApprovedWaiver: z.enum(["yes", "no", ""]),
-      ApprovedWaiverDate: z.any(),
+      ODSOApprovedWaiver: z.enum(["yes", "no", ""]),
+      ODSOApprovedWaiverDate: z.any(),
     }),
   ])
   .pipe(approvedWaiverUnionSave);
@@ -74,17 +78,19 @@ export const outsidedsoRuleFinal = z
   .discriminatedUnion("hasOutsideDSO", [
     z.object({
       hasOutsideDSO: z.enum(["no"]),
-      ApprovedWaiver: populateWithDefaultValue(Distribution.ApprovedWaiver),
-      ApprovedWaiverDate: populateWithDefaultValue(
-        Distribution.ApprovedWaiverDate
+      ODSOApprovedWaiver: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiver
+      ),
+      ODSOApprovedWaiverDate: populateWithDefaultValue(
+        Distribution.ODSOApprovedWaiverDate
       ),
     }),
     z.object({
       hasOutsideDSO: z.enum(["yes"]),
-      ApprovedWaiver: z.enum(["yes", "no"], {
+      ODSOApprovedWaiver: z.enum(["yes", "no"], {
         message: "You must select whether or not you have an approved waiver",
       }),
-      ApprovedWaiverDate: z.any(),
+      ODSOApprovedWaiverDate: z.any(),
     }),
   ])
   .pipe(approvedWaiverUnionFinal);
