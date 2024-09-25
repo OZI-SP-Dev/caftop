@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TechnicalOrders } from "stateManagement/reducer";
+import { TechnicalOrders } from "api/CAFTOP/defaults";
 import { populateWithDefaultValue } from "utilities/Validation";
 
 const numberRulesSave = (fieldName: string) => {

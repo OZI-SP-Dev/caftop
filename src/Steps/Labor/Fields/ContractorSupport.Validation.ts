@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Labor } from "stateManagement/reducer";
+import { Labor } from "api/CAFTOP/defaults";
 import { populateWithDefaultValue } from "utilities/Validation";
 
 const laborCostBaseRule = z.union([
