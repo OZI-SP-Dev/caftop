@@ -1,7 +1,6 @@
-import { useContext, useState, SyntheticEvent } from "react";
+import { useContext, useState } from "react";
 import { CAFTOPFinalStep, CAFTOPWizardSteps } from "Steps/Steps";
 import { globalContext } from "stateManagement/GlobalStore";
-import { AlertModal } from "Steps/AlertModal";
 import { AppLeftNav } from "components/AppLeftNav";
 
 import { Button, Spinner } from "@fluentui/react-components";
@@ -11,7 +10,6 @@ import { useCheckComplete } from "utilities/Validations";
 function App() {
   const { globalState, dispatch } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
-  const [isChecking, setChecking] = useState(false);
   const errors = useCheckComplete();
 
   let submitButtonText: string;
@@ -28,18 +26,6 @@ function App() {
       default:
         submitButtonText = "Save and Continue";
     }
-  }
-
-  function handleAlert(accept: boolean) {
-    setChecking(false);
-    if (accept) {
-      dispatch({ type: "PURGE_STATE" });
-    }
-  }
-
-  // TODO: update to use ResetAlert
-  function handleReset(_e: SyntheticEvent<HTMLButtonElement, MouseEvent>) {
-    setChecking(true);
   }
 
   return (
@@ -94,21 +80,8 @@ function App() {
             </Button>
           }
           <div className="vr" />
-          <Button
-            appearance="secondary"
-            type="reset"
-            disabled={isLoading}
-            style={{ color: "#ef0000", outlineColor: "#ef0000" }}
-            onClick={(e) => handleReset(e)}
-          >
-            {globalState.wizardStep === CAFTOPFinalStep
-              ? "Close and Reset"
-              : "Reset"}
-          </Button>
         </div>
       </div>
-
-      <AlertModal show={isChecking} close={handleAlert} />
     </div>
   );
 }

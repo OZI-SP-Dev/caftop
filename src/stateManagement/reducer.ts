@@ -53,9 +53,6 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
         ...action.payload,
       };
     }
-    case "PURGE_STATE": {
-      return initialState;
-    }
     case "CHANGE_MODE": {
       let mode = state.mode;
       mode = action.payload?.mode ?? mode;
