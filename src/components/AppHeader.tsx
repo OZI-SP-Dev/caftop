@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Text,
   Tooltip,
   makeStyles,
   Popover,
@@ -10,6 +9,7 @@ import {
 import { useContext } from "react";
 import { UserContext } from "providers/UserProvider";
 import { tokens } from "@fluentui/react-theme";
+import { Link } from "react-router-dom";
 
 /* FluentUI Styling */
 const useStyles = makeStyles({
@@ -63,7 +63,9 @@ export const AppHeader = () => {
   return (
     <>
       <div role="heading" aria-level={1} className={classes.navHeader}>
-        <Text className={classes.navHeaderSiteName}>{title}</Text>
+        <Link to="/" className={classes.navHeaderSiteName}>
+          {title}
+        </Link>
         <Popover trapFocus={true} closeOnScroll={true} withArrow={true}>
           <PopoverTrigger>
             <Tooltip

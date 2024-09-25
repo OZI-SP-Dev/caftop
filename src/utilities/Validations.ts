@@ -186,34 +186,34 @@ export const useCheckComplete = () => {
   const errors = [] as CAFTOPError[];
   const { globalState } = useContext(globalContext);
   const checks = [
-    { pageIndex: 1, check: useInfoPageValidation(), data: globalState.Info },
+    { pageIndex: 0, check: useInfoPageValidation(), data: globalState.Info },
     {
-      pageIndex: 2,
+      pageIndex: 1,
       check: useDescriptionPageValidation("submit"),
       data: globalState.Description,
     },
     {
-      pageIndex: 3,
+      pageIndex: 2,
       check: useTechnicalOrdersPageValidation("submit"),
       data: globalState.TechnicalOrders,
     },
     {
-      pageIndex: 4,
+      pageIndex: 3,
       check: useLaborPageValidation("submit"),
       data: globalState.Labor,
     },
     {
-      pageIndex: 5,
+      pageIndex: 4,
       check: useDistributionPageValidation("submit"),
       data: globalState.Distribution,
     },
     {
-      pageIndex: 6,
+      pageIndex: 5,
       check: useImprovementsPageValidation("submit"),
       data: globalState.Improvements,
     },
     {
-      pageIndex: 8,
+      pageIndex: 7,
       check: useLRDPPageValidation("submit"),
       data: globalState.LRDP,
     },

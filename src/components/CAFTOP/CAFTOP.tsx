@@ -20,9 +20,6 @@ function App() {
       case CAFTOPFinalStep:
         submitButtonText = "Generate Document";
         break;
-      case 0:
-        submitButtonText = "Start CAFTOP";
-        break;
       default:
         submitButtonText = "Save and Continue";
     }

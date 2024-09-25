@@ -63,7 +63,6 @@ const blankdHandlers = {
   handleError: blankHandleErr,
 };
 export const WizardSteps: WizardStep[] = [
-  { id: "Home", name: "Home", jsxObj: <GenericStep {...blankdHandlers} /> },
   {
     id: "Info",
     name: "CAFTOP Information Page",

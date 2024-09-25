@@ -19,6 +19,7 @@ const router = createHashRouter(
     <Route element={<MainLayout />}>
       <Route path="/" element={<Home />} />
       <Route path="item/:itemId" element={<CAFTOP />} />
+      <Route path="new" element={<CAFTOP />} />
       <Route
         path="*" // Catch-all to display homepage if no match
         element={<Home />}
