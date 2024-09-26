@@ -38,105 +38,107 @@ const Complete = (_props: ICAFTOPWizardStep) => {
   }
 
   function generateDocument() {
-    const caftopData = caftop.data as CAFTOP;
-    const outFileName = [
-      "27", // TODO: Replace Year (BAC-137)
-      caftopData.Info.LeadCommand,
-      caftopData.Info.Center,
-      caftopData.Info.ProgramElementCode,
-      caftopData.Info.ProgramName,
-      ".docx",
-    ].join("_");
+    if (caftop.data) {
+      const caftopData = caftop.data;
+      const outFileName = [
+        "27", // TODO: Replace Year (BAC-137)
+        caftopData.Info.LeadCommand,
+        caftopData.Info.Center,
+        caftopData.Info.ProgramElementCode,
+        caftopData.Info.ProgramName,
+        ".docx",
+      ].join("_");
 
-    const totalCount =
-      (caftopData.TechnicalOrders.NumAuthoredInTOAP !== ""
-        ? caftopData.TechnicalOrders.NumAuthoredInTOAP
-        : 0) +
-      (caftopData.TechnicalOrders.NumNotAuthoredInTOAP !== ""
-        ? caftopData.TechnicalOrders.NumNotAuthoredInTOAP
-        : 0) +
-      (caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
-        ? caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP
-        : 0) +
-      (caftopData.TechnicalOrders.NumUnpublished !== ""
-        ? caftopData.TechnicalOrders.NumUnpublished
-        : 0);
+      const totalCount =
+        (caftopData.TechnicalOrders.NumAuthoredInTOAP !== ""
+          ? caftopData.TechnicalOrders.NumAuthoredInTOAP
+          : 0) +
+        (caftopData.TechnicalOrders.NumNotAuthoredInTOAP !== ""
+          ? caftopData.TechnicalOrders.NumNotAuthoredInTOAP
+          : 0) +
+        (caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
+          ? caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP
+          : 0) +
+        (caftopData.TechnicalOrders.NumUnpublished !== ""
+          ? caftopData.TechnicalOrders.NumUnpublished
+          : 0);
 
-    const totalTypeCount =
-      (caftopData.TechnicalOrders.NumPaper !== ""
-        ? caftopData.TechnicalOrders.NumPaper
-        : 0) +
-      (caftopData.TechnicalOrders.NumElectronic !== ""
-        ? caftopData.TechnicalOrders.NumElectronic
-        : 0) +
-      (caftopData.TechnicalOrders.NumCDDVD !== ""
-        ? caftopData.TechnicalOrders.NumCDDVD
-        : 0);
+      const totalTypeCount =
+        (caftopData.TechnicalOrders.NumPaper !== ""
+          ? caftopData.TechnicalOrders.NumPaper
+          : 0) +
+        (caftopData.TechnicalOrders.NumElectronic !== ""
+          ? caftopData.TechnicalOrders.NumElectronic
+          : 0) +
+        (caftopData.TechnicalOrders.NumCDDVD !== ""
+          ? caftopData.TechnicalOrders.NumCDDVD
+          : 0);
 
-    const approvedTOWaiverDate = formatDate(
-      caftopData.TechnicalOrders.TOApprovedWaiverDate ?? undefined
-    );
+      const approvedTOWaiverDate = formatDate(
+        caftopData.TechnicalOrders.TOApprovedWaiverDate ?? undefined
+      );
 
-    const approvedODSOWaiverDate = formatDate(
-      caftopData.Distribution.ODSOApprovedWaiverDate ?? undefined
-    );
+      const approvedODSOWaiverDate = formatDate(
+        caftopData.Distribution.ODSOApprovedWaiverDate ?? undefined
+      );
 
-    const ctrExpirationDate = formatDate(
-      caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
-    );
+      const ctrExpirationDate = formatDate(
+        caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
+      );
 
-    const technicalOrders = () => ({
-      ...caftopData.TechnicalOrders,
-      TotalCount: totalCount,
-      TotalTypeCount: totalTypeCount,
-      TOApprovedWaiverDate: approvedTOWaiverDate,
-    });
+      const technicalOrders = () => ({
+        ...caftopData.TechnicalOrders,
+        TotalCount: totalCount,
+        TotalTypeCount: totalTypeCount,
+        TOApprovedWaiverDate: approvedTOWaiverDate,
+      });
 
-    const distribution = {
-      ...caftopData.Distribution,
-      ODSOApprovedWaiverDate: approvedODSOWaiverDate,
-    };
+      const distribution = {
+        ...caftopData.Distribution,
+        ODSOApprovedWaiverDate: approvedODSOWaiverDate,
+      };
 
-    const labor = {
-      ...caftopData.Labor,
-      ContractorSupport: {
-        ...caftopData.Labor.ContractorSupport,
-        ContractExpiration: ctrExpirationDate,
-      },
-    };
+      const labor = {
+        ...caftopData.Labor,
+        ContractorSupport: {
+          ...caftopData.Labor.ContractorSupport,
+          ContractExpiration: ctrExpirationDate,
+        },
+      };
 
-    const dataForDocument = {
-      ...globalState,
-      TechnicalOrders: technicalOrders,
-      Labor: labor,
-      Distribution: distribution,
-    };
+      const dataForDocument = {
+        ...caftop.data,
+        TechnicalOrders: technicalOrders,
+        Labor: labor,
+        Distribution: distribution,
+      };
 
-    PizZipUtils.getBinaryContent(
-      ".\\CAFTOP_Template.docx",
-      function (error: Error, content: string) {
-        if (error) {
-          throw error;
+      PizZipUtils.getBinaryContent(
+        ".\\CAFTOP_Template.docx",
+        function (error: Error, content: string) {
+          if (error) {
+            throw error;
+          }
+          const zip = new PizZip(content);
+          const doc = new Docxtemplater(zip, {
+            paragraphLoop: true,
+            linebreaks: true,
+            parser: expressions,
+          });
+
+          // render the document
+          doc.render(dataForDocument);
+
+          const out = doc.getZip().generate({
+            type: "blob",
+            mimeType:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            compression: "DEFLATE",
+          }); //Output the document using Data-URI
+          saveAs(out, outFileName);
         }
-        const zip = new PizZip(content);
-        const doc = new Docxtemplater(zip, {
-          paragraphLoop: true,
-          linebreaks: true,
-          parser: expressions,
-        });
-
-        // render the document
-        doc.render(dataForDocument);
-
-        const out = doc.getZip().generate({
-          type: "blob",
-          mimeType:
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          compression: "DEFLATE",
-        }); //Output the document using Data-URI
-        saveAs(out, outFileName);
-      }
-    );
+      );
+    }
   }
 
   return (
