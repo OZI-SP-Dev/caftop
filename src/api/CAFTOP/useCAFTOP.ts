@@ -1,8 +1,3 @@
-// TODO -- Need to fix potential issue. Need to ensure the mutation completes before Navigation occurs to the next page
-// before it queries to see next page.  This becomes an issue in 2 scenarios
-// 1) Going straight from TO to Dist and changing if it is electronic only or not.
-// 2) Going to "Complete" with a piece of data missing - ex from Description with no Config Plan straight to "Complete"
-
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 import { spWebContext } from "api/SPWebContext";
 import { getCAFTOPFields } from "./SampleData";

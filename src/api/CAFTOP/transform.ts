@@ -203,6 +203,11 @@ export const transformRequestFromSP = <T extends Pages>(
   return {} as never;
 };
 
+// If a number is "" then we make it null -- previous check was checking truthy and zeros were becoming null
+const transformNumToSP = (number: number | "") => {
+  return typeof number === "number" ? number : null;
+};
+
 const transformInfoToSP = (data: CAFTOPInfo) => {
   const info: CAFTOPSPInfo = {
     ProgramGroup: data.ProgramGroup,
@@ -230,21 +235,19 @@ const transformDescriptionToSP = (data: CAFTOPDescription) => {
 
 const transformTechnicalOrdersToSP = (data: CAFTOPTechnicalOrders) => {
   const techOrder: CAFTOPSPTechnicalOrders = {
-    NumElectronic: data.NumElectronic ? data.NumElectronic : null,
-    NumPaper: data.NumPaper ? data.NumPaper : null,
-    NumCDDVD: data.NumCDDVD ? data.NumCDDVD : null,
-    NumUnpublished: data.NumUnpublished ? data.NumUnpublished : null,
-    NumInAcquisition: data.NumInAcquisition ? data.NumInAcquisition : null,
+    NumElectronic: transformNumToSP(data.NumElectronic),
+    NumPaper: transformNumToSP(data.NumPaper),
+    NumCDDVD: transformNumToSP(data.NumCDDVD),
+    NumUnpublished: transformNumToSP(data.NumUnpublished),
+    NumInAcquisition: transformNumToSP(data.NumInAcquisition),
     TOApprovedWaiver: data.TOApprovedWaiver,
-    TOApprovedWaiverDate: JSON.stringify(data.TOApprovedWaiverDate),
+    TOApprovedWaiverDate: data.TOApprovedWaiverDate?.toISOString() ?? null,
     AuthoredInTOAPType: data.AuthoredInTOAPType,
-    NumAuthoredInTOAP: data.NumAuthoredInTOAP ? data.NumAuthoredInTOAP : null,
-    NumNotAuthoredInTOAP: data.NumNotAuthoredInTOAP
-      ? data.NumNotAuthoredInTOAP
-      : null,
-    NumWillNotBeAuthoredInTOAP: data.NumWillNotBeAuthoredInTOAP
-      ? data.NumWillNotBeAuthoredInTOAP
-      : null,
+    NumAuthoredInTOAP: transformNumToSP(data.NumAuthoredInTOAP),
+    NumNotAuthoredInTOAP: transformNumToSP(data.NumNotAuthoredInTOAP),
+    NumWillNotBeAuthoredInTOAP: transformNumToSP(
+      data.NumWillNotBeAuthoredInTOAP
+    ),
     Explanation: data.Explanation ?? "",
     PlanToConvert: data.PlanToConvert ?? "",
   };
@@ -269,15 +272,18 @@ const transformLaborToSP = (data: CAFTOPLabor) => {
 const transformDistributionToSP = (data: CAFTOPDistribution) => {
   const distr: CAFTOPSPDistribution = {
     hasDistCost: data.hasDistCost,
-    DistCost: data.DistCost ? data.DistCost : null,
+    DistCost: transformNumToSP(data.DistCost),
     hasDSO: data.hasDSO,
     ODSOApprovedWaiver: data.ODSOApprovedWaiver,
-    ODSOApprovedWaiverDate: JSON.stringify(data.ODSOApprovedWaiverDate),
+    ODSOApprovedWaiverDate: data.ODSOApprovedWaiverDate?.toISOString() ?? null,
     hasOutsideDSO: data.hasOutsideDSO,
-    NumPaper: data.NumPaper ? data.NumPaper : null,
-    NumCDDVD: data.NumCDDVD ? data.NumCDDVD : null,
+    NumPaper: transformNumToSP(data.NumPaper),
+    NumCDDVD: transformNumToSP(data.NumCDDVD),
   };
-  return distr;
+
+  // We don't want to update NumPaper and NumCDDVD
+  const { NumPaper, NumCDDVD, ...rest } = distr;
+  return rest;
 };
 
 const transformImprovementsToSP = (data: CAFTOPImprovements) => {

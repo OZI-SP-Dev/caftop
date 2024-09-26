@@ -155,23 +155,25 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
     void queryClient.invalidateQueries(["caftop-MaxStep"]);
   }, [itemId, dispatch, queryClient]);
 
-  const handleSubmit: SubmitHandler<CAFTOPPage> = (data, e) => {
+  const handleSubmit: SubmitHandler<CAFTOPPage> = async (data, e) => {
     e?.preventDefault();
     if (e?.nativeEvent instanceof SubmitEvent) {
       if (e.nativeEvent?.submitter?.id === "next") {
         if (props.currentStep + 1 > (maxStep.data?.wizardMaxStep ?? 0)) {
           Object.assign(data, { wizardMaxStep: props.currentStep + 1 });
         }
+        await updateCAFTOP.mutateAsync(data);
         dispatch({ type: "NEXT_STEP" });
       } else if (e.nativeEvent?.submitter?.id.startsWith("goto_")) {
         const gotoStep = parseInt(
           e.nativeEvent?.submitter?.id.replace("goto_", "")
         );
+        await updateCAFTOP.mutateAsync(data);
         dispatch({ type: "GOTO_STEP", payload: { wizardStep: gotoStep } });
       } else {
+        await updateCAFTOP.mutateAsync(data);
         dispatch({ type: "PREV_STEP" });
       }
-      updateCAFTOP.mutate(data);
     }
     return Promise.resolve();
   };
