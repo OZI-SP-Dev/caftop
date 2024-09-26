@@ -1,33 +1,32 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPImprovements } from "api/CAFTOP/types";
 import * as Fields from "./Fields";
 import { useImprovementsPageValidation } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { Improvements as ImprovementsDefaults } from "api/CAFTOP/defaults";
 
 const Improvements = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  const currentCAFTOP = globalState.Improvements;
-
-  const submitSuccess: SubmitHandler<CAFTOPImprovements> = (data, e?) => {
-    dispatch({
-      type: "MERGE_GLOBAL_OPTION",
-      payload: { Improvements: { ...data } },
-    });
-    props.handleSubmit(e);
-  };
+  const { globalState } = useContext(globalContext);
+  const currentCAFTOP = useCAFTOP(globalState.id, "Improvements");
 
   const schema = useImprovementsPageValidation();
 
   const myForm = useForm<CAFTOPImprovements>({
-    defaultValues: currentCAFTOP,
+    defaultValues: ImprovementsDefaults,
+    values: currentCAFTOP.data,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  if (!currentCAFTOP.data) {
+    return "Loading...";
+  }
 
   return (
     <>
@@ -36,7 +35,10 @@ const Improvements = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(
+              props.handleSubmit,
+              props.handleError
+            )(...args)
           }
         >
           <div className="requestFormContainer">

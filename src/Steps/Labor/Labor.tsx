@@ -1,30 +1,32 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPLabor } from "api/CAFTOP/types";
 import * as Fields from "./Fields";
 import { useLaborPageValidation } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { Labor as LaborDefaults } from "api/CAFTOP/defaults";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 
 const Labor = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  const currentCAFTOP = globalState.Labor;
-
-  const submitSuccess: SubmitHandler<CAFTOPLabor> = (data, e?) => {
-    dispatch({ type: "MERGE_GLOBAL_OPTION", payload: { Labor: { ...data } } });
-    props.handleSubmit(e);
-  };
+  const { globalState } = useContext(globalContext);
+  const currentCAFTOP = useCAFTOP(globalState.id, "Labor");
 
   const schema = useLaborPageValidation();
 
   const myForm = useForm<CAFTOPLabor>({
-    defaultValues: currentCAFTOP,
+    defaultValues: LaborDefaults,
+    values: currentCAFTOP.data,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  if (!currentCAFTOP.data) {
+    return "Loading...";
+  }
 
   if (globalState.mode === "submit") {
     void myForm.trigger();
@@ -37,7 +39,10 @@ const Labor = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(
+              props.handleSubmit,
+              props.handleError
+            )(...args)
           }
         >
           <div className="requestFormContainer">

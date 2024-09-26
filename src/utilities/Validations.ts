@@ -58,6 +58,8 @@ import {
   outsidedsoRuleSave,
 } from "Steps/Distribution/Fields/OutsideDSO.Validation";
 import { lrdpRuleFinal, lrdpRuleSave } from "Steps/LRDP/Fields/LRDP.Validation";
+import { useParams } from "react-router-dom";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -149,10 +151,10 @@ export const useImprovementsPageValidation = (
 };
 
 export const useDistributionPageValidation = (
+  notElectronicOnly: boolean,
   mode?: GlobalStateInterface["mode"]
 ) => {
   const { globalState } = useContext(globalContext);
-  const notElectronicOnly = isNotElectronicOnly(globalState);
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
@@ -183,50 +185,56 @@ interface CAFTOPError {
 }
 
 export const useCheckComplete = () => {
-  const errors = [] as CAFTOPError[];
-  const { globalState } = useContext(globalContext);
+  const { itemId } = useParams();
+  const caftop = useCAFTOP(parseInt(itemId ?? "0"), "ALL");
+  const notElectronicOnly = caftop.data
+    ? isNotElectronicOnly(caftop.data)
+    : false;
+
   const checks = [
-    { pageIndex: 0, check: useInfoPageValidation(), data: globalState.Info },
+    { pageIndex: 0, check: useInfoPageValidation(), data: caftop.data?.Info },
     {
       pageIndex: 1,
       check: useDescriptionPageValidation("submit"),
-      data: globalState.Description,
+      data: caftop.data?.Description,
     },
     {
       pageIndex: 2,
       check: useTechnicalOrdersPageValidation("submit"),
-      data: globalState.TechnicalOrders,
+      data: caftop.data?.TechnicalOrders,
     },
     {
       pageIndex: 3,
       check: useLaborPageValidation("submit"),
-      data: globalState.Labor,
+      data: caftop.data?.Labor,
     },
     {
       pageIndex: 4,
-      check: useDistributionPageValidation("submit"),
-      data: globalState.Distribution,
+      check: useDistributionPageValidation(notElectronicOnly, "submit"),
+      data: caftop.data?.Distribution,
     },
     {
       pageIndex: 5,
       check: useImprovementsPageValidation("submit"),
-      data: globalState.Improvements,
+      data: caftop.data?.Improvements,
     },
     {
       pageIndex: 7,
       check: useLRDPPageValidation("submit"),
-      data: globalState.LRDP,
+      data: caftop.data?.LRDP,
     },
   ];
 
-  checks.forEach((item) => {
-    const result = item.check.safeParse(item.data);
-    if (!result.success) {
-      result.error.issues.forEach((issue) =>
-        errors.push({ errortext: issue.message, pageIndex: item.pageIndex })
-      );
-    }
-  });
-
-  return errors;
+  if (caftop.data && !caftop.isLoading) {
+    const errors = [] as CAFTOPError[];
+    checks.forEach((item) => {
+      const result = item.check.safeParse(item.data);
+      if (!result.success) {
+        result.error.issues.forEach((issue) =>
+          errors.push({ errortext: issue.message, pageIndex: item.pageIndex })
+        );
+      }
+    });
+    return errors;
+  } else return undefined;
 };

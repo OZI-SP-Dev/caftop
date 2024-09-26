@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { spWebContext } from "api/SPWebContext";
-import { useContext } from "react";
-import { globalContext } from "stateManagement/GlobalStore";
+import { useCAFTOP } from "./CAFTOP/useCAFTOP";
+import { useParams } from "react-router-dom";
+import { CAFTOPInfo } from "./CAFTOP/types";
 
 type TDefaultData = { Title: string; Value: string }[];
 
 /** Interal Hook returning the RQ for the default data */
 const useDefaultData = () => {
-  const { globalState } = useContext(globalContext);
-
   /** Function to retreive the Centers, either from SharePoint, or local Dev examples
    * @returns Array of {Title: "Center"}
    */
@@ -48,13 +47,7 @@ const useDefaultData = () => {
   const transformData = (data: TDefaultData) => {
     const dataMap = new Map<string, string>();
     data.forEach((entry) => {
-      // Replace {ProgramName} with the selected Program Name
-      const value = entry.Value.replaceAll(
-        "{ProgramName}",
-        globalState.Info.ProgramName
-      );
-
-      dataMap.set(entry.Title, value);
+      dataMap.set(entry.Title, entry.Value);
     });
 
     return dataMap;
@@ -68,14 +61,31 @@ const useDefaultData = () => {
   });
 };
 
+const trnasform = (value: string, caftopData: CAFTOPInfo) => {
+  // Replace {ProgramName} with the selected Program Name
+  return value.replaceAll("{ProgramName}", caftopData.ProgramName ?? "");
+};
+
 /** Hook returning the default Description */
 export const useDefaultDescription = () => {
   const defaultData = useDefaultData();
-  return defaultData?.data?.get("Description") ?? "";
+  const { itemId } = useParams();
+  const caftop = useCAFTOP(parseInt(itemId ?? "0"), "Info");
+  if (caftop.data === undefined || defaultData.data === undefined) {
+    return "";
+  }
+
+  return trnasform(defaultData.data.get("Description") ?? "", caftop.data);
 };
 
 /** Hook returning the default Introduction */
 export const useDefaultIntroduction = () => {
   const defaultData = useDefaultData();
-  return defaultData?.data?.get("Introduction") ?? "";
+  const { itemId } = useParams();
+  const caftop = useCAFTOP(parseInt(itemId ?? "0"), "Info");
+  if (caftop.data === undefined || defaultData.data === undefined) {
+    return "";
+  }
+
+  return trnasform(defaultData.data.get("Introduction") ?? "", caftop.data);
 };

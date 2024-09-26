@@ -1,22 +1,7 @@
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
-import {
-  Description,
-  Distribution,
-  Improvements,
-  Info,
-  LRDP,
-  Labor,
-  TechnicalOrders,
-} from "api/CAFTOP/defaults";
 
 export const initialState: GlobalStateInterface = {
-  Info,
-  Description,
-  TechnicalOrders,
-  Labor,
-  Distribution,
-  Improvements,
-  LRDP,
+  id: 0,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",
@@ -24,12 +9,6 @@ export const initialState: GlobalStateInterface = {
 
 const Reducer = (state: GlobalStateInterface, action: ActionType) => {
   switch (action.type) {
-    case "MERGE_GLOBAL_OPTION": {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
     case "NEXT_STEP": {
       let wizardMaxStep = state.wizardMaxStep;
       if (wizardMaxStep <= state.wizardStep) {
@@ -59,6 +38,33 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
       return {
         ...state,
         mode,
+      };
+    }
+    case "SET_CURRENT_ITEM": {
+      const id = action.payload?.id ?? 0;
+      let wizardMaxStep = state.wizardMaxStep;
+      let wizardStep = state.wizardMaxStep;
+
+      if (id === 0) {
+        wizardMaxStep = 0;
+        wizardStep = 0;
+      }
+      const mode: GlobalStateInterface["mode"] = "save";
+      return {
+        ...state,
+        mode,
+        id,
+        wizardMaxStep,
+        wizardStep,
+      };
+    }
+    case "SET_MAX_STEP": {
+      const wizardMaxStep = action.payload?.wizardMaxStep ?? 0;
+      const wizardStep = wizardMaxStep;
+      return {
+        ...state,
+        wizardMaxStep,
+        wizardStep,
       };
     }
     default: {

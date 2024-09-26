@@ -61,6 +61,7 @@ function App() {
               disabled={
                 isLoading ||
                 (CAFTOPFinalStep === globalState.wizardStep &&
+                  errors &&
                   errors.length > 0)
               }
               onClick={(e) => {

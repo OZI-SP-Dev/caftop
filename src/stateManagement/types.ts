@@ -1,22 +1,7 @@
-import {
-  CAFTOPInfo,
-  CAFTOPDescription,
-  CAFTOPTechnicalOrders,
-  CAFTOPLabor,
-  CAFTOPDistribution,
-  CAFTOPLRDP,
-  CAFTOPImprovements,
-} from "api/CAFTOP/types";
 import { Dispatch } from "react";
 
 export interface GlobalStateInterface {
-  Info: CAFTOPInfo;
-  Description: CAFTOPDescription;
-  TechnicalOrders: CAFTOPTechnicalOrders;
-  Labor: CAFTOPLabor;
-  Distribution: CAFTOPDistribution;
-  Improvements: CAFTOPImprovements;
-  LRDP: CAFTOPLRDP;
+  id: number;
   wizardStep: number;
   wizardMaxStep: number;
   /** Drive how the "Save and Continue" button works -- page checking or full sumbission checking */
@@ -25,12 +10,12 @@ export interface GlobalStateInterface {
 
 export type ActionType = {
   type:
-    | "MERGE_GLOBAL_OPTION"
     | "NEXT_STEP"
     | "PREV_STEP"
     | "GOTO_STEP"
-    | "PURGE_STATE"
-    | "CHANGE_MODE";
+    | "CHANGE_MODE"
+    | "SET_CURRENT_ITEM"
+    | "SET_MAX_STEP";
   payload?: Partial<GlobalStateInterface>;
 };
 

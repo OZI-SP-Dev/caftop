@@ -9,9 +9,12 @@ import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate } from "utilities/Date";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { CAFTOP } from "api/CAFTOP/types";
 
-const Complete = (props: ICAFTOPWizardStep) => {
+const Complete = (_props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
+  const caftop = useCAFTOP(globalState.id, "ALL");
   const errors = useCheckComplete();
 
   function handleSubmit(e: FormEvent) {
@@ -21,74 +24,83 @@ const Complete = (props: ICAFTOPWizardStep) => {
       e.nativeEvent?.submitter?.id === "next"
     ) {
       generateDocument();
+    } else if (
+      e?.nativeEvent instanceof SubmitEvent &&
+      e.nativeEvent?.submitter?.id.startsWith("goto_")
+    ) {
+      const gotoStep = parseInt(
+        e.nativeEvent?.submitter?.id.replace("goto_", "")
+      );
+      dispatch({ type: "GOTO_STEP", payload: { wizardStep: gotoStep } });
     } else {
-      props.handleSubmit(e);
+      dispatch({ type: "PREV_STEP" });
     }
   }
 
   function generateDocument() {
+    const caftopData = caftop.data as CAFTOP;
     const outFileName = [
       "27", // TODO: Replace Year (BAC-137)
-      globalState.Info.LeadCommand,
-      globalState.Info.Center,
-      globalState.Info.ProgramElementCode,
-      globalState.Info.ProgramName,
+      caftopData.Info.LeadCommand,
+      caftopData.Info.Center,
+      caftopData.Info.ProgramElementCode,
+      caftopData.Info.ProgramName,
       ".docx",
     ].join("_");
 
     const totalCount =
-      (globalState.TechnicalOrders.NumAuthoredInTOAP !== ""
-        ? globalState.TechnicalOrders.NumAuthoredInTOAP
+      (caftopData.TechnicalOrders.NumAuthoredInTOAP !== ""
+        ? caftopData.TechnicalOrders.NumAuthoredInTOAP
         : 0) +
-      (globalState.TechnicalOrders.NumNotAuthoredInTOAP !== ""
-        ? globalState.TechnicalOrders.NumNotAuthoredInTOAP
+      (caftopData.TechnicalOrders.NumNotAuthoredInTOAP !== ""
+        ? caftopData.TechnicalOrders.NumNotAuthoredInTOAP
         : 0) +
-      (globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
-        ? globalState.TechnicalOrders.NumWillNotBeAuthoredInTOAP
+      (caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP !== ""
+        ? caftopData.TechnicalOrders.NumWillNotBeAuthoredInTOAP
         : 0) +
-      (globalState.TechnicalOrders.NumUnpublished !== ""
-        ? globalState.TechnicalOrders.NumUnpublished
+      (caftopData.TechnicalOrders.NumUnpublished !== ""
+        ? caftopData.TechnicalOrders.NumUnpublished
         : 0);
 
     const totalTypeCount =
-      (globalState.TechnicalOrders.NumPaper !== ""
-        ? globalState.TechnicalOrders.NumPaper
+      (caftopData.TechnicalOrders.NumPaper !== ""
+        ? caftopData.TechnicalOrders.NumPaper
         : 0) +
-      (globalState.TechnicalOrders.NumElectronic !== ""
-        ? globalState.TechnicalOrders.NumElectronic
+      (caftopData.TechnicalOrders.NumElectronic !== ""
+        ? caftopData.TechnicalOrders.NumElectronic
         : 0) +
-      (globalState.TechnicalOrders.NumCDDVD !== ""
-        ? globalState.TechnicalOrders.NumCDDVD
+      (caftopData.TechnicalOrders.NumCDDVD !== ""
+        ? caftopData.TechnicalOrders.NumCDDVD
         : 0);
 
     const approvedTOWaiverDate = formatDate(
-      globalState.TechnicalOrders.TOApprovedWaiverDate ?? undefined
+      caftopData.TechnicalOrders.TOApprovedWaiverDate ?? undefined
     );
 
     const approvedODSOWaiverDate = formatDate(
-      globalState.Distribution.ODSOApprovedWaiverDate ?? undefined
+      caftopData.Distribution.ODSOApprovedWaiverDate ?? undefined
     );
 
     const ctrExpirationDate = formatDate(
-      globalState.Labor.ContractorSupport.ContractExpiration ?? undefined
+      caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
     );
 
     const technicalOrders = () => ({
-      ...globalState.TechnicalOrders,
+      ...caftopData.TechnicalOrders,
       TotalCount: totalCount,
       TotalTypeCount: totalTypeCount,
       TOApprovedWaiverDate: approvedTOWaiverDate,
     });
 
     const distribution = {
-      ...globalState.Distribution,
+      ...caftopData.Distribution,
       ODSOApprovedWaiverDate: approvedODSOWaiverDate,
     };
 
     const labor = {
-      ...globalState.Labor,
+      ...caftopData.Labor,
       ContractorSupport: {
-        ...globalState.Labor.ContractorSupport,
+        ...caftopData.Labor.ContractorSupport,
         ContractExpiration: ctrExpirationDate,
       },
     };
@@ -131,14 +143,14 @@ const Complete = (props: ICAFTOPWizardStep) => {
     <div className="m-3">
       <h1>CAFTOP Template Steps Complete</h1>
       <form id="innerForm" onSubmit={handleSubmit}></form>
-      {errors.length === 0 && (
+      {errors && errors.length === 0 && (
         <div>
           You have completed all information required to generate a CAFTOP. If
           you are ready to create the CAFTOP Narrative file, you can do so by
           clicking &quot;Generate Document&quot; button below.
         </div>
       )}
-      {errors.length > 0 && (
+      {errors && errors.length > 0 && (
         <>
           <div>
             There is missing information, which must be completed before being

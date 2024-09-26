@@ -8,23 +8,40 @@ import { CAFTOPInfo } from "api/CAFTOP/types";
 import * as Fields from "./Fields";
 import { useInfoPageValidation } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { Info as InfoDefaults } from "api/CAFTOP/defaults";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useCreateCAFTOP } from "api/CAFTOP/useCreateCAFTOP";
 
 const Info = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  const currentCAFTOP = globalState.Info;
+  const { globalState } = useContext(globalContext);
+  const { pathname } = useLocation();
+  const currentCAFTOP = useCAFTOP(globalState.id, "Info");
+  const createCAFTOP = useCreateCAFTOP();
+  const navigate = useNavigate();
 
-  const submitSuccess: SubmitHandler<CAFTOPInfo> = (data, e?) => {
-    dispatch({ type: "MERGE_GLOBAL_OPTION", payload: { Info: { ...data } } });
-    props.handleSubmit(e);
+  const createNew: SubmitHandler<CAFTOPInfo> = (data, _e?) => {
+    createCAFTOP.mutate(data, {
+      onSuccess: (data: { Id: number }) => {
+        navigate(`/item/${data.Id}`);
+      },
+    });
   };
 
+  const whichHanlder = pathname === "/new" ? createNew : props.handleSubmit;
+  const whichValues = pathname === "/new" ? undefined : currentCAFTOP.data;
   const schema = useInfoPageValidation();
 
   const myForm = useForm<CAFTOPInfo>({
-    defaultValues: currentCAFTOP,
+    defaultValues: InfoDefaults,
+    values: whichValues,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  if (currentCAFTOP.isLoading && pathname !== "/new") {
+    return "Loading...";
+  }
 
   return (
     <>
@@ -35,7 +52,7 @@ const Info = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(whichHanlder, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">

@@ -1,4 +1,4 @@
-import { CAFTOPDescription, CAFTOPInfo } from "api/CAFTOP/types";
+import { CAFTOPPage, Pages } from "api/CAFTOP/types";
 import {
   ReactElement,
   Suspense,
@@ -7,20 +7,25 @@ import {
   useContext,
   BaseSyntheticEvent,
   useState,
+  useEffect,
 } from "react";
-import { SubmitErrorHandler } from "react-hook-form";
+import { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 import { globalContext } from "stateManagement/GlobalStore";
 import { AlertNavWithErrors } from "./AlertNavWithErrors";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { useParams } from "react-router-dom";
+import { useUpdateCAFTOP } from "api/CAFTOP/useUpdateCAFTOP";
+import { useQueryClient } from "@tanstack/react-query";
 
 type WizardStep = {
-  id: string;
+  id: Pages;
   name: string;
   jsxObj: ReactElement;
 };
 
 export interface ICAFTOPWizardStep {
-  handleSubmit: (e?: BaseSyntheticEvent) => void;
-  handleError: SubmitErrorHandler<CAFTOPInfo | CAFTOPDescription>;
+  handleSubmit: SubmitHandler<CAFTOPPage>;
+  handleError: SubmitErrorHandler<CAFTOPPage>;
 }
 
 // Begin module downloads immediately, but still utilize lazy() for code splitting
@@ -51,7 +56,7 @@ const GenericStep = lazy(() => genericStepPromise);
 const completePromise = import("Steps/Complete");
 const Complete = lazy(() => completePromise);
 
-const blankHandleErr: SubmitErrorHandler<CAFTOPInfo | CAFTOPDescription> = (
+const blankHandleErr: SubmitErrorHandler<CAFTOPPage> = (
   _errors,
   _e?: BaseSyntheticEvent
 ) => {};
@@ -126,10 +131,37 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   const { globalState, dispatch } = useContext(globalContext);
   const [isNavErr, setNavErr] = useState<boolean>(false);
   const [closeFunc, setCloseFunc] = useState<() => void>(() => {});
-  const handleSubmit = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
+  const { itemId } = useParams();
+  const maxStep = useCAFTOP(globalState.id, "MaxStep");
+  const queryClient = useQueryClient();
+  const updateCAFTOP = useUpdateCAFTOP(
+    itemId,
+    WizardSteps[props.currentStep].id
+  );
+
+  useEffect(() => {
+    const value = maxStep.data?.wizardMaxStep ?? 0;
+    dispatch({
+      type: "SET_MAX_STEP",
+      payload: { wizardMaxStep: value },
+    });
+  }, [maxStep.data, dispatch]);
+
+  useEffect(() => {
+    dispatch({
+      type: "SET_CURRENT_ITEM",
+      payload: { id: parseInt(itemId ?? "0") },
+    });
+    void queryClient.invalidateQueries(["caftop-MaxStep"]);
+  }, [itemId, dispatch, queryClient]);
+
+  const handleSubmit: SubmitHandler<CAFTOPPage> = (data, e) => {
+    e?.preventDefault();
     if (e?.nativeEvent instanceof SubmitEvent) {
       if (e.nativeEvent?.submitter?.id === "next") {
+        if (props.currentStep + 1 > (maxStep.data?.wizardMaxStep ?? 0)) {
+          Object.assign(data, { wizardMaxStep: props.currentStep + 1 });
+        }
         dispatch({ type: "NEXT_STEP" });
       } else if (e.nativeEvent?.submitter?.id.startsWith("goto_")) {
         const gotoStep = parseInt(
@@ -139,11 +171,12 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
       } else {
         dispatch({ type: "PREV_STEP" });
       }
+      updateCAFTOP.mutate(data);
     }
     return Promise.resolve();
   };
 
-  const handleError: SubmitErrorHandler<CAFTOPInfo | CAFTOPDescription> = (
+  const handleError: SubmitErrorHandler<CAFTOPPage> = (
     errors,
     e?: BaseSyntheticEvent
   ) => {
