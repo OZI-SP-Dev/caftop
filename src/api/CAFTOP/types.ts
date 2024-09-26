@@ -112,7 +112,6 @@ export type Pages =
   | "ALL"
   | "MaxStep"
   | "Completed"
-  | "ReqSummary" // TODO - Remove when removing menu item
   | "Approvals"; // TODO - Remove when removing menu item
 
 export type PageType<T> = T extends "Info"

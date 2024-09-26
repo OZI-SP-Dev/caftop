@@ -99,11 +99,6 @@ export const WizardSteps: WizardStep[] = [
     jsxObj: <Improvements {...blankdHandlers} />,
   },
   {
-    id: "ReqSummary",
-    name: "Requirements Summary",
-    jsxObj: <GenericStep {...blankdHandlers} />,
-  },
-  {
     id: "LRDP",
     name: "Logistics Requirements Destermination Process (LRDP) Task Prioritization",
     jsxObj: <LRDP {...blankdHandlers} />,

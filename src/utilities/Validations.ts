@@ -219,7 +219,7 @@ export const useCheckComplete = () => {
       data: caftop.data?.Improvements,
     },
     {
-      pageIndex: 7,
+      pageIndex: 6,
       check: useLRDPPageValidation("submit"),
       data: caftop.data?.LRDP,
     },
