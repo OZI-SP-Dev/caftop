@@ -10,7 +10,6 @@ import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate } from "utilities/Date";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { CAFTOP } from "api/CAFTOP/types";
 
 const Complete = (_props: ICAFTOPWizardStep) => {
   const { globalState, dispatch } = useContext(globalContext);
