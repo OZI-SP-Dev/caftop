@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { UserContext } from "providers/UserProvider";
 import { tokens } from "@fluentui/react-theme";
 import { Link } from "react-router-dom";
+import { useDefaultHelpLink } from "api/DefaultData";
 
 /* FluentUI Styling */
 const useStyles = makeStyles({
@@ -48,12 +49,20 @@ const useStyles = makeStyles({
     textDecorationLine: "none",
     ":hover": { textDecorationLine: "underline" },
   },
-  navAvatar: { marginLeft: "auto", marginRight: "5px" }, // Force the Avatar icon to be positioned at the right most side
+  navHelp: {
+    marginLeft: "auto", // Force the help link and Avatar icon to be positioned at the right most side of the toolbar
+    marginRight: "1em",
+    textDecorationLine: "none",
+    ":hover": { textDecorationLine: "underline" },
+    color: tokens.colorBrandBackgroundInverted,
+  },
+  navAvatar: { marginLeft: "1em", marginRight: "5px" },
 });
 
 export const AppHeader = () => {
   const classes = useStyles();
   const userContext = useContext(UserContext);
+  const helpLink = useDefaultHelpLink();
 
   const title =
     import.meta.env.MODE === "testing" || import.meta.env.DEV
@@ -65,6 +74,9 @@ export const AppHeader = () => {
       <div role="heading" aria-level={1} className={classes.navHeader}>
         <Link to="/" className={classes.navHeaderSiteName}>
           {title}
+        </Link>
+        <Link to={helpLink} className={classes.navHelp} target="_blank">
+          Help
         </Link>
         <Popover trapFocus={true} closeOnScroll={true} withArrow={true}>
           <PopoverTrigger>

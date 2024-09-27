@@ -33,6 +33,10 @@ const useDefaultData = () => {
                 Value:
                   "The overall health of {ProgramName} Technical Orders (TOs) is good. All  TOs are in digital format Portable Document Format (PDF) and available in the Enhanced Technical Information Management System (ETIMS).",
               },
+              {
+                Title: "HelpLink",
+                Value: "https://usaf.dps.mil/sites/10792/SitePages/Home.aspx",
+              },
             ]),
           1000
         )
@@ -88,4 +92,11 @@ export const useDefaultIntroduction = () => {
   }
 
   return trnasform(defaultData.data.get("Introduction") ?? "", caftop.data);
+};
+
+/** Hook returning the Help link website */
+export const useDefaultHelpLink = () => {
+  const defaultData = useDefaultData();
+
+  return defaultData?.data?.get("HelpLink") ?? "";
 };
