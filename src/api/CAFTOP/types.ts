@@ -111,8 +111,7 @@ export type Pages =
   | "LRDP"
   | "ALL"
   | "MaxStep"
-  | "Completed"
-  | "Approvals"; // TODO - Remove when removing menu item
+  | "Completed";
 
 export type PageType<T> = T extends "Info"
   ? CAFTOPInfo

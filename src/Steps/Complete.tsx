@@ -128,6 +128,20 @@ const Complete = (_props: ICAFTOPWizardStep) => {
           // render the document
           doc.render(dataForDocument);
 
+          // Replace the metadata for the signature lines with the Program Manager data
+          let docXML = zip.files["word/document.xml"].asText();
+          caftopData.Info.ProgramManagers.forEach((progManager) => {
+            docXML = docXML.replace(
+              `o:suggestedsigner="FirstName LastName"`,
+              `o:suggestedsigner="${progManager.FirstName} ${progManager.LastName}"`
+            );
+            docXML = docXML.replace(
+              `o:suggestedsigneremail="Email"`,
+              `o:suggestedsigneremail="${progManager.Email}"`
+            );
+          });
+          zip.file("word/document.xml", docXML);
+
           const out = doc.getZip().generate({
             type: "blob",
             mimeType:

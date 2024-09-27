@@ -50,9 +50,6 @@ const Improvements = lazy(() => improvementsPromise);
 const lrdpPromise = import("Steps/LRDP/LRDP");
 const LRDP = lazy(() => lrdpPromise);
 
-const genericStepPromise = import("Steps/GenericStep");
-const GenericStep = lazy(() => genericStepPromise);
-
 const completePromise = import("Steps/Complete");
 const Complete = lazy(() => completePromise);
 
@@ -102,11 +99,6 @@ export const WizardSteps: WizardStep[] = [
     id: "LRDP",
     name: "Logistics Requirements Destermination Process (LRDP) Task Prioritization",
     jsxObj: <LRDP {...blankdHandlers} />,
-  },
-  {
-    id: "Approvals",
-    name: "Program Approvals",
-    jsxObj: <GenericStep {...blankdHandlers} />,
   },
   {
     id: "Completed",
