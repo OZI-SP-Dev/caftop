@@ -120,6 +120,7 @@ export const getFieldsForPage = (page: string) => {
         ...Distribution,
         ...Improvements,
         ...LRDP,
+        Year: 0,
       };
   }
 

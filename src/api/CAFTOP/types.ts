@@ -90,6 +90,7 @@ export type CAFTOP = {
   Distribution: CAFTOPDistribution;
   Improvements: CAFTOPImprovements;
   LRDP: CAFTOPLRDP;
+  Year: number;
 };
 
 export type CAFTOPPage =
@@ -211,7 +212,7 @@ export type CAFTOPSP = CAFTOPSPInfo &
   CAFTOPSPDistribution &
   CAFTOPSPImprovements &
   CAFTOPSPLRDP &
-  CAFTOPSPMaxStep;
+  CAFTOPSPMaxStep & { Year: number };
 
 export type CAFTOPSPPage =
   | CAFTOPSPInfo

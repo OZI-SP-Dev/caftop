@@ -57,6 +57,7 @@ const caftopSamples: CAFTOPSP[] = [
     HasImprovements: "yes",
     Improvements:
       '[{"Title":"Title","Description":"Description","Impact":"Impact"},{"Title":"Number 2","Description":"Desc 2","Impact":"Impact 2"}]',
+    Year: 2027,
   },
 ];
 
@@ -107,6 +108,7 @@ const blankData: CAFTOPSP = {
   wizardMaxStep: 1,
   HasImprovements: null,
   Improvements: null,
+  Year: 0,
 };
 
 // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties

@@ -192,6 +192,11 @@ export const transformRequestFromSP = <T extends Pages>(
           request as CAFTOPSPImprovements
         ),
         LRDP: transformLRDPFromSP(request as CAFTOPSPLRDP),
+        Year: (
+          request as {
+            Year: number;
+          }
+        ).Year,
       } as PageType<T>;
     }
     case "MaxStep":

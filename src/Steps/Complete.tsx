@@ -40,7 +40,7 @@ const Complete = (_props: ICAFTOPWizardStep) => {
     if (caftop.data) {
       const caftopData = caftop.data;
       const outFileName = [
-        "27", // TODO: Replace Year (BAC-137)
+        caftopData.Year.toString().substring(2),
         caftopData.Info.LeadCommand,
         caftopData.Info.Center,
         caftopData.Info.ProgramElementCode,
@@ -110,6 +110,18 @@ const Complete = (_props: ICAFTOPWizardStep) => {
         TechnicalOrders: technicalOrders,
         Labor: labor,
         Distribution: distribution,
+      };
+
+      // Function to allow for filter in word document to display 2-digit year rather than 4
+      // example use for document {Year | twoDigit}
+      expressions.filters.twoDigit = function (year: number | undefined) {
+        // Make sure that if your input is undefined, your
+        // output will be undefined as well and will not
+        // throw an error
+        if (!year) {
+          return year;
+        }
+        return year.toString().substring(2);
       };
 
       PizZipUtils.getBinaryContent(
