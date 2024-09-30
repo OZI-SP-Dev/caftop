@@ -199,6 +199,13 @@ export const transformRequestFromSP = <T extends Pages>(
             Year: number;
           }
         ).Year,
+        Created: new Date(
+          (
+            request as {
+              Created: string;
+            }
+          ).Created
+        ),
       } as PageType<T>;
     }
     case "MaxStep":

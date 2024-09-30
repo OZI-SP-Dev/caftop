@@ -121,6 +121,7 @@ export const getFieldsForPage = (page: string) => {
         ...Improvements,
         ...LRDP,
         Year: 0,
+        Created: new Date(),
       };
   }
 

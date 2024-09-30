@@ -110,6 +110,7 @@ const Complete = (_props: ICAFTOPWizardStep) => {
         TechnicalOrders: technicalOrders,
         Labor: labor,
         Distribution: distribution,
+        Created: formatDate(caftopData.Created ?? undefined),
       };
 
       // Function to allow for filter in word document to display 2-digit year rather than 4
