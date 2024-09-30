@@ -261,3 +261,21 @@ export const isNotElectronicOnly = (caftop: CAFTOP | CAFTOPDistribution) => {
     return (caftop.NumCDDVD || 0) + (caftop.NumPaper || 0) > 0;
   }
 };
+
+export type PagedRequestSP = Pick<
+  CAFTOPSPInfo,
+  | "LeadCommand"
+  | "Center"
+  | "ProgramElementCode"
+  | "ProgramGroup"
+  | "ProgramName"
+> & { Id: number; Year: number };
+
+export type PagedRequest = Pick<
+  CAFTOPInfo,
+  | "LeadCommand"
+  | "Center"
+  | "ProgramElementCode"
+  | "ProgramGroup"
+  | "ProgramName"
+> & { Id: number; Year: number };

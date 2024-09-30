@@ -1,12 +1,14 @@
 import { Button } from "@fluentui/react-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import Dashboard from "components/Dashboard/Dashboard";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
     <>
-      <Link to="/item/1">Load CAFTOP #1</Link>
+      <Dashboard />
       <br />
       <br />
       <Button

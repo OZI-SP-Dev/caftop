@@ -18,6 +18,8 @@ import {
   CAFTOPSPImprovements,
   CAFTOPSPLRDP,
   CAFTOPMaxStep,
+  PagedRequestSP,
+  PagedRequest,
 } from "./types";
 
 const transformInfoFromSP = (data: CAFTOPSPInfo) => {
@@ -352,4 +354,29 @@ export const transformRequestToSP = <T extends Pages>(
   }
 
   return {} as never;
+};
+
+export const transformPagedRequestsFromSP = (requests: {
+  data: PagedRequestSP[];
+  iterator: AsyncIterator<PagedRequestSP[]>;
+  hasMore: boolean;
+}) => {
+  const returnObject: PagedRequest[] = [];
+
+  requests?.data?.forEach((request) => {
+    returnObject.push({
+      Id: request.Id,
+      Year: request.Year,
+      LeadCommand: request.LeadCommand,
+      Center: request.Center,
+      ProgramElementCode: request.ProgramElementCode,
+      ProgramGroup: request.ProgramGroup,
+      ProgramName: request.ProgramName,
+    });
+  });
+
+  return {
+    data: returnObject,
+    hasMore: requests.hasMore,
+  };
 };

@@ -26,6 +26,12 @@ export type valueCallback<T extends FieldValues> = (
   value: PathValue<T, Path<T>>
 ) => string | (readonly string[] & string) | undefined;
 
+export type TBACDropdownProps<T extends FieldValues> = BaseFormField<T> & {
+  fieldProps?: Partial<DropdownProps>;
+  customOnOptionSelect?: onOptionSelectCallback<T>;
+  customValue?: valueCallback<T>;
+};
+
 const BACDropdown = <T extends FieldValues>({
   name,
   labelText,
@@ -35,11 +41,7 @@ const BACDropdown = <T extends FieldValues>({
   fieldProps,
   customOnOptionSelect,
   customValue,
-}: BaseFormField<T> & {
-  fieldProps?: Partial<DropdownProps>;
-  customOnOptionSelect?: onOptionSelectCallback<T>;
-  customValue?: valueCallback<T>;
-}) => {
+}: TBACDropdownProps<T>) => {
   const form = useFormContext<T>();
 
   const { field, fieldState } = useController<T>({
