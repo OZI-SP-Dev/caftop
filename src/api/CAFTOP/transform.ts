@@ -420,3 +420,28 @@ export const transformPagedRequestsFromSP = (requests: {
     hasMore: requests.hasMore,
   };
 };
+
+export const transformFPPagedRequestsFromSP = (requests: {
+  data: PagedRequestSP[];
+  pageHref: string | undefined;
+  hasMore: boolean;
+}) => {
+  const returnObject: PagedRequest[] = [];
+
+  requests?.data?.forEach((request) => {
+    returnObject.push({
+      Id: request.Id,
+      Year: request.Year,
+      LeadCommand: request.LeadCommand,
+      Center: request.Center,
+      ProgramElementCode: request.ProgramElementCode,
+      ProgramGroup: request.ProgramGroup,
+      ProgramName: request.ProgramName,
+    });
+  });
+
+  return {
+    data: returnObject,
+    hasMore: requests.hasMore,
+  };
+};

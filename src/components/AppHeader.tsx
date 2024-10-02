@@ -75,6 +75,9 @@ export const AppHeader = () => {
         <Link to="/" className={classes.navHeaderSiteName}>
           {title}
         </Link>
+        <Link to="/CAFTOPs" className={classes.navLink}>
+          CAFTOPs
+        </Link>
         <Link to={helpLink} className={classes.navHelp} target="_blank">
           Help
         </Link>
