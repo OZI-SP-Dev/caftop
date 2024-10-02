@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Labor } from "stateManagement/reducer";
+import { Labor } from "api/CAFTOP/defaults";
 
 const officeFinalRule = z
   .string()

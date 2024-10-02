@@ -1,4 +1,4 @@
-import { CAFTOPTechnicalOrders } from "api/CAFTOP";
+import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
 import BACInput from "components/BaseFormFields/BACInput";
 import BACTextarea from "components/BaseFormFields/BACTextarea";
 import { useWatch } from "react-hook-form";

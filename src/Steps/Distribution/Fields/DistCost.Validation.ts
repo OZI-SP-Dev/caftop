@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Distribution } from "stateManagement/reducer";
+import { Distribution } from "api/CAFTOP/defaults";
 import { populateWithDefaultValue } from "utilities/Validation";
 
 const distcostBaseRule = z.union([

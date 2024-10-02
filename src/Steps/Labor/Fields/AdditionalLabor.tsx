@@ -1,4 +1,4 @@
-import { CAFTOPLabor } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP/types";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { Button, Radio, Text } from "@fluentui/react-components";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";

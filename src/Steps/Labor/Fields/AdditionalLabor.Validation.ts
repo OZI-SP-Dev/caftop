@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Labor } from "stateManagement/reducer";
+import { Labor } from "api/CAFTOP/defaults";
 
 const titleRule = z.string().trim().min(1, "Title is required");
 

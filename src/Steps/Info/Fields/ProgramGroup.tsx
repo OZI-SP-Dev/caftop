@@ -1,8 +1,12 @@
 import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramGroups } from "api/ProgramGroups";
 
-export const ProgramGroup = () => {
+interface IProgramGroupProps {
+  isFilter?: boolean;
+}
+
+export const ProgramGroup = (props: IProgramGroupProps) => {
   const ProgramGroups = useProgramGroups();
   const Groups =
     ProgramGroups.data?.map((item) => {
@@ -13,7 +17,7 @@ export const ProgramGroup = () => {
     <BACCombobox<CAFTOPInfo>
       name="ProgramGroup"
       labelText="Program Group"
-      rules={{ required: true }}
+      rules={{ required: !props.isFilter }}
       options={Groups}
     ></BACCombobox>
   );

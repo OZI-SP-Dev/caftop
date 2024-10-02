@@ -1,20 +1,20 @@
 import { Radio } from "@fluentui/react-components";
-import { CAFTOPTechnicalOrders } from "api/CAFTOP";
+import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
 import BACDatePicker from "components/BaseFormFields/BACDatePicker";
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
 import { useWatch } from "react-hook-form";
 import { formatDate } from "utilities/Date";
 
 export const TOAPMigrationWaiver = () => {
-  const approvedWaiver = useWatch<CAFTOPTechnicalOrders, "ApprovedWaiver">({
-    name: "ApprovedWaiver",
+  const approvedWaiver = useWatch<CAFTOPTechnicalOrders, "TOApprovedWaiver">({
+    name: "TOApprovedWaiver",
   });
 
   return (
     <>
       <div className="requestFieldContainer">
         <BACRadioGroup<CAFTOPTechnicalOrders>
-          name="ApprovedWaiver"
+          name="TOApprovedWaiver"
           labelText="Do you have an approved waiver?"
           rules={{ required: true }}
           fieldProps={{ layout: "horizontal" }}
@@ -26,7 +26,7 @@ export const TOAPMigrationWaiver = () => {
       {approvedWaiver === "yes" && (
         <div className="requestFieldContainer">
           <BACDatePicker<CAFTOPTechnicalOrders>
-            name="ApprovedWaiverDate"
+            name="TOApprovedWaiverDate"
             labelText="Date current waiver was approved"
             rules={{ required: true }}
             fieldProps={{

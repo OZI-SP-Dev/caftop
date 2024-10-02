@@ -1,50 +1,59 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { CAFTOPDescription } from "api/CAFTOP";
+import { CAFTOPDescription } from "api/CAFTOP/types";
 import { useDescriptionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields";
 import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { Description as DescriptionDefaults } from "api/CAFTOP/defaults";
 
 const Description = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  let currentCAFTOP = { ...globalState.Description };
+  const { globalState } = useContext(globalContext);
+  const currentCAFTOP = useCAFTOP(globalState.id, "Description");
+
   const defaultDescription = useDefaultDescription();
   const defualtIntroduction = useDefaultIntroduction();
 
-  if (!currentCAFTOP.Description) {
-    currentCAFTOP = { ...currentCAFTOP, Description: defaultDescription };
+  let formData;
+  if (
+    currentCAFTOP.data &&
+    defaultDescription !== "" &&
+    defualtIntroduction !== ""
+  ) {
+    const desc = currentCAFTOP.data.Description
+      ? currentCAFTOP.data.Description
+      : defaultDescription;
+    const intro = currentCAFTOP.data.Introduction
+      ? currentCAFTOP.data.Introduction
+      : defualtIntroduction;
+    formData = {
+      ...currentCAFTOP.data,
+      Description: desc,
+      Introduction: intro,
+    };
   }
-
-  if (!currentCAFTOP.Introduction) {
-    currentCAFTOP = { ...currentCAFTOP, Introduction: defualtIntroduction };
-  }
-
-  const submitSuccess: SubmitHandler<CAFTOPDescription> = (data, e?) => {
-    dispatch({
-      type: "MERGE_GLOBAL_OPTION",
-      payload: { Description: { ...data } },
-    });
-    props.handleSubmit(e);
-  };
 
   const schema = useDescriptionPageValidation();
 
   const myForm = useForm<CAFTOPDescription>({
-    values: currentCAFTOP,
+    defaultValues: DescriptionDefaults,
+    values: formData,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
 
+  if (!currentCAFTOP.data || !defaultDescription || !defualtIntroduction) {
+    return "Loading...";
+  }
+
   if (globalState.mode === "submit") {
     void myForm.trigger();
   }
-
   return (
     <>
       <Title1>CAFTOP Description and General Introduction Page</Title1>
@@ -52,7 +61,10 @@ const Description = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(
+              props.handleSubmit,
+              props.handleError
+            )(...args)
           }
         >
           <div className="requestFormContainer">

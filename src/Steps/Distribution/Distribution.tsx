@@ -1,35 +1,37 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP";
+import { CAFTOPDistribution, isNotElectronicOnly } from "api/CAFTOP/types";
 import { useDistributionPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { Distribution as DistributionDefaults } from "api/CAFTOP/defaults";
 
 const Distribution = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  const currentCAFTOP = { ...globalState.Distribution };
-  const notElectronicOnly = isNotElectronicOnly(globalState);
+  const { globalState } = useContext(globalContext);
+  const currentCAFTOP = useCAFTOP(globalState.id, "Distribution");
 
-  const submitSuccess: SubmitHandler<CAFTOPDistribution> = (data, e?) => {
-    dispatch({
-      type: "MERGE_GLOBAL_OPTION",
-      payload: { Distribution: { ...data } },
-    });
-    props.handleSubmit(e);
-  };
+  const notElectronicOnly = currentCAFTOP.data
+    ? isNotElectronicOnly(currentCAFTOP.data)
+    : false;
 
-  const schema = useDistributionPageValidation();
+  const schema = useDistributionPageValidation(notElectronicOnly);
 
   const myForm = useForm<CAFTOPDistribution>({
-    values: currentCAFTOP,
+    defaultValues: DistributionDefaults,
+    values: currentCAFTOP.data,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  if (!currentCAFTOP.data) {
+    return "Loading...";
+  }
 
   if (globalState.mode === "submit") {
     void myForm.trigger();
@@ -42,7 +44,10 @@ const Distribution = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(
+              props.handleSubmit,
+              props.handleError
+            )(...args)
           }
         >
           <div className="requestFormContainer">

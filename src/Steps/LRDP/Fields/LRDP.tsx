@@ -1,5 +1,5 @@
 import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPLRDP } from "api/CAFTOP";
+import { CAFTOPLRDP } from "api/CAFTOP/types";
 import { useFieldArray, useWatch } from "react-hook-form";
 import {
   Button,

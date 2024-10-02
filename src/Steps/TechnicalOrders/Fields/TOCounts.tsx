@@ -1,4 +1,4 @@
-import { CAFTOPTechnicalOrders } from "api/CAFTOP";
+import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
 import { Text } from "@fluentui/react-components";
 import BACInput from "components/BaseFormFields/BACInput";
 

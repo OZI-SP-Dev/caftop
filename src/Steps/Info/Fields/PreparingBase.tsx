@@ -1,5 +1,5 @@
 import BACDropdown from "components/BaseFormFields/BACDropdown";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { Option } from "@fluentui/react-components";
 import { usePreparingBases } from "api/PreparingBases";
 

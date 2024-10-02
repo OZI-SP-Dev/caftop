@@ -1,5 +1,5 @@
 import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
-import { CAFTOPLabor } from "api/CAFTOP";
+import { CAFTOPLabor } from "api/CAFTOP/types";
 import { Radio } from "@fluentui/react-components";
 
 export const LaborType = () => {

@@ -1,88 +1,7 @@
-import {
-  CAFTOPInfo,
-  CAFTOPDescription,
-  CAFTOPTechnicalOrders,
-  CAFTOPDistribution,
-  CAFTOPLabor,
-  CAFTOPLRDP,
-} from "api/CAFTOP";
 import { ActionType, GlobalStateInterface } from "stateManagement/types";
 
-const Info: CAFTOPInfo = {
-  ProgramGroup: "",
-  ProgramName: "",
-  ProgramElementCode: "",
-  LeadCommand: "",
-  Center: "",
-  PreparingBase: "",
-  PreparingOffice: "",
-  ProgramManagers: [{ FirstName: "", LastName: "", DSN: "", Email: "" }],
-  TechOrderManager: { FirstName: "", LastName: "", DSN: "", Email: "" },
-};
-
-export const Description: CAFTOPDescription = {
-  Description: "",
-  Introduction: "",
-  ConfigurationPlan: "",
-  SystemMissionDescription: "",
-};
-
-export const TechnicalOrders: CAFTOPTechnicalOrders = {
-  NumElectronic: "",
-  NumPaper: "",
-  NumCDDVD: "",
-  NumUnpublished: "",
-  NumInAcquisition: "",
-  AuthoredInTOAPType: "",
-  ApprovedWaiver: "",
-  ApprovedWaiverDate: null,
-  NumAuthoredInTOAP: "",
-  NumNotAuthoredInTOAP: "",
-  NumWillNotBeAuthoredInTOAP: "",
-  Explanation: "",
-  PlanToConvert: "",
-};
-
-export const Labor: CAFTOPLabor = {
-  LaborType: "",
-  ContractorSupport: {
-    LaborCost: "",
-    TDSSe: "",
-    TDSSeRobins: "",
-    ContractorName: "",
-    ContractNumber: "",
-    ContractExpiration: null,
-  },
-  OrganicSupport: { Office: "" },
-  MILSTD3048Status: "",
-  MILSTD3048Location: "",
-  MILSTD3048Contractor: "",
-  MILSTD3048SourceData: "",
-  HasAdditionalLabor: "",
-  AdditionalLabor: [],
-};
-
-export const Distribution: CAFTOPDistribution = {
-  hasDistCost: "",
-  DistCost: "",
-  hasDSO: "",
-  hasOutsideDSO: "",
-  ApprovedWaiver: "",
-  ApprovedWaiverDate: null,
-};
-
-export const LRDP: CAFTOPLRDP = {
-  hasLRDP: "",
-  LRDP: [],
-};
-
 export const initialState: GlobalStateInterface = {
-  Info,
-  Description,
-  TechnicalOrders,
-  Labor,
-  Distribution,
-  LRDP,
+  id: 0,
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",
@@ -90,12 +9,6 @@ export const initialState: GlobalStateInterface = {
 
 const Reducer = (state: GlobalStateInterface, action: ActionType) => {
   switch (action.type) {
-    case "MERGE_GLOBAL_OPTION": {
-      return {
-        ...state,
-        ...action.payload,
-      };
-    }
     case "NEXT_STEP": {
       let wizardMaxStep = state.wizardMaxStep;
       if (wizardMaxStep <= state.wizardStep) {
@@ -119,15 +32,39 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
         ...action.payload,
       };
     }
-    case "PURGE_STATE": {
-      return initialState;
-    }
     case "CHANGE_MODE": {
       let mode = state.mode;
       mode = action.payload?.mode ?? mode;
       return {
         ...state,
         mode,
+      };
+    }
+    case "SET_CURRENT_ITEM": {
+      const id = action.payload?.id ?? 0;
+      let wizardMaxStep = state.wizardMaxStep;
+      let wizardStep = state.wizardMaxStep;
+
+      if (id === 0) {
+        wizardMaxStep = 0;
+        wizardStep = 0;
+      }
+      const mode: GlobalStateInterface["mode"] = "save";
+      return {
+        ...state,
+        mode,
+        id,
+        wizardMaxStep,
+        wizardStep,
+      };
+    }
+    case "SET_MAX_STEP": {
+      const wizardMaxStep = action.payload?.wizardMaxStep ?? 0;
+      const wizardStep = wizardMaxStep;
+      return {
+        ...state,
+        wizardMaxStep,
+        wizardStep,
       };
     }
     default: {

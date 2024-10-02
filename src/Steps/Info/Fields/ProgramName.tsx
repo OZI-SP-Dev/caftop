@@ -1,9 +1,13 @@
 import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP";
+import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useFormContext } from "react-hook-form";
 
-export const ProgramName = () => {
+interface IProgramNameProps {
+  isFilter?: boolean;
+}
+
+export const ProgramName = (props: IProgramNameProps) => {
   const ProgramNames = useProgramNamesAndECs();
   const Names =
     ProgramNames.data?.map((item) => {
@@ -15,7 +19,7 @@ export const ProgramName = () => {
     <BACCombobox<CAFTOPInfo>
       name="ProgramName"
       labelText="Program Name"
-      rules={{ required: true }}
+      rules={{ required: !props.isFilter }}
       options={Names}
       customOnOptionSelect={(_event, data, field) => {
         field.onChange(data.optionValue ?? "");

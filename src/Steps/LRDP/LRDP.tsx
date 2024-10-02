@@ -1,34 +1,33 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPLRDP } from "api/CAFTOP";
+import { CAFTOPLRDP } from "api/CAFTOP/types";
 import { useLRDPPageValidation } from "utilities/Validations";
 import * as Fields from "./Fields";
 import { ICAFTOPWizardStep } from "Steps/Steps";
+import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { LRDP as LRDPDefault } from "api/CAFTOP/defaults";
 
 const LRDP = (props: ICAFTOPWizardStep) => {
-  const { globalState, dispatch } = useContext(globalContext);
-  const currentCAFTOP = { ...globalState.LRDP };
-
-  const submitSuccess: SubmitHandler<CAFTOPLRDP> = (data, e?) => {
-    dispatch({
-      type: "MERGE_GLOBAL_OPTION",
-      payload: { LRDP: { ...data } },
-    });
-    props.handleSubmit(e);
-  };
+  const { globalState } = useContext(globalContext);
+  const currentCAFTOP = useCAFTOP(globalState.id, "LRDP");
 
   const schema = useLRDPPageValidation();
 
   const myForm = useForm<CAFTOPLRDP>({
-    values: currentCAFTOP,
+    defaultValues: LRDPDefault,
+    values: currentCAFTOP.data,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  if (!currentCAFTOP.data || currentCAFTOP.isLoading) {
+    return "Loading...";
+  }
 
   if (globalState.mode === "submit") {
     void myForm.trigger();
@@ -43,7 +42,10 @@ const LRDP = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(submitSuccess, props.handleError)(...args)
+            void myForm.handleSubmit(
+              props.handleSubmit,
+              props.handleError
+            )(...args)
           }
         >
           <div className="requestFormContainer">
