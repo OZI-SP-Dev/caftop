@@ -21,6 +21,8 @@ import {
   PagedRequestSP,
   PagedRequest,
 } from "./types";
+import { spWebContext } from "api/SPWebContext";
+import { getCurrentUser } from "api/UserApi";
 
 const transformInfoFromSP = (data: CAFTOPSPInfo) => {
   const info: CAFTOPInfo = {
@@ -37,6 +39,7 @@ const transformInfoFromSP = (data: CAFTOPSPInfo) => {
     TechOrderManagers: JSON.parse(
       data.TechOrderManagers
     ) as CAFTOPInfo["TechOrderManagers"],
+    PMandTOMAandAuthorIds: data.PMandTOMAandAuthorIds ?? "",
   };
   return info;
 };
@@ -222,7 +225,36 @@ const transformNumToSP = (number: number | "") => {
   return typeof number === "number" ? number : null;
 };
 
-const transformInfoToSP = (data: CAFTOPInfo) => {
+const transformInfoToSP = async (data: CAFTOPInfo) => {
+  let ids = "";
+
+  // Get the Ids for all the Program Managers (PMs)
+  for (const item of data.ProgramManagers) {
+    try {
+      const id = (await spWebContext.web.ensureUser(item.Email)).Id.toString();
+      ids += `"${id}",`;
+    } catch (e) {
+      /* Ignore failures that are just beause the email isn't in GAL */
+    }
+  }
+
+  // Get the Ids for all the Technical Order Managers (TOMAs)
+  for (const item of data.TechOrderManagers) {
+    try {
+      const id = (await spWebContext.web.ensureUser(item.Email)).Id.toString();
+      ids += `"${id}",`;
+    } catch (e) {
+      /* Ignore failures that are just beause the email isn't in GAL */
+    }
+  }
+
+  let authorId = data.PMandTOMAandAuthorIds.split(",")?.pop() ?? ""; // Get the last item of the array as it is the author
+  if (authorId === "") {
+    // If this is a brand new request then get current user as author
+    authorId = `"${getCurrentUser().Id.toString()}"`;
+  }
+  ids += `${authorId},`; // Add the AuthorId to the string of PMs and TOMAs
+
   const info: CAFTOPSPInfo = {
     ProgramGroup: data.ProgramGroup,
     ProgramName: data.ProgramName,
@@ -233,6 +265,7 @@ const transformInfoToSP = (data: CAFTOPInfo) => {
     PreparingOffice: data.PreparingOffice,
     ProgramManagers: JSON.stringify(data.ProgramManagers),
     TechOrderManagers: JSON.stringify(data.TechOrderManagers),
+    PMandTOMAandAuthorIds: ids,
   };
   return info;
 };
@@ -325,15 +358,15 @@ const transformLRDPToSP = (data: CAFTOPLRDP) => {
  * Convert "" numbers to null
  */
 
-export const transformRequestToSP = <T extends Pages>(
+export const transformRequestToSP = async <T extends Pages>(
   request: PageType<T>,
   page: T
-): PageTypeSP<T> => {
+): Promise<PageTypeSP<T>> => {
   //const retVal = structuredClone({ ...request }) as Partial<CAFTOPSP>;
 
   switch (page) {
     case "Info":
-      return transformInfoToSP(request as CAFTOPInfo) as PageTypeSP<T>;
+      return transformInfoToSP(request as CAFTOPInfo) as Promise<PageTypeSP<T>>;
     case "Description":
       return transformDescriptionToSP(
         request as CAFTOPDescription

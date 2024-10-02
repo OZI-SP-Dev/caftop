@@ -8,7 +8,7 @@ export const useUpdateCAFTOP = (id: string | undefined, page: Pages) => {
   const queryClient = useQueryClient();
   const idNum = parseInt(id ?? "");
   const updateFunc = async (request: CAFTOPPage) => {
-    const transformedData = transformRequestToSP(request, page);
+    const transformedData = await transformRequestToSP(request, page);
 
     if ("wizardMaxStep" in request) {
       Object.assign(transformedData, { wizardMaxStep: request.wizardMaxStep });

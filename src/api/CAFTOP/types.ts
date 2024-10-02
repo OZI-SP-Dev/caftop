@@ -14,6 +14,7 @@ export type CAFTOPInfo = {
   Center: string;
   PreparingBase: string;
   PreparingOffice: string;
+  PMandTOMAandAuthorIds: string;
 } & ProgramManagers &
   TechOrderManagers;
 
@@ -146,6 +147,7 @@ export type CAFTOPSPInfo = {
   PreparingOffice: string;
   ProgramManagers: string;
   TechOrderManagers: string;
+  PMandTOMAandAuthorIds: string;
 };
 
 export type CAFTOPSPDescription = {

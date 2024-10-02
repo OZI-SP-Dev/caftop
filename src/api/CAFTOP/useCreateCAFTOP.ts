@@ -9,7 +9,7 @@ const CAFTOP_YEARS_OUT = 2;
 
 export const useCreateCAFTOP = () => {
   const createFunc = async (request: CAFTOPInfo) => {
-    const newItem = transformRequestToSP(request, "Info");
+    const newItem = await transformRequestToSP(request, "Info");
     const caftopYear = new Date().getFullYear() + CAFTOP_YEARS_OUT;
     const newItemWithMaxStepAndYear = {
       ...newItem,

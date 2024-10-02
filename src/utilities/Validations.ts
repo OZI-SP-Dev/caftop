@@ -85,7 +85,8 @@ export const useInfoPageValidation = () => {
     .merge(PreparingBaseRuleFinal)
     .merge(PreparingOfficeRuleFinal)
     .merge(ProgramManagersRuleFinal)
-    .merge(TechOrderManagersRuleFinal);
+    .merge(TechOrderManagersRuleFinal)
+    .merge(z.object({ PMandTOMAandAuthorIds: z.string() }));
 
   return useAddlPECValidation(schema);
 };
