@@ -59,7 +59,7 @@ export class Person implements IPerson {
   }
 }
 
-export const useCurrentUser = () => {
+export const getCurrentUser = () => {
   let currentUser;
   if (import.meta.env.DEV) {
     currentUser = new Person({

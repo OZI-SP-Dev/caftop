@@ -11,7 +11,7 @@ import {
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { Person, useCurrentUser } from "api/UserApi";
+import { Person, getCurrentUser } from "api/UserApi";
 import BACPeoplePicker from "./PeoplePicker";
 import { FormProvider, useForm } from "react-hook-form";
 import { ContactIcon } from "@fluentui/react-icons-mdl2";
@@ -22,7 +22,7 @@ interface IPopupPeoplePicker {
 
 export const PopupPeoplePicker = ({ onUpdate }: IPopupPeoplePicker) => {
   const [selected, setSelected] = useState<Person[]>([]);
-  const currentUser = useCurrentUser();
+  const currentUser = getCurrentUser();
   const [isOpen, setOpen] = useState<boolean>(false);
   const [updateType, setUpdating] = useState<"none" | "selected" | "self">(
     "none"
