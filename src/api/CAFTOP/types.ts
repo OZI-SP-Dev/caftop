@@ -274,6 +274,17 @@ export type PagedRequestSP = Pick<
   | "ProgramName"
 > & { Id: number; Year: number };
 
+export type PagedRequestSPStream = Pick<
+  CAFTOPSPInfo,
+  | "LeadCommand"
+  | "Center"
+  | "ProgramElementCode"
+  | "ProgramGroup"
+  | "ProgramName"
+  | "ProgramManagers"
+  | "TechOrderManagers"
+> & { ID: number; Year: number };
+
 export type PagedRequest = Pick<
   CAFTOPInfo,
   | "LeadCommand"

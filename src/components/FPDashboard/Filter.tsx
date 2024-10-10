@@ -8,6 +8,7 @@ import {
 } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
 import { CAFTOPFilter } from "api/CAFTOP/useFPCAFTOPs";
+import BACInput from "components/BaseFormFields/BACInput";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import {
   Center,
@@ -23,6 +24,8 @@ interface IFilterFields {
   ProgramElementCode: string;
   ProgramGroup: string;
   ProgramName: string;
+  ProgramManagers: string;
+  TechOrderManagers: string;
 }
 
 const FilterRequestsDrawer = ({
@@ -52,7 +55,7 @@ const FilterRequestsDrawer = ({
     ProgramElementCode:
       filterState
         .filter((obj) => {
-          return obj.column === "ProgramElementCodem";
+          return obj.column === "ProgramElementCode";
         })[0]
         ?.filter.toString() ?? "",
     ProgramGroup:
@@ -65,6 +68,18 @@ const FilterRequestsDrawer = ({
       filterState
         .filter((obj) => {
           return obj.column === "ProgramName";
+        })[0]
+        ?.filter.toString() ?? "",
+    ProgramManagers:
+      filterState
+        .filter((obj) => {
+          return obj.column === "ProgramManagers";
+        })[0]
+        ?.filter.toString() ?? "",
+    TechOrderManagers:
+      filterState
+        .filter((obj) => {
+          return obj.column === "TechOrderManagers";
         })[0]
         ?.filter.toString() ?? "",
   };
@@ -120,6 +135,22 @@ const FilterRequestsDrawer = ({
       });
     }
 
+    if (data.ProgramManagers) {
+      newFilter.push({
+        column: "ProgramManagers",
+        filter: data.ProgramManagers,
+        queryString: `<Contains><FieldRef Name="ProgramManagers"/><Value Type="Note">${data.ProgramManagers}</Value></Contains>`,
+      });
+    }
+
+    if (data.TechOrderManagers) {
+      newFilter.push({
+        column: "TechOrderManagers",
+        filter: data.TechOrderManagers,
+        queryString: `<Contains><FieldRef Name="TechOrderManagers"/><Value Type="Note">${data.TechOrderManagers}</Value></Contains>`,
+      });
+    }
+
     setFilterState(newFilter);
     setIsOpen(false);
   };
@@ -166,6 +197,15 @@ const FilterRequestsDrawer = ({
             <hr />
             <ProgramName isFilter={true} />
             <hr />
+            <BACInput
+              name={`ProgramManagers`}
+              labelText="Progrm Manager Last Name"
+            />
+            <hr />
+            <BACInput
+              name={`TechOrderManagers`}
+              labelText="Technical Order Manager Last Name"
+            />
           </DrawerBody>
           <DrawerFooter>
             <Button appearance="primary" type="submit" value="submit">

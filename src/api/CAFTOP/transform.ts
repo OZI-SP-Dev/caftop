@@ -20,6 +20,7 @@ import {
   CAFTOPMaxStep,
   PagedRequestSP,
   PagedRequest,
+  PagedRequestSPStream,
 } from "./types";
 import { spWebContext } from "api/SPWebContext";
 import { getCurrentUser } from "api/UserApi";
@@ -422,7 +423,7 @@ export const transformPagedRequestsFromSP = (requests: {
 };
 
 export const transformFPPagedRequestsFromSP = (requests: {
-  data: PagedRequestSP[];
+  data: PagedRequestSPStream[];
   pageHref: string | undefined;
   hasMore: boolean;
 }) => {
@@ -430,7 +431,7 @@ export const transformFPPagedRequestsFromSP = (requests: {
 
   requests?.data?.forEach((request) => {
     returnObject.push({
-      Id: request.Id,
+      Id: request.ID,
       Year: request.Year,
       LeadCommand: request.LeadCommand,
       Center: request.Center,

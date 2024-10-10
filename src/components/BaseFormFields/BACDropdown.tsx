@@ -77,7 +77,9 @@ const BACDropdown = <T extends FieldValues>({
           customOnOptionSelect
             ? (event, data) => customOnOptionSelect(event, data, field)
             : (_e, data) => {
-                field.onChange(data.optionValue);
+                // Fix for when using clearable prop -- it sets it to undefined
+                // which RHF doesn't like So instead set it to blank "" if it is undefined
+                field.onChange(data.optionValue ?? "");
               }
         }
         value={customValue ? customValue(field.value) : field.value}
