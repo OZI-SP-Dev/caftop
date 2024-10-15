@@ -40,7 +40,7 @@ const BACCombobox = <T extends FieldValues>({
   customOnOptionSelect,
   customValue,
 }: BaseFormField<T> & {
-  fieldProps: Partial<ComboboxProps>;
+  fieldProps?: Partial<ComboboxProps>;
   options: { children: string; value: string }[];
   customOnOptionSelect?: onOptionSelectCallback<T>;
   customValue?: valueCallback<T>;
