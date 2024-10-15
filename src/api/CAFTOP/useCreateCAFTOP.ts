@@ -15,6 +15,7 @@ export const useCreateCAFTOP = () => {
       ...newItem,
       wizardMaxStep: 1, // Set it to default to the second page
       Year: caftopYear, // Set the CAFTOP year
+      Title: `${caftopYear}-${newItem.ProgramName}-${newItem.ProgramElementCode}`, // Set the Title value as this is the unique key
     };
 
     if (!import.meta.env.DEV) {

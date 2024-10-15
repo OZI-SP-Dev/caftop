@@ -1,5 +1,12 @@
 import { useContext } from "react";
-import { Title1, Title2 } from "@fluentui/react-components";
+import {
+  Title1,
+  Title2,
+  Toast,
+  ToastTitle,
+  ToastTrigger,
+  useToastController,
+} from "@fluentui/react-components";
 import { globalContext } from "stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import "Steps/Steps.css";
@@ -12,6 +19,7 @@ import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 import { Info as InfoDefaults } from "api/CAFTOP/defaults";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCreateCAFTOP } from "api/CAFTOP/useCreateCAFTOP";
+import { Link } from "@fluentui/react";
 
 const Info = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
@@ -19,11 +27,49 @@ const Info = (props: ICAFTOPWizardStep) => {
   const currentCAFTOP = useCAFTOP(globalState.id, "Info");
   const createCAFTOP = useCreateCAFTOP();
   const navigate = useNavigate();
+  const { dispatchToast } = useToastController("toaster");
 
   const createNew: SubmitHandler<CAFTOPInfo> = (data, _e?) => {
     createCAFTOP.mutate(data, {
       onSuccess: (data: { Id: number }) => {
         navigate(`/item/${data.Id}`);
+      },
+      onError: (e) => {
+        if (
+          e instanceof Error &&
+          e.message ===
+            `Error making HttpClient request in queryable [500]  ::> {"odata.error":{"code":"-2130575169, Microsoft.SharePoint.SPDuplicateValuesFoundException","message":{"lang":"en-US","value":"The list item could not be added or updated because duplicate values were found in the following field(s) in the list: [Title]."}}}`
+        ) {
+          dispatchToast(
+            <Toast>
+              <ToastTitle
+                action={
+                  <ToastTrigger>
+                    <Link>Dismiss</Link>
+                  </ToastTrigger>
+                }
+              >
+                A CAFTOP for this Program Name / PEC combo already exists
+              </ToastTitle>
+            </Toast>,
+            { intent: "error", timeout: -1 }
+          );
+        } else {
+          dispatchToast(
+            <Toast>
+              <ToastTitle
+                action={
+                  <ToastTrigger>
+                    <Link>Dismiss</Link>
+                  </ToastTrigger>
+                }
+              >
+                Error creating CAFTOP
+              </ToastTitle>
+            </Toast>,
+            { intent: "error", timeout: -1 }
+          );
+        }
       },
     });
   };
