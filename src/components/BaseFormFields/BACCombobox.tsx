@@ -1,5 +1,6 @@
 import {
   Combobox,
+  ComboboxProps,
   InfoLabel,
   Text,
   useComboboxFilter,
@@ -35,9 +36,11 @@ const BACCombobox = <T extends FieldValues>({
   labelInfo,
   rules,
   options,
+  fieldProps,
   customOnOptionSelect,
   customValue,
 }: BaseFormField<T> & {
+  fieldProps: Partial<ComboboxProps>;
   options: { children: string; value: string }[];
   customOnOptionSelect?: onOptionSelectCallback<T>;
   customValue?: valueCallback<T>;
@@ -103,6 +106,7 @@ const BACCombobox = <T extends FieldValues>({
         freeform={false}
         clearable={true}
         listbox={{ style: { maxHeight: "50vh" } }}
+        {...fieldProps}
       >
         {children ?? <></>}
       </Combobox>
