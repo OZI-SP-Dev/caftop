@@ -14,7 +14,7 @@ const laborCostBaseRule = z.union([
 const contractornameBaseRule = z
   .string()
   .trim()
-  .max(50, "Contractor Name cannot exceed 50 characters");
+  .max(100, "Contractor Name cannot exceed 100 characters");
 
 const tdsseCtr =
   "AFLCMC/LZP via Technical Data Support Service Enterprise (TDSSe)";
