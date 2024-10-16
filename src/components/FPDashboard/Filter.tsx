@@ -220,6 +220,8 @@ const FilterRequestsDrawer = ({
                     ProgramElementCode: "",
                     ProgramName: "",
                     ProgramGroup: "",
+                    ProgramManagers: "",
+                    TechOrderManagers: "",
                   },
                   { keepDefaultValues: false }
                 )
