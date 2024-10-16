@@ -125,6 +125,18 @@ const Complete = (_props: ICAFTOPWizardStep) => {
         return year.toString().substring(2);
       };
 
+      // Function to allow for filter in word document to display commas within a number
+      // example use for document {LaborCost | comma}
+      expressions.filters.comma = function (value: number | undefined) {
+        // Make sure that if your input is undefined, your
+        // output will be undefined as well and will not
+        // throw an error
+        if (!value) {
+          return value;
+        }
+        return value.toLocaleString();
+      };
+
       PizZipUtils.getBinaryContent(
         ".\\CAFTOP_Template.docx",
         function (error: Error, content: string) {
