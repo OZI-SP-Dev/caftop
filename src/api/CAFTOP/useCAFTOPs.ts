@@ -3,6 +3,7 @@ import { spWebContext } from "../SPWebContext";
 import { getCAFTOPs } from "./SampleData";
 import { PagedRequestSP, PagedRequest } from "./types";
 import { transformPagedRequestsFromSP } from "./transform";
+import { getCurrentUser } from "api/UserApi";
 
 declare const _spPageContextInfo: {
   userEmail: string;
@@ -41,16 +42,13 @@ const getPagedRequests = async (
   const requestedFields =
     "Id,Year,LeadCommand,Center,ProgramElementCode,ProgramGroup,ProgramName";
 
-  let queryString = "";
+  const { Id: currentUserId } = getCurrentUser();
+  // They should see only ones where they are the Author, PM, or TOMA
+  let queryString = `substringof('"${currentUserId}"',PMandTOMAandAuthorIds)`;
 
-  // TODO -- Need to add a way for this to filter by the author, PM, and TOMA
-
+  // Add any filters they have selected
   filterParams.forEach((filter) => {
-    if (queryString === "") {
-      queryString += `${filter.queryString}`;
-    } else {
-      queryString += ` and ${filter.queryString}`;
-    }
+    queryString += ` and ${filter.queryString}`;
   });
 
   if (!import.meta.env.DEV) {
@@ -71,7 +69,11 @@ const getPagedRequests = async (
       return { data: data.value, iterator: iterator, hasMore: !data.done };
     } else {
       const data = await pageIterator.next();
-      return { data: data.value, iterator: pageIterator, hasMore: !data.done };
+      return {
+        data: data.value,
+        iterator: pageIterator,
+        hasMore: !data.done,
+      };
     }
   } else {
     return new Promise((resolve) =>

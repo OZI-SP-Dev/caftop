@@ -18,6 +18,7 @@ export const Info: CAFTOPInfo = {
   PreparingOffice: "",
   ProgramManagers: [{ FirstName: "", LastName: "", Phone: "", Email: "" }],
   TechOrderManagers: [{ FirstName: "", LastName: "", Phone: "", Email: "" }],
+  PMandTOMAandAuthorIds: "",
 };
 
 export const Description: CAFTOPDescription = {

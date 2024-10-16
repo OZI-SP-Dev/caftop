@@ -9,12 +9,13 @@ const CAFTOP_YEARS_OUT = 2;
 
 export const useCreateCAFTOP = () => {
   const createFunc = async (request: CAFTOPInfo) => {
-    const newItem = transformRequestToSP(request, "Info");
+    const newItem = await transformRequestToSP(request, "Info");
     const caftopYear = new Date().getFullYear() + CAFTOP_YEARS_OUT;
     const newItemWithMaxStepAndYear = {
       ...newItem,
       wizardMaxStep: 1, // Set it to default to the second page
       Year: caftopYear, // Set the CAFTOP year
+      Title: `${caftopYear}-${newItem.ProgramName}-${newItem.ProgramElementCode}`, // Set the Title value as this is the unique key
     };
 
     if (!import.meta.env.DEV) {

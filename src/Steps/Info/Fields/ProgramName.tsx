@@ -2,12 +2,15 @@ import BACCombobox from "components/BaseFormFields/BACCombobox";
 import { CAFTOPInfo } from "api/CAFTOP/types";
 import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
 import { useFormContext } from "react-hook-form";
+import { useContext } from "react";
+import { globalContext } from "stateManagement/GlobalStore";
 
 interface IProgramNameProps {
   isFilter?: boolean;
 }
 
 export const ProgramName = (props: IProgramNameProps) => {
+  const { globalState } = useContext(globalContext);
   const ProgramNames = useProgramNamesAndECs();
   const Names =
     ProgramNames.data?.map((item) => {
@@ -20,6 +23,9 @@ export const ProgramName = (props: IProgramNameProps) => {
       name="ProgramName"
       labelText="Program Name"
       rules={{ required: !props.isFilter }}
+      fieldProps={{
+        disabled: !props.isFilter && globalState.wizardMaxStep >= 1,
+      }}
       options={Names}
       customOnOptionSelect={(_event, data, field) => {
         field.onChange(data.optionValue ?? "");

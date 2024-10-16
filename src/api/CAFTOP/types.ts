@@ -14,6 +14,7 @@ export type CAFTOPInfo = {
   Center: string;
   PreparingBase: string;
   PreparingOffice: string;
+  PMandTOMAandAuthorIds: string;
 } & ProgramManagers &
   TechOrderManagers;
 
@@ -146,6 +147,7 @@ export type CAFTOPSPInfo = {
   PreparingOffice: string;
   ProgramManagers: string;
   TechOrderManagers: string;
+  PMandTOMAandAuthorIds: string;
 };
 
 export type CAFTOPSPDescription = {
@@ -271,6 +273,17 @@ export type PagedRequestSP = Pick<
   | "ProgramGroup"
   | "ProgramName"
 > & { Id: number; Year: number };
+
+export type PagedRequestSPStream = Pick<
+  CAFTOPSPInfo,
+  | "LeadCommand"
+  | "Center"
+  | "ProgramElementCode"
+  | "ProgramGroup"
+  | "ProgramName"
+  | "ProgramManagers"
+  | "TechOrderManagers"
+> & { ID: number; Year: number };
 
 export type PagedRequest = Pick<
   CAFTOPInfo,

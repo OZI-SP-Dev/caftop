@@ -11,7 +11,7 @@ interface ILeadCommandProps {
 
 export const LeadCommand = (props: ILeadCommandProps) => {
   const LeadCommands = useLeadCommands();
-  let filterProps: Partial<TBACDropdownProps<CAFTOPInfo>> = {};
+  const filterProps: Partial<TBACDropdownProps<CAFTOPInfo>> = {};
   if (props.isFilter) {
     filterProps.fieldProps = { clearable: true };
   }

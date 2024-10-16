@@ -53,6 +53,11 @@ const BACDropdown = <T extends FieldValues>({
   /* Is it a required field, if so, then mark the label as required */
   const isRequired: boolean = rules?.required ? true : false;
 
+  // Fix bug with FluentUI where if value is "" it is showing the clear X
+  if (fieldProps?.clearable === true && field.value === "") {
+    fieldProps.clearable = false;
+  }
+
   return (
     <>
       <InfoLabel
@@ -77,7 +82,9 @@ const BACDropdown = <T extends FieldValues>({
           customOnOptionSelect
             ? (event, data) => customOnOptionSelect(event, data, field)
             : (_e, data) => {
-                field.onChange(data.optionValue);
+                // Fix for when using clearable prop -- it sets it to undefined
+                // which RHF doesn't like So instead set it to blank "" if it is undefined
+                field.onChange(data.optionValue ?? "");
               }
         }
         value={customValue ? customValue(field.value) : field.value}

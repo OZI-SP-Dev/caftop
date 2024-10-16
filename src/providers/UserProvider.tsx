@@ -1,6 +1,6 @@
 import { createContext, FunctionComponent, useState } from "react";
 //import { RoleType, useUserRoles } from "api/RolesApi";
-import { Person, useCurrentUser } from "api/UserApi";
+import { Person, getCurrentUser } from "api/UserApi";
 
 interface IUserContext {
   /** Current or Impersonated User object */ user: Person;
@@ -24,7 +24,7 @@ export const UserProvider: FunctionComponent<{
   children?: React.ReactNode;
 }> = ({ children }) => {
   // Get the current logged in user
-  const loggedInUser = useCurrentUser();
+  const loggedInUser = getCurrentUser();
   const [user, setUser] = useState(loggedInUser);
   /* We have to pass in a user id for two reasons:
       1)  This will take care of when we are impersonating, so that it will pull the roles for that user

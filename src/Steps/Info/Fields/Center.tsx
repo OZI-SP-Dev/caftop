@@ -11,7 +11,7 @@ interface ICenterProps {
 
 export const Center = (props: ICenterProps) => {
   const Centers = useCenters();
-  let filterProps: Partial<TBACDropdownProps<CAFTOPInfo>> = {};
+  const filterProps: Partial<TBACDropdownProps<CAFTOPInfo>> = {};
   if (props.isFilter) {
     filterProps.fieldProps = { clearable: true };
   }

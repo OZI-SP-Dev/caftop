@@ -12,6 +12,8 @@ import {
 import { Suspense } from "react";
 import Home from "components/Home/Home";
 import CAFTOP from "components/CAFTOP/CAFTOP";
+import FPDashboard from "components/FPDashboard/FPDashboard";
+import { Toaster } from "@fluentui/react-components";
 
 /** Create a React Router with the needed Routes using the Data API */
 const router = createHashRouter(
@@ -20,6 +22,7 @@ const router = createHashRouter(
       <Route path="/" element={<Home />} />
       <Route path="item/:itemId" element={<CAFTOP />} />
       <Route path="new" element={<CAFTOP />} />
+      <Route path="CAFTOPs" element={<FPDashboard />} />
       <Route
         path="*" // Catch-all to display homepage if no match
         element={<Home />}
@@ -40,6 +43,12 @@ function MainLayout() {
         >
           <Outlet />
         </Suspense>
+        <Toaster
+          toasterId={"toaster"}
+          position="top-end"
+          pauseOnHover
+          pauseOnWindowBlur
+        />
       </div>
     </div>
   );
