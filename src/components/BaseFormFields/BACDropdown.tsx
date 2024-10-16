@@ -53,6 +53,11 @@ const BACDropdown = <T extends FieldValues>({
   /* Is it a required field, if so, then mark the label as required */
   const isRequired: boolean = rules?.required ? true : false;
 
+  // Fix bug with FluentUI where if value is "" it is showing the clear X
+  if (fieldProps?.clearable === true && field.value === "") {
+    fieldProps.clearable = false;
+  }
+
   return (
     <>
       <InfoLabel
