@@ -153,7 +153,7 @@ const Complete = (_props: ICAFTOPWizardStep) => {
           // render the document
           doc.render(dataForDocument);
 
-          // Replace the metadata for the signature lines with the Program Manager data
+          // Replace the metadata for the signature lines with the Program Manager and Technical Order Manager data
           let docXML = zip.files["word/document.xml"].asText();
           caftopData.Info.ProgramManagers.forEach((progManager) => {
             docXML = docXML.replace(
@@ -163,6 +163,16 @@ const Complete = (_props: ICAFTOPWizardStep) => {
             docXML = docXML.replace(
               `o:suggestedsigneremail="Email"`,
               `o:suggestedsigneremail="${progManager.Email}"`
+            );
+          });
+          caftopData.Info.TechOrderManagers.forEach((toManager) => {
+            docXML = docXML.replace(
+              `o:suggestedsigner="TO FirstName LastName"`,
+              `o:suggestedsigner="${toManager.FirstName} ${toManager.LastName}"`
+            );
+            docXML = docXML.replace(
+              `o:suggestedsigneremail="TO Email"`,
+              `o:suggestedsigneremail="${toManager.Email}"`
             );
           });
           zip.file("word/document.xml", docXML);
