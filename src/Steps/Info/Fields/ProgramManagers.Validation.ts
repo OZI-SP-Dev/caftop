@@ -1,3 +1,4 @@
+import { formatPhone } from "utilities/Phone";
 import { z } from "zod";
 
 const firstNameRule = z
@@ -13,8 +14,12 @@ const lastNameRule = z
 const phoneRule = z
   .string()
   .trim()
-  .regex(/\(\d{3}\)\s\d{3}-\d{4}/, "Phone must be in the format (###) ###-####")
-  .min(1, "Phone is required");
+  .regex(/^([^\d]*\d){10}$/, "Phone must contain 10 digits") // Match anystring as long as it has 10 digits
+  .min(1, "Phone is required")
+  .transform((value) => {
+    // Transform in validation, as onBlur is not guarenteed to run and update value before save
+    return formatPhone(value);
+  });
 const finalEmailRule = z
   .string()
   .trim()
