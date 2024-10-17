@@ -166,13 +166,9 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   };
 
   const handleError: SubmitErrorHandler<CAFTOPPage> = (
-    errors,
+    _errors,
     e?: BaseSyntheticEvent
   ) => {
-    // TODO -- Remove this
-    if (errors) {
-      console.log(errors);
-    }
     if (e) {
       e.preventDefault();
       if (e?.nativeEvent instanceof SubmitEvent) {
