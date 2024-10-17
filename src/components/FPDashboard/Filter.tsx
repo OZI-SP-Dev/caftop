@@ -92,9 +92,6 @@ const FilterRequestsDrawer = ({
   const onSubmit: SubmitHandler<IFilterFields> = (data) => {
     const newFilter: CAFTOPFilter[] = [];
 
-    // TODO -- Add in PM and TOMA searches
-    /*<Contains><FieldRef Name="ProgramManagers" /><Value Type="Note">SEARCH VALUE</Value></Contains>;*/
-
     if (data.LeadCommand) {
       newFilter.push({
         column: "LeadCommand",

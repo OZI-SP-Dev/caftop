@@ -5,7 +5,8 @@ import BACInput from "components/BaseFormFields/BACInput";
 import { PopupPeoplePicker } from "components/PeoplePicker/PopupPeoplePicker";
 import { getSPUserProfileData } from "api/SPWebContext";
 import { Person } from "api/UserApi";
-import { formatPhone, onPhoneInput } from "utilities/Phone";
+import { formatPhone, onPhoneBlur } from "utilities/Phone";
+import { capitalizeFirstLetter } from "utilities/Names";
 
 export const TechOrderManagers = () => {
   const myForm = useFormContext();
@@ -34,10 +35,10 @@ export const TechOrderManagers = () => {
           workPhone = prop.Value;
           break;
         case "FirstName":
-          firstName = prop.Value;
+          firstName = capitalizeFirstLetter(prop.Value);
           break;
         case "LastName":
-          lastName = prop.Value;
+          lastName = capitalizeFirstLetter(prop.Value);
           break;
       }
     });
@@ -96,7 +97,7 @@ export const TechOrderManagers = () => {
               name={`TechOrderManagers.${index}.Phone`}
               labelText="Phone"
               rules={{ required: true }}
-              fieldProps={{ onInput: onPhoneInput, type: "tel" }}
+              fieldProps={{ onBlur: onPhoneBlur, type: "tel" }}
             />
           </div>
           <div className="requestFieldContainer">
