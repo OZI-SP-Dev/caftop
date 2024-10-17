@@ -1,9 +1,7 @@
 import { CAFTOPPage, Pages } from "api/CAFTOP/types";
 import {
-  ReactElement,
   Suspense,
   lazy,
-  cloneElement,
   useContext,
   BaseSyntheticEvent,
   useState,
@@ -20,7 +18,6 @@ import { useQueryClient } from "@tanstack/react-query";
 type WizardStep = {
   id: Pages;
   name: string;
-  jsxObj: ReactElement;
 };
 
 export interface ICAFTOPWizardStep {
@@ -53,57 +50,38 @@ const LRDP = lazy(() => lrdpPromise);
 const completePromise = import("Steps/Complete");
 const Complete = lazy(() => completePromise);
 
-const blankHandleErr: SubmitErrorHandler<CAFTOPPage> = (
-  _errors,
-  _e?: BaseSyntheticEvent
-) => {};
-
-const blankHandleSubmit = () => {};
-
-const blankdHandlers = {
-  handleSubmit: blankHandleSubmit,
-  handleError: blankHandleErr,
-};
-export const WizardSteps: WizardStep[] = [
+const WizardSteps: WizardStep[] = [
   {
     id: "Info",
     name: "CAFTOP Information Page",
-    jsxObj: <Info {...blankdHandlers} />,
   },
   {
     id: "Description",
     name: "Program Description and General Information",
-    jsxObj: <Description {...blankdHandlers} />,
   },
   {
     id: "TechnicalOrders",
     name: "Technical Orders",
-    jsxObj: <TechnicalOrders {...blankdHandlers} />,
   },
   {
     id: "Labor",
     name: "Labor",
-    jsxObj: <Labor {...blankdHandlers} />,
   },
   {
     id: "Distribution",
     name: "Distribution",
-    jsxObj: <Distribution {...blankdHandlers} />,
   },
   {
     id: "Improvements",
     name: "Improvements",
-    jsxObj: <Improvements {...blankdHandlers} />,
   },
   {
     id: "LRDP",
     name: "Logistics Requirements Destermination Process (LRDP) Task Prioritization",
-    jsxObj: <LRDP {...blankdHandlers} />,
   },
   {
     id: "Completed",
     name: "Completed",
-    jsxObj: <Complete {...blankdHandlers} />,
   },
 ];
 
@@ -112,6 +90,7 @@ export const CAFTOPFinalStep = CAFTOPStepNames.length - 1;
 
 interface ICAFTOPWizardSteps {
   currentStep: number;
+  setReadyForGeneration: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
@@ -199,8 +178,50 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
     }
   };
 
-  const stepToDisplay = WizardSteps[props.currentStep].jsxObj;
-  const step = cloneElement(stepToDisplay, { handleSubmit, handleError });
+  let step: JSX.Element = <></>;
+  switch (WizardSteps[props.currentStep].id) {
+    case "Info":
+      step = <Info handleSubmit={handleSubmit} handleError={handleError} />;
+      break;
+    case "Description":
+      step = (
+        <Description handleSubmit={handleSubmit} handleError={handleError} />
+      );
+      break;
+    case "Distribution":
+      step = (
+        <Distribution handleSubmit={handleSubmit} handleError={handleError} />
+      );
+      break;
+    case "Improvements":
+      step = (
+        <Improvements handleSubmit={handleSubmit} handleError={handleError} />
+      );
+      break;
+    case "LRDP":
+      step = <LRDP handleSubmit={handleSubmit} handleError={handleError} />;
+      break;
+    case "Labor":
+      step = <Labor handleSubmit={handleSubmit} handleError={handleError} />;
+      break;
+    case "TechnicalOrders":
+      step = (
+        <TechnicalOrders
+          handleSubmit={handleSubmit}
+          handleError={handleError}
+        />
+      );
+      break;
+    case "Completed":
+      step = (
+        <Complete
+          handleSubmit={handleSubmit}
+          handleError={handleError}
+          setReadyForGeneration={props.setReadyForGeneration}
+        />
+      );
+      break;
+  }
 
   return (
     <Suspense fallback={<div style={{ paddingLeft: ".5em" }}>Loading...</div>}>

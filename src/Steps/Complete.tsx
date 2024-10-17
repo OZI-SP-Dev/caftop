@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import { globalContext } from "../stateManagement/GlobalStore";
 import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
@@ -11,10 +11,22 @@ import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate } from "utilities/Date";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 
-const Complete = (_props: ICAFTOPWizardStep) => {
+const Complete = (
+  props: ICAFTOPWizardStep & {
+    setReadyForGeneration: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+) => {
   const { globalState, dispatch } = useContext(globalContext);
   const caftop = useCAFTOP(globalState.id, "ALL");
   const errors = useCheckComplete();
+
+  useEffect(() => {
+    if (errors && errors.length === 0) {
+      props.setReadyForGeneration(true);
+    } else {
+      props.setReadyForGeneration(false);
+    }
+  }, [errors]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();

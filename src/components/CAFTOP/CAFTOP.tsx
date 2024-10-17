@@ -5,12 +5,12 @@ import { AppLeftNav } from "components/AppLeftNav";
 
 import { Button, Spinner } from "@fluentui/react-components";
 import "./CAFTOP.css";
-import { useCheckComplete } from "utilities/Validations";
 
-function App() {
+function CAFTOP() {
   const { globalState, dispatch } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
-  const errors = useCheckComplete();
+  // This will become true, only if we are on the last step, and we have valid data
+  const [readyForGeneration, setReadyForGeneration] = useState(false);
 
   let submitButtonText: string;
   if (isLoading) {
@@ -38,7 +38,10 @@ function App() {
               flexDirection: "column",
             }}
           >
-            <CAFTOPWizardSteps currentStep={globalState.wizardStep} />
+            <CAFTOPWizardSteps
+              currentStep={globalState.wizardStep}
+              setReadyForGeneration={setReadyForGeneration}
+            />
           </div>
         </div>
         <div className="formButtons">
@@ -61,8 +64,7 @@ function App() {
               disabled={
                 isLoading ||
                 (CAFTOPFinalStep === globalState.wizardStep &&
-                  errors &&
-                  errors.length > 0)
+                  !readyForGeneration)
               }
               onClick={(e) => {
                 if (submitButtonText === "Start CAFTOP") {
@@ -84,4 +86,4 @@ function App() {
   );
 }
 
-export default App;
+export default CAFTOP;
