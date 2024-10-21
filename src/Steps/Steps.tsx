@@ -7,21 +7,28 @@ import {
   useState,
   useEffect,
 } from "react";
-import { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
+import { SubmitErrorHandler } from "react-hook-form";
 import { globalContext } from "stateManagement/GlobalStore";
 import { AlertNavWithErrors } from "./AlertNavWithErrors";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 import { useParams } from "react-router-dom";
 import { useUpdateCAFTOP } from "api/CAFTOP/useUpdateCAFTOP";
 import { useQueryClient } from "@tanstack/react-query";
+import { AlertNav } from "./AlertNav";
 
 type WizardStep = {
   id: Pages;
   name: string;
 };
 
+type TCAFTOPSubmitFunc = (
+  hasChanges: boolean,
+  data: CAFTOPPage,
+  e?: React.BaseSyntheticEvent
+) => Promise<void>;
+
 export interface ICAFTOPWizardStep {
-  handleSubmit: SubmitHandler<CAFTOPPage>;
+  handleSubmit: TCAFTOPSubmitFunc;
   handleError: SubmitErrorHandler<CAFTOPPage>;
 }
 
@@ -96,7 +103,11 @@ interface ICAFTOPWizardSteps {
 export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   const { globalState, dispatch } = useContext(globalContext);
   const [isNavErr, setNavErr] = useState<boolean>(false);
-  const [closeFunc, setCloseFunc] = useState<() => void>(() => {});
+  const [isNavChanges, setNavChanges] = useState<boolean>(false);
+  const [closeFunc, setCloseFunc] = useState(() => () => {});
+  const [closeFuncChanges, setCloseFuncChanges] = useState(
+    () => () => Promise.resolve()
+  );
   const { itemId } = useParams();
   const maxStep = useCAFTOP(globalState.id, "MaxStep");
   const queryClient = useQueryClient();
@@ -121,27 +132,56 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
     void queryClient.invalidateQueries(["caftop-MaxStep"]);
   }, [itemId, dispatch, queryClient]);
 
-  const handleSubmit: SubmitHandler<CAFTOPPage> = async (data, e) => {
+  const handleSubmit: TCAFTOPSubmitFunc = async (
+    hasChanges: boolean,
+    data: CAFTOPPage,
+    e?: React.BaseSyntheticEvent
+  ) => {
+    let saveAction = () => Promise.resolve();
+    let navAction = () => {};
+    let isSaveAndContinue = false;
     e?.preventDefault();
     if (e?.nativeEvent instanceof SubmitEvent) {
       if (e.nativeEvent?.submitter?.id === "next") {
-        if (props.currentStep + 1 > (maxStep.data?.wizardMaxStep ?? 0)) {
-          Object.assign(data, { wizardMaxStep: props.currentStep + 1 });
-        }
-        await updateCAFTOP.mutateAsync(data);
-        dispatch({ type: "NEXT_STEP" });
+        isSaveAndContinue = globalState.wizardMaxStep === props.currentStep;
+        saveAction = async () => {
+          if (props.currentStep + 1 > (maxStep.data?.wizardMaxStep ?? 0)) {
+            Object.assign(data, {
+              wizardMaxStep: props.currentStep + 1,
+            });
+          }
+          await updateCAFTOP.mutateAsync(data);
+        };
+        navAction = () => dispatch({ type: "NEXT_STEP" });
       } else if (e.nativeEvent?.submitter?.id.startsWith("goto_")) {
         const gotoStep = parseInt(
           e.nativeEvent?.submitter?.id.replace("goto_", "")
         );
-        await updateCAFTOP.mutateAsync(data);
-        dispatch({ type: "GOTO_STEP", payload: { wizardStep: gotoStep } });
+        saveAction = async () => {
+          await updateCAFTOP.mutateAsync(data);
+        };
+        navAction = () =>
+          dispatch({ type: "GOTO_STEP", payload: { wizardStep: gotoStep } });
       } else {
-        await updateCAFTOP.mutateAsync(data);
-        dispatch({ type: "PREV_STEP" });
+        saveAction = async () => {
+          await updateCAFTOP.mutateAsync(data);
+        };
+        navAction = () => dispatch({ type: "PREV_STEP" });
       }
     }
-    return Promise.resolve();
+    if (hasChanges && !isSaveAndContinue) {
+      setNavChanges(hasChanges);
+      setCloseFuncChanges(() => saveAction);
+      setCloseFunc(() => navAction);
+    } else {
+      if (saveAction) {
+        await saveAction();
+      }
+      if (navAction) {
+        navAction();
+      }
+      return Promise.resolve();
+    }
   };
 
   const handleError: SubmitErrorHandler<CAFTOPPage> = (
@@ -226,6 +266,17 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
   return (
     <Suspense fallback={<div style={{ paddingLeft: ".5em" }}>Loading...</div>}>
       {step}
+      <AlertNav
+        show={isNavChanges}
+        close={async (choice) => {
+          setNavChanges(false);
+          if (choice) {
+            await closeFuncChanges();
+          }
+          closeFunc();
+          return Promise.resolve();
+        }}
+      />
       <AlertNavWithErrors
         show={isNavErr}
         close={(choice) => {

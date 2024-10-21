@@ -7,7 +7,7 @@ import { Button, Spinner } from "@fluentui/react-components";
 import "./CAFTOP.css";
 
 function CAFTOP() {
-  const { globalState, dispatch } = useContext(globalContext);
+  const { globalState } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
   // This will become true, only if we are on the last step, and we have valid data
   const [readyForGeneration, setReadyForGeneration] = useState(false);
@@ -21,7 +21,13 @@ function CAFTOP() {
         submitButtonText = "Generate Document";
         break;
       default:
-        submitButtonText = "Save and Continue";
+        submitButtonText = "Next Step";
+    }
+    if (
+      globalState.wizardStep === globalState.wizardMaxStep &&
+      globalState.wizardStep !== CAFTOPFinalStep
+    ) {
+      submitButtonText = "Save and Continue";
     }
   }
 
@@ -66,12 +72,6 @@ function CAFTOP() {
                 (CAFTOPFinalStep === globalState.wizardStep &&
                   !readyForGeneration)
               }
-              onClick={(e) => {
-                if (submitButtonText === "Start CAFTOP") {
-                  e.preventDefault();
-                  dispatch({ type: "NEXT_STEP" });
-                }
-              }}
             >
               <>
                 {isLoading === true && <Spinner size="tiny" />}
