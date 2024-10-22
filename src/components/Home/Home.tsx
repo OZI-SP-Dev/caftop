@@ -1,26 +1,39 @@
-import { Button } from "@fluentui/react-components";
-import { useNavigate } from "react-router-dom";
-
+import { Card, CardHeader, Title2, Text } from "@fluentui/react-components";
 import Dashboard from "components/Dashboard/Dashboard";
+import {
+  useAnnouncements,
+  useHelp,
+  useHomepageNotice,
+  usePurpose,
+} from "api/DefaultData";
+import "./Home.css";
 
 const Home = () => {
-  const navigate = useNavigate();
+  const homepageNotice = useHomepageNotice();
+  const announcements = useAnnouncements();
+  const help = useHelp();
+  const purpose = usePurpose();
 
   return (
     <>
-      <Dashboard />
-      <br />
-      <br />
-      <Button
-        id="start"
-        aria-label="Create New CAFTOP"
-        appearance="primary"
-        onClick={() => {
-          navigate("/new");
-        }}
-      >
-        Create New CAFTOP
-      </Button>
+      <div className="container">
+        <Text align="center" className="notice">
+          <div dangerouslySetInnerHTML={{ __html: homepageNotice }}></div>{" "}
+        </Text>
+        <Card className="purpose">
+          <CardHeader header={<Title2>Purpose</Title2>} />
+          <div dangerouslySetInnerHTML={{ __html: purpose }} />
+        </Card>
+        <Card className="help">
+          <CardHeader header={<Title2>Help</Title2>} />
+          <div dangerouslySetInnerHTML={{ __html: help }} />
+        </Card>
+        <Card className="announcements">
+          <CardHeader header={<Title2>Announcements</Title2>} />
+          <div dangerouslySetInnerHTML={{ __html: announcements }} />
+        </Card>
+        <Dashboard className="dashboard" />
+      </div>
     </>
   );
 };
