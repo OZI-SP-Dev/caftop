@@ -97,12 +97,12 @@ const Complete = (
         caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
       );
 
-      const technicalOrders = () => ({
+      const technicalOrders = {
         ...caftopData.TechnicalOrders,
         TotalCount: totalCount,
         TotalTypeCount: totalTypeCount,
         TOApprovedWaiverDate: approvedTOWaiverDate,
-      });
+      };
 
       const distribution = {
         ...caftopData.Distribution,
