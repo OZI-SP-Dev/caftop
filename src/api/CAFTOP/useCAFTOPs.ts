@@ -15,7 +15,7 @@ type pageType = {
   hasMore: boolean;
 };
 
-export const PAGESIZE = 3;
+export const PAGESIZE = 10;
 
 interface SortParams {
   sortColumn: string | number | undefined;
