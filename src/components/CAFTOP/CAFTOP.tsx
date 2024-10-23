@@ -6,7 +6,7 @@ import { AppLeftNav } from "components/AppLeftNav";
 import { Button, Spinner } from "@fluentui/react-components";
 import "./CAFTOP.css";
 
-function CAFTOP() {
+function CAFTOPView() {
   const { globalState } = useContext(globalContext);
   const [isLoading, _setLoading] = useState(false);
   // This will become true, only if we are on the last step, and we have valid data
@@ -86,4 +86,4 @@ function CAFTOP() {
   );
 }
 
-export default CAFTOP;
+export default CAFTOPView;

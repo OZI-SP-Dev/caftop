@@ -12,7 +12,7 @@ import { ICAFTOPWizardStep } from "Steps/Steps";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 import { LRDP as LRDPDefault } from "api/CAFTOP/defaults";
 
-const LRDP = (props: ICAFTOPWizardStep) => {
+const LRDPStep = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
   const currentCAFTOP = useCAFTOP(globalState.id, "LRDP");
 
@@ -58,4 +58,4 @@ const LRDP = (props: ICAFTOPWizardStep) => {
   );
 };
 
-export default LRDP;
+export default LRDPStep;
