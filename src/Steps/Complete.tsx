@@ -26,7 +26,7 @@ const Complete = (
     } else {
       props.setReadyForGeneration(false);
     }
-  }, [errors]);
+  }, [errors, props]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
