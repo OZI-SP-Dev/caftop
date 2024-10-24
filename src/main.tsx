@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "App.tsx";
 import "./index.css";
-import { GlobalStore } from "stateManagement/GlobalStore";
+import { GlobalStore } from "providers/GlobalStoreProvider";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { initializeFileTypeIcons } from "@fluentui/react-file-type-icons";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
