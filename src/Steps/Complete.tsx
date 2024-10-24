@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import { globalContext } from "../stateManagement/GlobalStore";
 import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
@@ -11,10 +11,22 @@ import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate } from "utilities/Date";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 
-const Complete = (_props: ICAFTOPWizardStep) => {
+const Complete = (
+  props: ICAFTOPWizardStep & {
+    setReadyForGeneration: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+) => {
   const { globalState, dispatch } = useContext(globalContext);
   const caftop = useCAFTOP(globalState.id, "ALL");
   const errors = useCheckComplete();
+
+  useEffect(() => {
+    if (errors && errors.length === 0) {
+      props.setReadyForGeneration(true);
+    } else {
+      props.setReadyForGeneration(false);
+    }
+  }, [errors, props]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -85,12 +97,12 @@ const Complete = (_props: ICAFTOPWizardStep) => {
         caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
       );
 
-      const technicalOrders = () => ({
+      const technicalOrders = {
         ...caftopData.TechnicalOrders,
         TotalCount: totalCount,
         TotalTypeCount: totalTypeCount,
         TOApprovedWaiverDate: approvedTOWaiverDate,
-      });
+      };
 
       const distribution = {
         ...caftopData.Distribution,
@@ -125,6 +137,18 @@ const Complete = (_props: ICAFTOPWizardStep) => {
         return year.toString().substring(2);
       };
 
+      // Function to allow for filter in word document to display commas within a number
+      // example use for document {LaborCost | comma}
+      expressions.filters.comma = function (value: number | undefined) {
+        // Make sure that if your input is undefined, your
+        // output will be undefined as well and will not
+        // throw an error
+        if (!value) {
+          return value;
+        }
+        return value.toLocaleString();
+      };
+
       PizZipUtils.getBinaryContent(
         ".\\CAFTOP_Template.docx",
         function (error: Error, content: string) {
@@ -141,7 +165,7 @@ const Complete = (_props: ICAFTOPWizardStep) => {
           // render the document
           doc.render(dataForDocument);
 
-          // Replace the metadata for the signature lines with the Program Manager data
+          // Replace the metadata for the signature lines with the Program Manager and Technical Order Manager data
           let docXML = zip.files["word/document.xml"].asText();
           caftopData.Info.ProgramManagers.forEach((progManager) => {
             docXML = docXML.replace(
@@ -151,6 +175,16 @@ const Complete = (_props: ICAFTOPWizardStep) => {
             docXML = docXML.replace(
               `o:suggestedsigneremail="Email"`,
               `o:suggestedsigneremail="${progManager.Email}"`
+            );
+          });
+          caftopData.Info.TechOrderManagers.forEach((toManager) => {
+            docXML = docXML.replace(
+              `o:suggestedsigner="TO FirstName LastName"`,
+              `o:suggestedsigner="${toManager.FirstName} ${toManager.LastName}"`
+            );
+            docXML = docXML.replace(
+              `o:suggestedsigneremail="TO Email"`,
+              `o:suggestedsigneremail="${toManager.Email}"`
             );
           });
           zip.file("word/document.xml", docXML);

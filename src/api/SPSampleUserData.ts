@@ -651,7 +651,7 @@ export const spUserProfileData = [
       },
       {
         Key: "WorkPhone",
-        Value: "312-257-1111",
+        Value: "257-1111",
         ValueType: "Edm.String",
       },
       {

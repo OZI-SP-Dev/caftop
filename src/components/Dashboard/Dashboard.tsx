@@ -34,7 +34,7 @@ import {
   FilterRegular,
 } from "@fluentui/react-icons";
 import { useCallback, useRef, useState } from "react";
-import { FilterIcon } from "@fluentui/react-icons-mdl2";
+import { AddIcon, FilterIcon } from "@fluentui/react-icons-mdl2";
 import FilterRequestsDrawer from "./Filter";
 import { useNavigate } from "react-router-dom";
 
@@ -110,7 +110,7 @@ const ProgramName = createTableColumn<PagedRequest>({
   },
 });
 
-const RequestsTable = () => {
+const RequestsTable = (props: { className: string }) => {
   // HOOKS
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
@@ -180,7 +180,7 @@ const RequestsTable = () => {
 
   // RENDER
   return (
-    <>
+    <div className={props.className}>
       <FilterRequestsDrawer
         isOpen={drawerIsOpen}
         setIsOpen={setDrawerIsOpen}
@@ -191,6 +191,16 @@ const RequestsTable = () => {
         checkedValues={checkedValues}
         onCheckedValueChange={onCheckedValueChange}
       >
+        <ToolbarButton
+          icon={<AddIcon />}
+          aria-label="Create CAFTOP"
+          appearance="primary"
+          onClick={() => {
+            navigate("/new");
+          }}
+        >
+          Create New CAFTOP
+        </ToolbarButton>
         <ToolbarButton
           icon={<FilterIcon />}
           onClick={() => setDrawerIsOpen(true)}
@@ -278,7 +288,7 @@ const RequestsTable = () => {
           Next
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,30 +1,21 @@
 import { SyntheticEvent } from "react";
 
 export const formatPhone = (phone: string) => {
-  let endsDash = false;
-  let retVal = phone;
-  if (phone.match(/-$/)) {
-    endsDash = true;
+  if (phone.match(/^([^\d]*\d){10}$/)) {
+    // Match only if it has exactly 10 digits
+    const justNumbers = phone.replace(/\D/g, ""); // Strip out non-digits
+    return `(${justNumbers.slice(0, 3)}) ${justNumbers.slice(
+      3,
+      6
+    )}-${justNumbers.slice(6)}`; // Return number formatted as (###) ###-####
+  } else if (phone.match(/^([^\d]*\d){7}$/)) {
+    // Match only if it has exactly 7 digits
+    const justNumbers = phone.replace(/\D/g, ""); // Strip out non-digits
+    return `${justNumbers.slice(0, 3)}-${justNumbers.slice(3)}`; // Return number formatted as ###-####
   }
-  retVal = phone.replace(/\D/g, "");
-  const size = retVal.length;
-  if (size > 3 || endsDash) {
-    // If we have more than 3 numbers, or we have either (###) or (###) ###-
-    // The second condition allows them to type a dash, otherwise the code would "reject" it
-    retVal = "(" + retVal.slice(0, 3) + ") " + retVal.slice(3, 10);
-  }
-  if (size > 6 || (size > 5 && endsDash)) {
-    retVal = retVal.slice(0, 9) + "-" + retVal.slice(9);
-  }
-  return retVal;
+  return phone; // Preserve string if we don't match
 };
 
-export const onPhoneInput = (e: SyntheticEvent<HTMLInputElement>) => {
-  const formattedDSN = formatPhone(e.currentTarget.value);
-  const start = e.currentTarget.selectionStart ?? 1;
-  const length = e.currentTarget.value.length;
-  e.currentTarget.value = formattedDSN;
-  if (start < length) {
-    e.currentTarget.setSelectionRange(start, start);
-  }
+export const onPhoneBlur = (e: SyntheticEvent<HTMLInputElement>) => {
+  e.currentTarget.value = formatPhone(e.currentTarget.value);
 };

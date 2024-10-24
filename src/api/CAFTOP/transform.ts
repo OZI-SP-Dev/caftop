@@ -81,13 +81,15 @@ const transformTechnicalOrdersFromSP = (data: CAFTOPSPTechnicalOrders) => {
 const transformLaborFromSP = (data: CAFTOPSPLabor) => {
   const transformCtrSupport = () => {
     if (data.ContractorSupport !== null && data.ContractorSupport !== "") {
-      const ctrSupport = JSON.parse(data.ContractorSupport);
+      const ctrSupport = JSON.parse(
+        data.ContractorSupport
+      ) as CAFTOPLabor["ContractorSupport"];
 
       ctrSupport.ContractExpiration = ctrSupport.ContractExpiration
         ? new Date(ctrSupport.ContractExpiration)
         : null;
 
-      return ctrSupport as CAFTOPLabor["ContractorSupport"];
+      return ctrSupport;
     }
     return Labor.ContractorSupport;
   };

@@ -12,7 +12,7 @@ import { ICAFTOPWizardStep } from "Steps/Steps";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 import { LRDP as LRDPDefault } from "api/CAFTOP/defaults";
 
-const LRDP = (props: ICAFTOPWizardStep) => {
+const LRDPStep = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
   const currentCAFTOP = useCAFTOP(globalState.id, "LRDP");
 
@@ -24,6 +24,8 @@ const LRDP = (props: ICAFTOPWizardStep) => {
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data || currentCAFTOP.isLoading) {
     return "Loading...";
@@ -42,10 +44,9 @@ const LRDP = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(
-              props.handleSubmit,
-              props.handleError
-            )(...args)
+            void myForm.handleSubmit((data, e) => {
+              void props.handleSubmit(hasChanges, data, e);
+            }, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">
@@ -57,4 +58,4 @@ const LRDP = (props: ICAFTOPWizardStep) => {
   );
 };
 
-export default LRDP;
+export default LRDPStep;

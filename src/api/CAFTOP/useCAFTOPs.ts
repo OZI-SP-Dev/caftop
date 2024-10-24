@@ -11,11 +11,11 @@ declare const _spPageContextInfo: {
 
 type pageType = {
   data: PagedRequestSP[];
-  iterator: AsyncIterator<PagedRequestSP[]>;
+  iterator: AsyncIterator<PagedRequestSP[], PagedRequestSP[]>;
   hasMore: boolean;
 };
 
-export const PAGESIZE = 3;
+export const PAGESIZE = 10;
 
 interface SortParams {
   sortColumn: string | number | undefined;
@@ -35,10 +35,10 @@ export interface CAFTOPFilter {
 }
 
 const getPagedRequests = async (
-  pageIterator: AsyncIterator<PagedRequestSP[]> | undefined,
+  pageIterator: AsyncIterator<PagedRequestSP[], PagedRequestSP[]> | undefined,
   sortParams: SortParams,
   filterParams: CAFTOPFilter[]
-): Promise<pageType> /*: Promise<PagedRequestSP[]>*/ => {
+): Promise<pageType> => {
   const requestedFields =
     "Id,Year,LeadCommand,Center,ProgramElementCode,ProgramGroup,ProgramName";
 
@@ -53,7 +53,7 @@ const getPagedRequests = async (
 
   if (!import.meta.env.DEV) {
     if (!pageIterator) {
-      const iterator: AsyncIterator<PagedRequestSP[]> = spWebContext.web.lists
+      const iterable = spWebContext.web.lists
         .getByTitle("caftops")
         .items.select(requestedFields)
         .filter(queryString)
@@ -62,11 +62,18 @@ const getPagedRequests = async (
           sortParams.sortDirection !== "descending"
         )
         .orderBy("Id", true) // Include this or non-unique sort values can cause issues
-        .top(PAGESIZE)
-        [Symbol.asyncIterator]();
+        .top(PAGESIZE)<PagedRequestSP[]>;
+      const iterator = iterable[Symbol.asyncIterator]() as AsyncIterator<
+        PagedRequestSP[],
+        PagedRequestSP[]
+      >;
 
       const data = await iterator.next();
-      return { data: data.value, iterator: iterator, hasMore: !data.done };
+      return {
+        data: data.value,
+        iterator: iterator,
+        hasMore: !data.done,
+      };
     } else {
       const data = await pageIterator.next();
       return {
@@ -102,7 +109,7 @@ export const usePagedRequests = (
           page - 1,
         ]) as {
           data: PagedRequest[];
-          iterator: AsyncIterator<PagedRequestSP[]>;
+          iterator: AsyncIterator<PagedRequestSP[], PagedRequestSP[]>;
           hasMore: boolean;
         };
 

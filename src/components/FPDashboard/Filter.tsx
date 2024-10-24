@@ -92,9 +92,6 @@ const FilterRequestsDrawer = ({
   const onSubmit: SubmitHandler<IFilterFields> = (data) => {
     const newFilter: CAFTOPFilter[] = [];
 
-    // TODO -- Add in PM and TOMA searches
-    /*<Contains><FieldRef Name="ProgramManagers" /><Value Type="Note">SEARCH VALUE</Value></Contains>;*/
-
     if (data.LeadCommand) {
       newFilter.push({
         column: "LeadCommand",
@@ -164,7 +161,10 @@ const FilterRequestsDrawer = ({
       open={isOpen}
       onOpenChange={(_e, { open }) => setIsOpen(open)}
     >
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+      <form
+        onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+        style={{ width: "100%" }}
+      >
         <FormProvider {...myForm}>
           <DrawerHeader>
             <DrawerHeaderTitle

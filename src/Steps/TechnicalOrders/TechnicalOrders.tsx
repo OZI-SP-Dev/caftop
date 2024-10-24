@@ -23,6 +23,8 @@ const TechnicalOrders = (props: ICAFTOPWizardStep) => {
     mode: "onChange",
   });
 
+  const hasChanges = myForm.formState.isDirty;
+
   if (!currentCAFTOP.data) {
     return "Loading...";
   }
@@ -38,10 +40,9 @@ const TechnicalOrders = (props: ICAFTOPWizardStep) => {
         <form
           id="innerForm"
           onSubmit={(...args) =>
-            void myForm.handleSubmit(
-              props.handleSubmit,
-              props.handleError
-            )(...args)
+            void myForm.handleSubmit((data, e) => {
+              void props.handleSubmit(hasChanges, data, e);
+            }, props.handleError)(...args)
           }
         >
           <div className="requestFormContainer">

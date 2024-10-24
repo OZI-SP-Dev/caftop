@@ -16,7 +16,7 @@ type pageType = {
   hasMore: boolean;
 };
 
-export const PAGESIZE = 3;
+export const PAGESIZE = 15;
 const CARRYOVER_DATA_ONLY_FLAG = "CARRYOVER_DATA_ONLY";
 
 interface SortParams {
