@@ -161,7 +161,10 @@ const FilterRequestsDrawer = ({
       open={isOpen}
       onOpenChange={(_e, { open }) => setIsOpen(open)}
     >
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+      <form
+        onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+        style={{ width: "100%" }}
+      >
         <FormProvider {...myForm}>
           <DrawerHeader>
             <DrawerHeaderTitle

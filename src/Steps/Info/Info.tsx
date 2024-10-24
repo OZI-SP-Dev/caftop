@@ -78,7 +78,7 @@ const Info = (props: ICAFTOPWizardStep) => {
     pathname === "/new"
       ? createNew
       : (data, e) => {
-          props.handleSubmit(hasChanges, data, e);
+          void props.handleSubmit(hasChanges, data, e);
         };
   const whichValues = pathname === "/new" ? undefined : currentCAFTOP.data;
   const schema = useInfoPageValidation();

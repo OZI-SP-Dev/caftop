@@ -33,13 +33,13 @@ export const AlertNav = (props: IAlertModal) => {
           </DialogContent>
         </DialogBody>
         <DialogActions>
-          <Button onClick={() => props.close(true)} appearance="primary">
+          <Button onClick={() => void props.close(true)} appearance="primary">
             Save Changes
           </Button>
           <Button
             disabled={props.show === false}
             onClick={() => {
-              props.close(false);
+              void props.close(false);
             }}
             appearance="secondary"
           >
