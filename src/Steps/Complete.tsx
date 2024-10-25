@@ -57,8 +57,9 @@ const Complete = (
         caftopData.Info.Center,
         caftopData.Info.ProgramElementCode,
         caftopData.Info.ProgramName,
-        ".docx",
-      ].join("_");
+      ]
+        .join("_")
+        .concat(".docx");
 
       const totalCount =
         (caftopData.TechnicalOrders.NumAuthoredInTOAP !== ""
