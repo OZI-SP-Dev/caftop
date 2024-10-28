@@ -11,3 +11,15 @@ export const formatDate = (date?: Date) => {
         date.toLocaleDateString("en-US", { year: "numeric" })
     : "";
 };
+
+/** Format the date as yyyyMMdd (ex: 20240101)
+ *
+ * @returns A string formatted as yyyyMMdd
+ */
+export const formatDate2 = (date?: Date) => {
+  return date
+    ? date.toLocaleDateString("en-US", { year: "numeric" }) +
+        date.toLocaleDateString("en-US", { month: "2-digit" }) +
+        date.toLocaleDateString("en-US", { day: "2-digit" })
+    : "";
+};
