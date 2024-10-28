@@ -249,13 +249,13 @@ export const usePagedRequests = (
   const queryClient = useQueryClient();
 
   return useQuery({
-    queryKey: ["paged-requests", sortParams, filterParams, page],
+    queryKey: ["fp-paged-requests", sortParams, filterParams, page],
     queryFn: () => {
       let prevPageHref, carryOverData;
 
       if (page > 0) {
         const data = queryClient.getQueryData([
-          "paged-requests",
+          "fp-paged-requests",
           sortParams,
           filterParams,
           page - 1,
