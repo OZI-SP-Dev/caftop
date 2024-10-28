@@ -433,8 +433,8 @@ export const transformFPPagedRequestsFromSP = (requests: {
 
   requests?.data?.forEach((request) => {
     returnObject.push({
-      Id: request.ID,
-      Year: request.Year,
+      Id: parseInt(request.ID.replace(/\D/g, "")), // Remove any non numbers before parsing -- otherwise Id of "2,026" would be parsed as 2 instead of 2026
+      Year: parseInt(request.Year.replace(/\D/g, "")), // Remove any non numbers before parsing -- otherwise year of "2,026" would be parsed as 2 instead of 2026
       LeadCommand: request.LeadCommand,
       Center: request.Center,
       ProgramElementCode: request.ProgramElementCode,
