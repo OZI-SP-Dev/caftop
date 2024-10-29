@@ -51,16 +51,18 @@ const Distribution = (props: ICAFTOPWizardStep) => {
             }, props.handleError)(...args)
           }
         >
-          <div className="requestFormContainer">
-            <Fields.DistCost />
-          </div>
-          {notElectronicOnly && (
+          {notElectronicOnly ? (
             <>
+              <div className="requestFormContainer">
+                <Fields.DistCost />
+              </div>
               <div className="requestFieldContainer">
                 <Fields.DSO />
               </div>
               <Fields.OutsideDSO />
             </>
+          ) : (
+            "There is no Distribution as this CAFTOP is Electronic Only"
           )}
         </form>
       </FormProvider>

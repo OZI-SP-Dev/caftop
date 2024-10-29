@@ -39,6 +39,7 @@ import {
 } from "Steps/Description/Fields/ConfigurationPlan.Validation";
 import {
   distcostRuleFinal,
+  distcostRuleNA,
   distcostRuleSave,
 } from "Steps/Distribution/Fields/DistCost.Validation";
 import { improvementsRuleFinal } from "Steps/Improvements/Fields/Improvements.Validation";
@@ -159,13 +160,17 @@ export const useDistributionPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return distcostRuleSave
-      .and(notElectronicOnly ? dsoRuleSave : dsoRuleNA)
-      .and(notElectronicOnly ? outsidedsoRuleSave : outsidedsoRuleNA);
+    if (notElectronicOnly) {
+      return distcostRuleSave.and(dsoRuleSave).and(outsidedsoRuleSave);
+    } else {
+      return distcostRuleNA.and(dsoRuleNA).and(outsidedsoRuleNA);
+    }
   } else {
-    return distcostRuleFinal
-      .and(notElectronicOnly ? dsoRuleFinal : dsoRuleNA)
-      .and(notElectronicOnly ? outsidedsoRuleFinal : outsidedsoRuleNA);
+    if (notElectronicOnly) {
+      return distcostRuleFinal.and(dsoRuleFinal).and(outsidedsoRuleFinal);
+    } else {
+      return distcostRuleNA.and(dsoRuleNA).and(outsidedsoRuleNA);
+    }
   }
 };
 

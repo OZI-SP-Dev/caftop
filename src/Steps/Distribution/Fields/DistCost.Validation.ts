@@ -11,6 +11,12 @@ const distcostBaseRule = z.union([
     .step(1, "Distribution Cost must be a whole dollar value"),
 ]);
 
+/** Rule for when the Distribution Cost is Not Applicable */
+export const distcostRuleNA = z.object({
+  hasDistCost: populateWithDefaultValue(Distribution.hasDistCost),
+  DistCost: populateWithDefaultValue(Distribution.DistCost),
+});
+
 export const distcostRuleSave = z.discriminatedUnion("hasDistCost", [
   z.object({
     hasDistCost: z.enum(["no", ""]),
