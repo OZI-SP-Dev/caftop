@@ -1,4 +1,4 @@
-import { CAFTOPSP, PagedRequestSP } from "./types";
+import { CAFTOPSP, PagedRequestSP, PagedRequestSPStream } from "./types";
 
 const caftopSamples: CAFTOPSP[] = [
   {
@@ -214,6 +214,29 @@ export const getCAFTOPs = () => {
       ProgramElementCode: caftop.ProgramElementCode,
       ProgramGroup: caftop.ProgramGroup,
       ProgramName: caftop.ProgramName,
+    });
+  });
+  return {
+    data: caftops,
+    iterator: {},
+    hasMore: false,
+  };
+};
+
+export const getCAFTOPsAsStream = () => {
+  const caftops: PagedRequestSPStream[] = [];
+  let index = 1;
+  caftopSamples.forEach((caftop) => {
+    caftops.push({
+      ID: (index++).toString(),
+      Year: caftop.Year.toString(),
+      LeadCommand: caftop.LeadCommand,
+      Center: caftop.Center,
+      ProgramElementCode: caftop.ProgramElementCode,
+      ProgramGroup: caftop.ProgramGroup,
+      ProgramName: caftop.ProgramName,
+      ProgramManagers: caftop.ProgramManagers,
+      TechOrderManagers: caftop.TechOrderManagers,
     });
   });
   return {

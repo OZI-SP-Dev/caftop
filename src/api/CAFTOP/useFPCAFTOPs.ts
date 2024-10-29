@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { spWebContext } from "../SPWebContext";
-import { getCAFTOPs } from "./SampleData";
+import { getCAFTOPsAsStream } from "./SampleData";
 import { PagedRequest, PagedRequestSPStream } from "./types";
 import { transformFPPagedRequestsFromSP } from "./transform";
 import { IRenderListDataAsStreamResult } from "@pnp/sp/lists/types";
@@ -236,7 +236,10 @@ const getPagedRequests = async (
     }
   } else {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(getCAFTOPs() as unknown as pageType), 1000)
+      setTimeout(
+        () => resolve(getCAFTOPsAsStream() as unknown as pageType),
+        1000
+      )
     );
   }
 };
