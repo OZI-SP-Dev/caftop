@@ -1,4 +1,4 @@
-import { Improvements, LRDP, Labor } from "api/CAFTOP/defaults";
+import { Distribution, Improvements, LRDP, Labor } from "api/CAFTOP/defaults";
 import {
   PageType,
   Pages,
@@ -117,22 +117,34 @@ const transformLaborFromSP = (data: CAFTOPSPLabor) => {
   return labor;
 };
 
-const transformDistributionFromSP = (data: CAFTOPSPDistribution) => {
-  const distr: CAFTOPDistribution = {
-    hasDistCost: (data.hasDistCost ?? "") as CAFTOPDistribution["hasDistCost"],
-    DistCost: data.DistCost ?? "",
-    hasDSO: (data.hasDSO ?? "") as CAFTOPDistribution["hasDSO"],
-    ODSOApprovedWaiver: (data.ODSOApprovedWaiver ??
-      "") as CAFTOPDistribution["ODSOApprovedWaiver"],
-    ODSOApprovedWaiverDate: data.ODSOApprovedWaiverDate
-      ? new Date(data.ODSOApprovedWaiverDate)
-      : null,
-    hasOutsideDSO: (data.hasOutsideDSO ??
-      "") as CAFTOPDistribution["hasOutsideDSO"],
-    NumPaper: data.NumPaper ?? "",
-    NumCDDVD: data.NumCDDVD ?? "",
-  };
-  return distr;
+const transformDistributionFromSP = (
+  data: CAFTOPSPDistribution
+): CAFTOPDistribution => {
+  if (data.NumPaper === 0 && data.NumCDDVD === 0) {
+    // If it is electronic only -- then return default Distribution data
+    //  as there is no Distribution data for electronic only
+    return {
+      ...Distribution,
+      NumPaper: 0,
+      NumCDDVD: 0,
+    };
+  } else {
+    return {
+      hasDistCost: (data.hasDistCost ??
+        "") as CAFTOPDistribution["hasDistCost"],
+      DistCost: data.DistCost ?? "",
+      hasDSO: (data.hasDSO ?? "") as CAFTOPDistribution["hasDSO"],
+      ODSOApprovedWaiver: (data.ODSOApprovedWaiver ??
+        "") as CAFTOPDistribution["ODSOApprovedWaiver"],
+      ODSOApprovedWaiverDate: data.ODSOApprovedWaiverDate
+        ? new Date(data.ODSOApprovedWaiverDate)
+        : null,
+      hasOutsideDSO: (data.hasOutsideDSO ??
+        "") as CAFTOPDistribution["hasOutsideDSO"],
+      NumPaper: data.NumPaper ?? "",
+      NumCDDVD: data.NumCDDVD ?? "",
+    };
+  }
 };
 
 const transformImprovementsFromSP = (data: CAFTOPSPImprovements) => {
@@ -433,8 +445,8 @@ export const transformFPPagedRequestsFromSP = (requests: {
 
   requests?.data?.forEach((request) => {
     returnObject.push({
-      Id: request.ID,
-      Year: request.Year,
+      Id: parseInt(request.ID.replace(/\D/g, "")), // Remove any non numbers before parsing -- otherwise Id of "2,026" would be parsed as 2 instead of 2026
+      Year: parseInt(request.Year.replace(/\D/g, "")), // Remove any non numbers before parsing -- otherwise year of "2,026" would be parsed as 2 instead of 2026
       LeadCommand: request.LeadCommand,
       Center: request.Center,
       ProgramElementCode: request.ProgramElementCode,

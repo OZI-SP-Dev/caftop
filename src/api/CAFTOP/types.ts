@@ -283,7 +283,7 @@ export type PagedRequestSPStream = Pick<
   | "ProgramName"
   | "ProgramManagers"
   | "TechOrderManagers"
-> & { ID: number; Year: number };
+> & { ID: string; Year: string };
 
 export type PagedRequest = Pick<
   CAFTOPInfo,

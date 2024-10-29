@@ -8,7 +8,7 @@ import expressions from "docxtemplater/expressions";
 import { Link } from "@fluentui/react-components";
 import { useCheckComplete } from "utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
-import { formatDate } from "utilities/Date";
+import { formatDate, formatDate2 } from "utilities/Date";
 import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
 
 const Complete = (
@@ -57,6 +57,8 @@ const Complete = (
         caftopData.Info.Center,
         caftopData.Info.ProgramElementCode,
         caftopData.Info.ProgramName,
+        "v1",
+        formatDate2(new Date()),
       ]
         .join("_")
         .concat(".docx");

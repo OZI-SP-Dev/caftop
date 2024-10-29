@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { spWebContext } from "api/SPWebContext";
 import { CAFTOPInfo } from "./types";
 import { createCAFTOP } from "./SampleData";
@@ -8,6 +8,7 @@ import { transformRequestToSP } from "./transform";
 const CAFTOP_YEARS_OUT = 2;
 
 export const useCreateCAFTOP = () => {
+  const queryClient = useQueryClient();
   const createFunc = async (request: CAFTOPInfo) => {
     const newItem = await transformRequestToSP(request, "Info");
     const caftopYear = new Date().getFullYear() + CAFTOP_YEARS_OUT;
@@ -29,5 +30,10 @@ export const useCreateCAFTOP = () => {
     }
   };
 
-  return useMutation([`caftop-create`], createFunc);
+  return useMutation([`caftop-create`], createFunc, {
+    onSuccess: () => {
+      void queryClient.invalidateQueries([`paged-requests`]);
+      void queryClient.invalidateQueries([`fp-paged-requests`]);
+    },
+  });
 };
