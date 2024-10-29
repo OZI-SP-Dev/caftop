@@ -32,8 +32,8 @@ export const useCreateCAFTOP = () => {
 
   return useMutation([`caftop-create`], createFunc, {
     onSuccess: () => {
-      queryClient.invalidateQueries([`paged-requests`]);
-      queryClient.invalidateQueries([`fp-paged-requests`]);
+      void queryClient.invalidateQueries([`paged-requests`]);
+      void queryClient.invalidateQueries([`fp-paged-requests`]);
     },
   });
 };
