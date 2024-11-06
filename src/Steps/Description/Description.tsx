@@ -53,7 +53,7 @@ const Description = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data || !defaultDescription || !defualtIntroduction) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   if (globalState.mode === "submit") {

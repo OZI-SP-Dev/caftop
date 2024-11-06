@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import App from "@src/App";
 import "./index.css";
 import { GlobalStore } from "@providers/GlobalStoreProvider";
@@ -13,8 +13,9 @@ initializeIcons();
 initializeFileTypeIcons();
 
 const queryClient = new QueryClient();
+const app = document.getElementById("root");
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.render(
   <React.StrictMode>
     <FluentProvider theme={webLightTheme}>
       <QueryClientProvider client={queryClient}>
@@ -25,5 +26,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         </UserProvider>
       </QueryClientProvider>
     </FluentProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  app
 );

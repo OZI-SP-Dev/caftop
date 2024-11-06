@@ -32,7 +32,7 @@ const Distribution = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   if (globalState.mode === "submit") {
