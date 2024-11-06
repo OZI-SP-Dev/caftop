@@ -14,7 +14,7 @@ import "@pnp/sp/files/folder";
 import "@pnp/sp/files/web";
 import "@pnp/sp/comments/item";
 import "@pnp/sp/profiles";
-import { getSPUserProfileDataDev } from "api/SPSampleUserData";
+import { getSPUserProfileDataDev } from "@api/SPSampleUserData";
 
 declare const _spPageContextInfo: { webAbsoluteUrl: string };
 

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { CAFTOPFinalStep, CAFTOPWizardSteps } from "Steps/Steps";
-import { globalContext } from "stateManagement/GlobalStore";
-import { AppLeftNav } from "components/AppLeftNav";
+import { CAFTOPFinalStep, CAFTOPWizardSteps } from "@steps/Steps";
+import { globalContext } from "@stateManagement/GlobalStore";
+import { AppLeftNav } from "@components/AppLeftNav";
 
 import { Button, Spinner } from "@fluentui/react-components";
 import "./CAFTOP.css";

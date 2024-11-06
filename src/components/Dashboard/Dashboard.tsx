@@ -2,8 +2,8 @@ import {
   CAFTOPFilter,
   PAGESIZE,
   usePagedRequests,
-} from "api/CAFTOP/useCAFTOPs";
-import { PagedRequest } from "api/CAFTOP/types";
+} from "@api/CAFTOP/useCAFTOPs";
+import { PagedRequest } from "@api/CAFTOP/types";
 import {
   Button,
   DataGrid,

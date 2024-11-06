@@ -1,4 +1,4 @@
-import { CAFTOPPage, Pages } from "api/CAFTOP/types";
+import { CAFTOPPage, Pages } from "@api/CAFTOP/types";
 import {
   Suspense,
   lazy,
@@ -8,11 +8,11 @@ import {
   useEffect,
 } from "react";
 import { SubmitErrorHandler } from "react-hook-form";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { AlertNavWithErrors } from "./AlertNavWithErrors";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { useParams } from "react-router-dom";
-import { useUpdateCAFTOP } from "api/CAFTOP/useUpdateCAFTOP";
+import { useUpdateCAFTOP } from "@api/CAFTOP/useUpdateCAFTOP";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertNav } from "./AlertNav";
 
@@ -33,28 +33,28 @@ export interface ICAFTOPWizardStep {
 }
 
 // Begin module downloads immediately, but still utilize lazy() for code splitting
-const infoPromise = import("Steps/Info/Info");
+const infoPromise = import("@steps/Info/Info");
 const Info = lazy(() => infoPromise);
 
-const descriptionPromise = import("Steps/Description/Description");
+const descriptionPromise = import("@steps/Description/Description");
 const Description = lazy(() => descriptionPromise);
 
-const technicalOrdersPromise = import("Steps/TechnicalOrders/TechnicalOrders");
+const technicalOrdersPromise = import("@steps/TechnicalOrders/TechnicalOrders");
 const TechnicalOrders = lazy(() => technicalOrdersPromise);
 
-const laborPromise = import("Steps/Labor/Labor");
+const laborPromise = import("@steps/Labor/Labor");
 const Labor = lazy(() => laborPromise);
 
-const distributionPromise = import("Steps/Distribution/Distribution");
+const distributionPromise = import("@steps/Distribution/Distribution");
 const Distribution = lazy(() => distributionPromise);
 
-const improvementsPromise = import("Steps/Improvements/Improvements");
+const improvementsPromise = import("@src/Steps/Improvements/Improvements");
 const Improvements = lazy(() => improvementsPromise);
 
-const lrdpPromise = import("Steps/LRDP/LRDP");
+const lrdpPromise = import("@steps/LRDP/LRDP");
 const LRDP = lazy(() => lrdpPromise);
 
-const completePromise = import("Steps/Complete");
+const completePromise = import("@steps/Complete");
 const Complete = lazy(() => completePromise);
 
 const WizardSteps: WizardStep[] = [

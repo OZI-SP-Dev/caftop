@@ -1,11 +1,11 @@
 import { Card, CardHeader, Title2, Text } from "@fluentui/react-components";
-import Dashboard from "components/Dashboard/Dashboard";
+import Dashboard from "@components/Dashboard/Dashboard";
 import {
   useAnnouncements,
   useHelp,
   useHomepageNotice,
   usePurpose,
-} from "api/DefaultData";
+} from "@api/DefaultData";
 import "./Home.css";
 
 const Home = () => {

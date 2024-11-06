@@ -1,4 +1,4 @@
-import { formatPhone } from "utilities/Phone";
+import { formatPhone } from "@utilities/Phone";
 import { z } from "zod";
 
 const firstNameRule = z

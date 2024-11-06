@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { CAFTOPLRDP } from "api/CAFTOP/types";
-import { LRDP as LRDPDefault } from "api/CAFTOP/defaults";
-import { populateWithDefaultValue } from "utilities/Validation";
+import { CAFTOPLRDP } from "@api/CAFTOP/types";
+import { LRDP as LRDPDefault } from "@api/CAFTOP/defaults";
+import { populateWithDefaultValue } from "@utilities/Validation";
 
 const lrdpName = z.string().trim().max(50, "Name cannot exceed 50 characters");
 const lrdpSeqNumFinal = z

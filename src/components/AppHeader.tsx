@@ -7,10 +7,10 @@ import {
   PopoverSurface,
 } from "@fluentui/react-components";
 import { useContext } from "react";
-import { UserContext } from "providers/UserProvider";
+import { UserContext } from "@providers/UserProvider";
 import { tokens } from "@fluentui/react-theme";
 import { Link } from "react-router-dom";
-import { useDefaultHelpLink } from "api/DefaultData";
+import { useDefaultHelpLink } from "@api/DefaultData";
 
 /* FluentUI Styling */
 const useStyles = makeStyles({

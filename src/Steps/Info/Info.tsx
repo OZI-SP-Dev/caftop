@@ -7,18 +7,18 @@ import {
   ToastTrigger,
   useToastController,
 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import "Steps/Steps.css";
+import "@steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPInfo } from "api/CAFTOP/types";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import * as Fields from "./Fields";
-import { useInfoPageValidation } from "utilities/Validations";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { Info as InfoDefaults } from "api/CAFTOP/defaults";
+import { useInfoPageValidation } from "@utilities/Validations";
+import { ICAFTOPWizardStep } from "@steps/Steps";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { Info as InfoDefaults } from "@api/CAFTOP/defaults";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCreateCAFTOP } from "api/CAFTOP/useCreateCAFTOP";
+import { useCreateCAFTOP } from "@api/CAFTOP/useCreateCAFTOP";
 import { Link } from "@fluentui/react";
 
 const Info = (props: ICAFTOPWizardStep) => {

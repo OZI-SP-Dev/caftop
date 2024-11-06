@@ -1,6 +1,6 @@
-import { CAFTOPDistribution } from "api/CAFTOP/types";
+import { CAFTOPDistribution } from "@api/CAFTOP/types";
 import { Radio } from "@fluentui/react-components";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
 import { OutsideDSOWaiver } from "./OutsideDSO.Waiver";
 import { useWatch } from "react-hook-form";
 

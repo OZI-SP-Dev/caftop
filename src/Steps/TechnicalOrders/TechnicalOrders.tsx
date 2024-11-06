@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "Steps/Steps.css";
+import "@src/Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
-import { useTechnicalOrdersPageValidation } from "utilities/Validations";
+import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
+import { useTechnicalOrdersPageValidation } from "@src/utilities/Validations";
 import * as Fields from "./Fields";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { TechnicalOrders as TechnicalOrdersDefaults } from "api/CAFTOP/defaults";
+import { ICAFTOPWizardStep } from "@src/Steps/Steps";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { TechnicalOrders as TechnicalOrdersDefaults } from "@api/CAFTOP/defaults";
 
 const TechnicalOrders = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);

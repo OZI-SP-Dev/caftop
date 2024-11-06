@@ -1,6 +1,6 @@
-import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
+import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
 import { Text } from "@fluentui/react-components";
-import BACInput from "components/BaseFormFields/BACInput";
+import BACInput from "@components/BaseFormFields/BACInput";
 
 export const TOCounts = () => {
   return (

@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "Steps/Steps.css";
+import "@steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { CAFTOPLRDP } from "api/CAFTOP/types";
-import { useLRDPPageValidation } from "utilities/Validations";
+import { CAFTOPLRDP } from "@api/CAFTOP/types";
+import { useLRDPPageValidation } from "@utilities/Validations";
 import * as Fields from "./Fields";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { LRDP as LRDPDefault } from "api/CAFTOP/defaults";
+import { ICAFTOPWizardStep } from "@steps/Steps";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { LRDP as LRDPDefault } from "@api/CAFTOP/defaults";
 
 const LRDPStep = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);

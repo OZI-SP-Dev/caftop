@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
-import { spWebContext } from "api/SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 import { getCAFTOPFields } from "./SampleData";
 import { getFieldsForPage } from "./defaults";
 import { transformRequestFromSP } from "./transform";

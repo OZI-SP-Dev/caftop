@@ -1,4 +1,4 @@
-import { ActionType, GlobalStateInterface } from "stateManagement/types";
+import { ActionType, GlobalStateInterface } from "./types";
 
 export const initialState: GlobalStateInterface = {
   id: 0,

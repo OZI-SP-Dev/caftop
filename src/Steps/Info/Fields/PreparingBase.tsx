@@ -1,7 +1,7 @@
-import BACDropdown from "components/BaseFormFields/BACDropdown";
-import { CAFTOPInfo } from "api/CAFTOP/types";
+import BACDropdown from "@components/BaseFormFields/BACDropdown";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import { Option } from "@fluentui/react-components";
-import { usePreparingBases } from "api/PreparingBases";
+import { usePreparingBases } from "@api/PreparingBases";
 
 export const PreparingBase = () => {
   const PreparingBases = usePreparingBases();

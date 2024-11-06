@@ -1,8 +1,8 @@
-import { CAFTOPLabor } from "api/CAFTOP/types";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
+import { CAFTOPLabor } from "@api/CAFTOP/types";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
 import { Radio, Text } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";
-import BACInput from "components/BaseFormFields/BACInput";
+import BACInput from "@components/BaseFormFields/BACInput";
 
 export const MILSTD3048 = () => {
   const milstd3048Status = useWatch<CAFTOPLabor, "MILSTD3048Status">({

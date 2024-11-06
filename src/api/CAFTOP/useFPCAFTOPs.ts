@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { spWebContext } from "../SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 import { getCAFTOPsAsStream } from "./SampleData";
 import { PagedRequest, PagedRequestSPStream } from "./types";
 import { transformFPPagedRequestsFromSP } from "./transform";

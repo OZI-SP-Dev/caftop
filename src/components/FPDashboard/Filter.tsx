@@ -7,8 +7,8 @@ import {
   DrawerHeaderTitle,
 } from "@fluentui/react-components";
 import { DismissRegular } from "@fluentui/react-icons";
-import { CAFTOPFilter } from "api/CAFTOP/useFPCAFTOPs";
-import BACInput from "components/BaseFormFields/BACInput";
+import { CAFTOPFilter } from "@api/CAFTOP/useFPCAFTOPs";
+import BACInput from "@components/BaseFormFields/BACInput";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import {
   Center,
@@ -16,7 +16,7 @@ import {
   ProgramElementCode,
   ProgramGroup,
   ProgramName,
-} from "Steps/Info/Fields";
+} from "@steps/Info/Fields";
 
 interface IFilterFields {
   LeadCommand: string;

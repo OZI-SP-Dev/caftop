@@ -1,9 +1,9 @@
 import BACDropdown, {
   TBACDropdownProps,
-} from "components/BaseFormFields/BACDropdown";
-import { CAFTOPInfo } from "api/CAFTOP/types";
+} from "@components/BaseFormFields/BACDropdown";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import { Option } from "@fluentui/react-components";
-import { useLeadCommands } from "api/LeadCommands";
+import { useLeadCommands } from "@api/LeadCommands";
 
 interface ILeadCommandProps {
   isFilter?: boolean;

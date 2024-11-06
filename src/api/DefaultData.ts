@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { spWebContext } from "api/SPWebContext";
-import { useCAFTOP } from "./CAFTOP/useCAFTOP";
+import { spWebContext } from "@api/SPWebContext";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { useParams } from "react-router-dom";
-import { CAFTOPInfo } from "./CAFTOP/types";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import DOMPurify from "dompurify";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {

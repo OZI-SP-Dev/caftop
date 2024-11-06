@@ -6,7 +6,7 @@ import {
   RadioGroupOnChangeData,
 } from "@fluentui/react-components";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "./BaseTypeDef";
 import { RadioButtonFilled } from "@fluentui/react-icons";
 import { FormEvent } from "react";
 

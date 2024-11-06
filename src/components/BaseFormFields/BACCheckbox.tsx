@@ -1,6 +1,6 @@
 import { Checkbox, InfoLabel, Text } from "@fluentui/react-components";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "./BaseTypeDef";
 import { ClipboardCheckmarkRegular } from "@fluentui/react-icons";
 
 const BACCheckbox = <T extends FieldValues>({

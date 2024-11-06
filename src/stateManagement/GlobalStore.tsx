@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { ContextType } from "stateManagement/types";
+import { ContextType } from "./types";
 
 export const globalContext = createContext({} as ContextType);

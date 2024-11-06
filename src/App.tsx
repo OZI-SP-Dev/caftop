@@ -1,4 +1,4 @@
-import { AppHeader } from "components/AppHeader";
+import { AppHeader } from "@components/AppHeader";
 
 import "./App.css";
 
@@ -10,9 +10,9 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import { Suspense } from "react";
-import Home from "components/Home/Home";
-import CAFTOP from "components/CAFTOP/CAFTOP";
-import FPDashboard from "components/FPDashboard/FPDashboard";
+import Home from "@components/Home/Home";
+import CAFTOP from "@components/CAFTOP/CAFTOP";
+import FPDashboard from "@components/FPDashboard/FPDashboard";
 import { Toaster } from "@fluentui/react-components";
 
 /** Create a React Router with the needed Routes using the Data API */

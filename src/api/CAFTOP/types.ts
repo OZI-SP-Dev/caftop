@@ -1,5 +1,5 @@
-import { ProgramManagersRuleFinal } from "Steps/Info/Fields/ProgramManagers.Validation";
-import { TechOrderManagersRuleFinal } from "Steps/Info/Fields/TechOrderManagers.Validation";
+import { ProgramManagersRuleFinal } from "@steps/Info/Fields/ProgramManagers.Validation";
+import { TechOrderManagersRuleFinal } from "@steps/Info/Fields/TechOrderManagers.Validation";
 import { z } from "zod";
 
 // Generate the type definition from the Zod rules

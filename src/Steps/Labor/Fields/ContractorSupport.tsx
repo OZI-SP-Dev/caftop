@@ -1,11 +1,11 @@
-import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPLabor } from "api/CAFTOP/types";
+import BACInput from "@components/BaseFormFields/BACInput";
+import { CAFTOPLabor } from "@api/CAFTOP/types";
 import { useWatch } from "react-hook-form";
 import { Text } from "@fluentui/react-components";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
 import { Radio } from "@fluentui/react-components";
-import BACDatePicker from "components/BaseFormFields/BACDatePicker";
-import { formatDate } from "utilities/Date";
+import BACDatePicker from "@components/BaseFormFields/BACDatePicker";
+import { formatDate } from "@utilities/Date";
 
 export const ContractorSupport = () => {
   const laborType = useWatch<CAFTOPLabor, "LaborType">({

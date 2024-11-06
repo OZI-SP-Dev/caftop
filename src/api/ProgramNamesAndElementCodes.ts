@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { spWebContext } from "api/SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 
 type TProgramNamesAndECs = { Title: string; PEC: string }[];
 type TFinalProgramNamesAndECs = { Title: string; PECs: string[] }[];
