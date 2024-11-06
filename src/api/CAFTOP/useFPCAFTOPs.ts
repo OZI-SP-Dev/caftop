@@ -5,10 +5,6 @@ import { PagedRequest, PagedRequestSPStream } from "./types";
 import { transformFPPagedRequestsFromSP } from "./transform";
 import { IRenderListDataAsStreamResult } from "@pnp/sp/lists/types";
 
-declare const _spPageContextInfo: {
-  userEmail: string;
-};
-
 type pageType = {
   data: PagedRequestSPStream[];
   carryOverData?: PagedRequestSPStream[]; // Any data from having to do multiple network requests to get PAGESIZE after client filtering

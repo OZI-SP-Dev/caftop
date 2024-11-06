@@ -5,10 +5,6 @@ import { PagedRequestSP, PagedRequest } from "./types";
 import { transformPagedRequestsFromSP } from "./transform";
 import { getCurrentUser } from "@api/UserApi";
 
-declare const _spPageContextInfo: {
-  userEmail: string;
-};
-
 type pageType = {
   data: PagedRequestSP[];
   iterator: AsyncIterator<PagedRequestSP[], PagedRequestSP[]>;
