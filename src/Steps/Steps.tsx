@@ -48,7 +48,7 @@ const Labor = lazy(() => laborPromise);
 const distributionPromise = import("@steps/Distribution/Distribution");
 const Distribution = lazy(() => distributionPromise);
 
-const improvementsPromise = import("@src/Steps/Improvements/Improvements");
+const improvementsPromise = import("@steps/Improvements/Improvements");
 const Improvements = lazy(() => improvementsPromise);
 
 const lrdpPromise = import("@steps/LRDP/LRDP");

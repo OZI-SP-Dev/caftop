@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "@src/Steps/Steps.css";
+import "@steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
-import { useTechnicalOrdersPageValidation } from "@src/utilities/Validations";
+import { useTechnicalOrdersPageValidation } from "@utilities/Validations";
 import * as Fields from "./Fields";
-import { ICAFTOPWizardStep } from "@src/Steps/Steps";
+import { ICAFTOPWizardStep } from "@steps/Steps";
 import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { TechnicalOrders as TechnicalOrdersDefaults } from "@api/CAFTOP/defaults";
 
