@@ -15,6 +15,8 @@ import { useParams } from "react-router-dom";
 import { useUpdateCAFTOP } from "@api/CAFTOP/useUpdateCAFTOP";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertNav } from "./AlertNav";
+import "./Steps.css";
+import "@components/BaseFormFields/BaseFormFields.css";
 
 type WizardStep = {
   id: Pages;

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "@steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPLabor } from "@api/CAFTOP/types";
 import * as Fields from "./Fields";

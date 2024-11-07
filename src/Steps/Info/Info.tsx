@@ -9,7 +9,6 @@ import {
 } from "@fluentui/react-components";
 import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import "@steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPInfo } from "@api/CAFTOP/types";
 import * as Fields from "./Fields";
