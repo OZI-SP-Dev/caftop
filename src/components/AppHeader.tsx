@@ -97,7 +97,7 @@ export const AppHeader = () => {
                 }
                 name={userContext.user?.Title}
                 size={32}
-              ></Avatar>
+              />
             </Tooltip>
           </PopoverTrigger>
           <PopoverSurface aria-label="Your roles">

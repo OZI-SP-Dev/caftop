@@ -207,7 +207,7 @@ const Complete = (
   return (
     <div className="m-3">
       <h1>CAFTOP Template Steps Complete</h1>
-      <form id="innerForm" onSubmit={handleSubmit}></form>
+      <form id="innerForm" onSubmit={handleSubmit} />
       {errors && errors.length === 0 && (
         <div>
           You have completed all information required to generate a CAFTOP. If

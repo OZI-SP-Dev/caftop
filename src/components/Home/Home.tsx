@@ -18,7 +18,7 @@ const Home = () => {
     <>
       <div className="container">
         <Text align="center" className="notice">
-          <div dangerouslySetInnerHTML={{ __html: homepageNotice }}></div>{" "}
+          <div dangerouslySetInnerHTML={{ __html: homepageNotice }} />
         </Text>
         <Card className="purpose">
           <CardHeader header={<Title2>Purpose</Title2>} />

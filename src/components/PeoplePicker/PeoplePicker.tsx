@@ -225,10 +225,7 @@ const BACPeoplePicker = <T extends FieldValues>({
              allows the popup people suggestions to appear above the V9 Dialog box 
              This can likely be eliminated once they release a V9 for the PeoplePicker
              NOTE:  When removing also remove the pickerCalloutProps setting hostId to this host  */}
-      <LayerHost
-        id="myPicker"
-        style={{ zIndex: 1000001, position: "fixed" }}
-      ></LayerHost>
+      <LayerHost id="myPicker" style={{ zIndex: 1000001, position: "fixed" }} />
     </>
   );
 };

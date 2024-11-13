@@ -19,6 +19,6 @@ export const ProgramGroup = (props: IProgramGroupProps) => {
       labelText="Program Group"
       rules={{ required: !props.isFilter }}
       options={Groups}
-    ></BACCombobox>
+    />
   );
 };
