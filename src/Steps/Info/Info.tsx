@@ -93,7 +93,7 @@ const Info = (props: ICAFTOPWizardStep) => {
         };
 
   if (currentCAFTOP.isLoading && pathname !== "/new") {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   return (
