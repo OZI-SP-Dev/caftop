@@ -73,12 +73,6 @@ const Info = (props: ICAFTOPWizardStep) => {
     });
   };
 
-  const whichHanlder: SubmitHandler<CAFTOPInfo> =
-    pathname === "/new"
-      ? createNew
-      : (data, e) => {
-          void props.handleSubmit(hasChanges, data, e);
-        };
   const whichValues = pathname === "/new" ? undefined : currentCAFTOP.data;
   const schema = useInfoPageValidation();
 
@@ -90,6 +84,13 @@ const Info = (props: ICAFTOPWizardStep) => {
   });
 
   const hasChanges = myForm.formState.isDirty;
+
+  const whichHanlder: SubmitHandler<CAFTOPInfo> =
+    pathname === "/new"
+      ? createNew
+      : (data, e) => {
+          void props.handleSubmit(hasChanges, data, e);
+        };
 
   if (currentCAFTOP.isLoading && pathname !== "/new") {
     return <>Loading...</>;

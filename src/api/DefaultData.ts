@@ -20,6 +20,25 @@ type TDefaultData = {
   ValueRTF: string | null;
 }[];
 
+/** Turn the array of TDefaultData into a Map
+ * @param data Array of {Title: "Key", Value: "DefaultData"}
+ * @returns Map of the Default Data Key/Value
+ */
+const transformData = (data: TDefaultData) => {
+  const dataMap = new Map<string, string>();
+  const valuesInRTF = ["HomepageNotice", "Announcements", "Help", "Purpose"];
+  data.forEach((entry) => {
+    if (valuesInRTF.includes(entry.Title)) {
+      const value = DOMPurify.sanitize(entry.ValueRTF ?? "");
+      dataMap.set(entry.Title, value);
+    } else {
+      dataMap.set(entry.Title, entry.Value ?? "");
+    }
+  });
+
+  return dataMap;
+};
+
 /** Interal Hook returning the RQ for the default data */
 const useDefaultData = () => {
   /** Function to retreive the Centers, either from SharePoint, or local Dev examples
@@ -80,32 +99,6 @@ final document. The narrative details the areas of activity to sustain and distr
         )
       ).then(transformData);
     }
-  };
-
-  /*function decodeHtmlEntities(text: string) {
-    return text.replace(/&#(\d+);/g, function (_match, dec) {
-      return String.fromCharCode(dec);
-    });
-  }*/
-
-  /** Turn the array of TDefaultData into a Map
-   * @param data Array of {Title: "Key", Value: "DefaultData"}
-   * @returns Map of the Default Data Key/Value
-   */
-  const transformData = (data: TDefaultData) => {
-    const dataMap = new Map<string, string>();
-    const valuesInRTF = ["HomepageNotice", "Announcements", "Help", "Purpose"];
-    data.forEach((entry) => {
-      if (valuesInRTF.includes(entry.Title)) {
-        //const value = decodeHtmlEntities(entry.ValueRTF ?? "");
-        const value = DOMPurify.sanitize(entry.ValueRTF ?? "");
-        dataMap.set(entry.Title, value);
-      } else {
-        dataMap.set(entry.Title, entry.Value ?? "");
-      }
-    });
-
-    return dataMap;
   };
 
   return useQuery({

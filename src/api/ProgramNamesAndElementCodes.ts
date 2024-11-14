@@ -4,14 +4,26 @@ import { spWebContext } from "@api/SPWebContext";
 type TProgramNamesAndECs = { Title: string; PEC: string }[];
 type TFinalProgramNamesAndECs = { Title: string; PECs: string[] }[];
 
-/** Hook returning the RQ for list of Program Names and associated Program Element Codes */
-export const useProgramNamesAndECs = () => {
-  return useQuery({
-    queryKey: ["ProgramNamesAndECs"],
-    queryFn: getProgramNamesAndECs, // This query transforms the data directly since we don't requery, we can do the "expensive" transform here since we don't have to worry about unchanged data
-    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
-    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
+/** Turn the array of TProgramNamesAndECs into an array containing the Title, and an array of PEC
+ * @param data Array of {Title: "Program Name", PEC: "PEC"}
+ * @returns Array of Program Names and PEC {Title: "ProgramName", PEC:"PEC" }
+ */
+const transformData = (data: TProgramNamesAndECs): TFinalProgramNamesAndECs => {
+  // Use a Map to consolidate, and remove the duplicate Program Names
+  const programNameAndPECs = new Map<string, string[]>();
+  data.forEach((item) => {
+    const programNamePECs = programNameAndPECs.get(item.Title);
+    if (programNamePECs !== undefined) {
+      programNamePECs.push(item.PEC);
+    } else {
+      programNameAndPECs.set(item.Title, [item.PEC]);
+    }
   });
+
+  return Array.from(programNameAndPECs, ([key, value]) => ({
+    Title: key,
+    PECs: value,
+  }));
 };
 
 /** Function to retreive the Program Names and Program Element Codes, either from SharePoint, or local Dev examples
@@ -295,24 +307,12 @@ const getProgramNamesAndECs = async () => {
   }
 };
 
-/** Turn the array of TProgramNamesAndECs into an array containing the Title, and an array of PEC
- * @param data Array of {Title: "Program Name", PEC: "PEC"}
- * @returns Array of Program Names and PEC {Title: "ProgramName", PEC:"PEC" }
- */
-const transformData = (data: TProgramNamesAndECs): TFinalProgramNamesAndECs => {
-  // Use a Map to consolidate, and remove the duplicate Program Names
-  const programNameAndPECs = new Map<string, string[]>();
-  data.forEach((item) => {
-    const programNamePECs = programNameAndPECs.get(item.Title);
-    if (programNamePECs !== undefined) {
-      programNamePECs.push(item.PEC);
-    } else {
-      programNameAndPECs.set(item.Title, [item.PEC]);
-    }
+/** Hook returning the RQ for list of Program Names and associated Program Element Codes */
+export const useProgramNamesAndECs = () => {
+  return useQuery({
+    queryKey: ["ProgramNamesAndECs"],
+    queryFn: getProgramNamesAndECs, // This query transforms the data directly since we don't requery, we can do the "expensive" transform here since we don't have to worry about unchanged data
+    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
+    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
   });
-
-  return Array.from(programNameAndPECs, ([key, value]) => ({
-    Title: key,
-    PECs: value,
-  }));
 };

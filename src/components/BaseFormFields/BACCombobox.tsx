@@ -47,11 +47,11 @@ const BACCombobox = <T extends FieldValues>({
 }) => {
   const form = useFormContext<T>();
 
+  const [query, setQuery] = useState("");
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQuery(e.target.value ?? "");
   };
 
-  const [query, setQuery] = useState("");
   const children = useComboboxFilter(query, options, {
     noOptionsMessage: "No matches for your search.",
   });

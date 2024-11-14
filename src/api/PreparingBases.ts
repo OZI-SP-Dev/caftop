@@ -3,17 +3,6 @@ import { spWebContext } from "@api/SPWebContext";
 
 type TPreparingBases = { Title: string }[];
 
-/** Hook returning the RQ for list of Preparing Bases */
-export const usePreparingBases = () => {
-  return useQuery({
-    queryKey: ["PreparingBases"],
-    queryFn: getPreparingBases,
-    select: transformData,
-    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
-    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
-  });
-};
-
 /** Function to retreive the Preparing Bases, either from SharePoint, or local Dev examples
  * @returns Array of {Title: "Base"}
  */
@@ -57,4 +46,15 @@ const getPreparingBases = async () => {
  */
 const transformData = (data: { Title: string }[]) => {
   return data.map((item) => item.Title);
+};
+
+/** Hook returning the RQ for list of Preparing Bases */
+export const usePreparingBases = () => {
+  return useQuery({
+    queryKey: ["PreparingBases"],
+    queryFn: getPreparingBases,
+    select: transformData,
+    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
+    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
+  });
 };
