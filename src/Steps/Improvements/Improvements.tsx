@@ -26,7 +26,7 @@ const Improvements = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data) {
-    return <>Loading...</>;
+    return "Loading...";
   }
 
   return (
