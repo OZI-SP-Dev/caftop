@@ -54,7 +54,7 @@ export const spPeoplePickerData: IPeoplePickerEntity[] = [
 ];
 
 /** Sample Data for what is returned when querying a profile of a user by Email */
-export const spUserProfileData = [
+const spUserProfileData = [
   /* This is a sample of what is returned directly from SharePoint -- However for our samples we will just include the neccessary values 
   {
     "odata.metadata":

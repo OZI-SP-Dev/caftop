@@ -7,7 +7,7 @@ declare const _spPageContextInfo: {
   userLoginName: string;
 };
 
-export interface IPerson {
+interface IPerson {
   Id: number;
   Title: string;
   EMail: string;

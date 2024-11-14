@@ -14,7 +14,7 @@ import {
  * @param show Boolean that determines when the modal is displayed
  * @param close Function that handles the close
  */
-export interface IAlertModal {
+interface IAlertModal {
   show: boolean;
   close: (accept: boolean) => void;
 }

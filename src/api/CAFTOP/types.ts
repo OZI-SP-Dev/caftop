@@ -83,7 +83,7 @@ export type CAFTOPLRDP = {
 
 export type CAFTOPMaxStep = { wizardMaxStep: number };
 
-export type CAFTOP = {
+type CAFTOP = {
   Info: CAFTOPInfo;
   Description: CAFTOPDescription;
   TechnicalOrders: CAFTOPTechnicalOrders;
@@ -206,7 +206,7 @@ export type CAFTOPSPLRDP = {
   LRDP: string | null;
 };
 
-export type CAFTOPSPMaxStep = CAFTOPMaxStep; // We assign the max step -- so it won't be null like the others could be
+type CAFTOPSPMaxStep = CAFTOPMaxStep; // We assign the max step -- so it won't be null like the others could be
 
 export type CAFTOPSP = CAFTOPSPInfo &
   CAFTOPSPDescription &
@@ -216,16 +216,6 @@ export type CAFTOPSP = CAFTOPSPInfo &
   CAFTOPSPImprovements &
   CAFTOPSPLRDP &
   CAFTOPSPMaxStep & { Year: number; Created: string };
-
-export type CAFTOPSPPage =
-  | CAFTOPSPInfo
-  | CAFTOPSPDescription
-  | CAFTOPSPTechnicalOrders
-  | CAFTOPSPLabor
-  | CAFTOPSPDistribution
-  | CAFTOPSPImprovements
-  | CAFTOPSPLRDP
-  | CAFTOPSPMaxStep;
 
 export type PageTypeSP<T> = T extends "Info"
   ? CAFTOPSPInfo

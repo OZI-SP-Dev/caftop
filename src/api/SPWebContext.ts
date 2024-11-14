@@ -18,7 +18,7 @@ import { getSPUserProfileDataDev } from "@api/SPSampleUserData";
 
 declare const _spPageContextInfo: { webAbsoluteUrl: string };
 
-export const webUrl = import.meta.env.DEV
+const webUrl = import.meta.env.DEV
   ? "http://localhost:3000"
   : _spPageContextInfo.webAbsoluteUrl;
 
