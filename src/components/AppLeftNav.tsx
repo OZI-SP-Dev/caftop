@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "@fluentui/react-components";
-import { globalContext } from "../stateManagement/GlobalStore";
-import { CAFTOPStepNames } from "../Steps/Steps";
+import { globalContext } from "@stateManagement/GlobalStore";
+import { CAFTOPStepNames } from "@steps/Steps";
 
 export const AppLeftNav = () => {
   const { globalState } = useContext(globalContext);

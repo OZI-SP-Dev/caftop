@@ -1,11 +1,11 @@
 import { Card, CardHeader, Title2, Text } from "@fluentui/react-components";
-import Dashboard from "components/Dashboard/Dashboard";
+import Dashboard from "@components/Dashboard/Dashboard";
 import {
   useAnnouncements,
   useHelp,
   useHomepageNotice,
   usePurpose,
-} from "api/DefaultData";
+} from "@api/DefaultData";
 import "./Home.css";
 
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
     <>
       <div className="container">
         <Text align="center" className="notice">
-          <div dangerouslySetInnerHTML={{ __html: homepageNotice }}></div>{" "}
+          <div dangerouslySetInnerHTML={{ __html: homepageNotice }} />
         </Text>
         <Card className="purpose">
           <CardHeader header={<Title2>Purpose</Title2>} />

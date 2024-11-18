@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { spWebContext } from "api/SPWebContext";
-import { useCAFTOP } from "./CAFTOP/useCAFTOP";
+import { spWebContext } from "@api/SPWebContext";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { useParams } from "react-router-dom";
-import { CAFTOPInfo } from "./CAFTOP/types";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import DOMPurify from "dompurify";
 
 DOMPurify.addHook("afterSanitizeAttributes", function (node) {
@@ -19,6 +19,25 @@ type TDefaultData = {
   Value: string | null;
   ValueRTF: string | null;
 }[];
+
+/** Turn the array of TDefaultData into a Map
+ * @param data Array of {Title: "Key", Value: "DefaultData"}
+ * @returns Map of the Default Data Key/Value
+ */
+const transformData = (data: TDefaultData) => {
+  const dataMap = new Map<string, string>();
+  const valuesInRTF = ["HomepageNotice", "Announcements", "Help", "Purpose"];
+  data.forEach((entry) => {
+    if (valuesInRTF.includes(entry.Title)) {
+      const value = DOMPurify.sanitize(entry.ValueRTF ?? "");
+      dataMap.set(entry.Title, value);
+    } else {
+      dataMap.set(entry.Title, entry.Value ?? "");
+    }
+  });
+
+  return dataMap;
+};
 
 /** Interal Hook returning the RQ for the default data */
 const useDefaultData = () => {
@@ -80,32 +99,6 @@ final document. The narrative details the areas of activity to sustain and distr
         )
       ).then(transformData);
     }
-  };
-
-  /*function decodeHtmlEntities(text: string) {
-    return text.replace(/&#(\d+);/g, function (_match, dec) {
-      return String.fromCharCode(dec);
-    });
-  }*/
-
-  /** Turn the array of TDefaultData into a Map
-   * @param data Array of {Title: "Key", Value: "DefaultData"}
-   * @returns Map of the Default Data Key/Value
-   */
-  const transformData = (data: TDefaultData) => {
-    const dataMap = new Map<string, string>();
-    const valuesInRTF = ["HomepageNotice", "Announcements", "Help", "Purpose"];
-    data.forEach((entry) => {
-      if (valuesInRTF.includes(entry.Title)) {
-        //const value = decodeHtmlEntities(entry.ValueRTF ?? "");
-        const value = DOMPurify.sanitize(entry.ValueRTF ?? "");
-        dataMap.set(entry.Title, value);
-      } else {
-        dataMap.set(entry.Title, entry.Value ?? "");
-      }
-    });
-
-    return dataMap;
   };
 
   return useQuery({

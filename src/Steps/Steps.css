@@ -1,5 +1,3 @@
-@import "../components/BaseFormFields/BaseFormFields.css";
-
 .requestFormContainer {
     display: grid;
     width: 100%;

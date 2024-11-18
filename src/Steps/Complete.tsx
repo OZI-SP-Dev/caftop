@@ -1,15 +1,15 @@
 import { FormEvent, useContext, useEffect } from "react";
-import { globalContext } from "../stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
 import PizZipUtils from "pizzip/utils/index.js";
 import { saveAs } from "file-saver";
 import expressions from "docxtemplater/expressions";
 import { Link } from "@fluentui/react-components";
-import { useCheckComplete } from "utilities/Validations";
+import { useCheckComplete } from "@utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
-import { formatDate, formatDate2 } from "utilities/Date";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { formatDate, formatDate2 } from "@utilities/Date";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 
 const Complete = (
   props: ICAFTOPWizardStep & {
@@ -207,7 +207,7 @@ const Complete = (
   return (
     <div className="m-3">
       <h1>CAFTOP Template Steps Complete</h1>
-      <form id="innerForm" onSubmit={handleSubmit}></form>
+      <form id="innerForm" onSubmit={handleSubmit} />
       {errors && errors.length === 0 && (
         <div>
           You have completed all information required to generate a CAFTOP. If

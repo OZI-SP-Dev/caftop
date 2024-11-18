@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPLabor } from "api/CAFTOP/types";
+import { CAFTOPLabor } from "@api/CAFTOP/types";
 import * as Fields from "./Fields";
-import { useLaborPageValidation } from "utilities/Validations";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { Labor as LaborDefaults } from "api/CAFTOP/defaults";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
+import { useLaborPageValidation } from "@utilities/Validations";
+import { ICAFTOPWizardStep } from "@steps/Steps";
+import { Labor as LaborDefaults } from "@api/CAFTOP/defaults";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 
 const Labor = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
@@ -27,7 +26,7 @@ const Labor = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   if (globalState.mode === "submit") {

@@ -1,13 +1,9 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { spWebContext } from "../SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 import { getCAFTOPsAsStream } from "./SampleData";
 import { PagedRequest, PagedRequestSPStream } from "./types";
 import { transformFPPagedRequestsFromSP } from "./transform";
 import { IRenderListDataAsStreamResult } from "@pnp/sp/lists/types";
-
-declare const _spPageContextInfo: {
-  userEmail: string;
-};
 
 type pageType = {
   data: PagedRequestSPStream[];

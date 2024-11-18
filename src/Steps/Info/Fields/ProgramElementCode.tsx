@@ -1,11 +1,11 @@
-import BACDropdown from "components/BaseFormFields/BACDropdown";
-import { CAFTOPInfo } from "api/CAFTOP/types";
-import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
+import BACDropdown from "@components/BaseFormFields/BACDropdown";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
+import { useProgramNamesAndECs } from "@api/ProgramNamesAndElementCodes";
 import { Option } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";
 import { useContext } from "react";
-import { globalContext } from "stateManagement/GlobalStore";
-import BACCombobox from "components/BaseFormFields/BACCombobox";
+import { globalContext } from "@stateManagement/GlobalStore";
+import BACCombobox from "@components/BaseFormFields/BACCombobox";
 
 interface IProgramElementCodeProps {
   isFilter?: boolean;

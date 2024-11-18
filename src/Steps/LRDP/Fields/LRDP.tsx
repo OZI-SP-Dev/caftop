@@ -1,5 +1,5 @@
-import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPLRDP } from "api/CAFTOP/types";
+import BACInput from "@components/BaseFormFields/BACInput";
+import { CAFTOPLRDP } from "@api/CAFTOP/types";
 import { useFieldArray, useWatch } from "react-hook-form";
 import {
   Button,
@@ -14,7 +14,7 @@ import {
   useArrowNavigationGroup,
   Text,
 } from "@fluentui/react-components";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
 import {
   DeleteRegular,
   ArrowUp16Regular,

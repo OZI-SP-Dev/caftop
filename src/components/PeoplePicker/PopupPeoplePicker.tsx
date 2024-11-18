@@ -11,7 +11,7 @@ import {
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { useState } from "react";
-import { Person, getCurrentUser } from "api/UserApi";
+import { Person, getCurrentUser } from "@api/UserApi";
 import BACPeoplePicker from "./PeoplePicker";
 import { FormProvider, useForm } from "react-hook-form";
 import { ContactIcon } from "@fluentui/react-icons-mdl2";

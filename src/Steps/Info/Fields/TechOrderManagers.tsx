@@ -1,12 +1,12 @@
 import { Text, Button } from "@fluentui/react-components";
-import { CAFTOPInfo } from "api/CAFTOP/types";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import BACInput from "components/BaseFormFields/BACInput";
-import { PopupPeoplePicker } from "components/PeoplePicker/PopupPeoplePicker";
-import { getSPUserProfileData } from "api/SPWebContext";
-import { Person } from "api/UserApi";
-import { formatPhone, onPhoneBlur } from "utilities/Phone";
-import { capitalizeFirstLetter } from "utilities/Names";
+import BACInput from "@components/BaseFormFields/BACInput";
+import { PopupPeoplePicker } from "@components/PeoplePicker/PopupPeoplePicker";
+import { getSPUserProfileData } from "@api/SPWebContext";
+import { Person } from "@api/UserApi";
+import { formatPhone, onPhoneBlur } from "@utilities/Phone";
+import { capitalizeFirstLetter } from "@utilities/Names";
 
 export const TechOrderManagers = () => {
   const myForm = useFormContext();

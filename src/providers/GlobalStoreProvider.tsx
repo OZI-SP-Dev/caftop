@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode, useReducer } from "react";
-import { globalContext } from "stateManagement/GlobalStore";
-import Reducer from "stateManagement/reducer";
-import { initialState } from "stateManagement/reducer";
+import { globalContext } from "@stateManagement/GlobalStore";
+import Reducer from "@stateManagement/reducer";
+import { initialState } from "@stateManagement/reducer";
 
 export function GlobalStore({
   children,

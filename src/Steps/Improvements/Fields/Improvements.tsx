@@ -1,9 +1,9 @@
-import { CAFTOPImprovements } from "api/CAFTOP/types";
+import { CAFTOPImprovements } from "@api/CAFTOP/types";
 import { useFieldArray, useWatch } from "react-hook-form";
 import { Button, Radio, Text } from "@fluentui/react-components";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
-import BACTextarea from "components/BaseFormFields/BACTextarea";
-import BACInput from "components/BaseFormFields/BACInput";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
+import BACTextarea from "@components/BaseFormFields/BACTextarea";
+import BACInput from "@components/BaseFormFields/BACInput";
 
 export const Improvements = () => {
   const hasImprovements = useWatch<CAFTOPImprovements, "HasImprovements">({

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Labor } from "api/CAFTOP/defaults";
+import { Labor } from "@api/CAFTOP/defaults";
 
 const officeFinalRule = z
   .string()

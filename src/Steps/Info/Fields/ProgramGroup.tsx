@@ -1,6 +1,6 @@
-import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP/types";
-import { useProgramGroups } from "api/ProgramGroups";
+import BACCombobox from "@components/BaseFormFields/BACCombobox";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
+import { useProgramGroups } from "@api/ProgramGroups";
 
 interface IProgramGroupProps {
   isFilter?: boolean;
@@ -19,6 +19,6 @@ export const ProgramGroup = (props: IProgramGroupProps) => {
       labelText="Program Group"
       rules={{ required: !props.isFilter }}
       options={Groups}
-    ></BACCombobox>
+    />
   );
 };

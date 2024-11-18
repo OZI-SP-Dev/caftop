@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TechnicalOrders } from "api/CAFTOP/defaults";
-import { populateWithDefaultValue } from "utilities/Validation";
+import { TechnicalOrders } from "@api/CAFTOP/defaults";
+import { populateWithDefaultValue } from "@utilities/Validation";
 
 const numberRulesSave = (fieldName: string) => {
   return z.union([

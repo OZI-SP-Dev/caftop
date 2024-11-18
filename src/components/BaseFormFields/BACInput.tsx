@@ -1,6 +1,6 @@
 import { Input, InputProps, InfoLabel, Text } from "@fluentui/react-components";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "./BaseTypeDef";
 import { TextFieldIcon } from "@fluentui/react-icons-mdl2";
 
 const BACInput = <T extends FieldValues>({

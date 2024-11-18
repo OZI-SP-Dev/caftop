@@ -1,18 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { spWebContext } from "api/SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 
 type TProgramGroups = { Title: string }[];
-
-/** Hook returning the RQ for list of Program Groups */
-export const useProgramGroups = () => {
-  return useQuery({
-    queryKey: ["ProgramGroups"],
-    queryFn: getProgramGroups,
-    select: transformData,
-    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
-    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
-  });
-};
 
 /** Turn the array of TProgramGroups into a regular string array
  * @param data Array of {Title: "ProgramGroup"}
@@ -185,4 +174,15 @@ const getProgramGroups = () => {
  */
 const transformData = (data: TProgramGroups) => {
   return data.map((item) => item.Title);
+};
+
+/** Hook returning the RQ for list of Program Groups */
+export const useProgramGroups = () => {
+  return useQuery({
+    queryKey: ["ProgramGroups"],
+    queryFn: getProgramGroups,
+    select: transformData,
+    staleTime: Infinity, // Keep stale and cached data, as this data is fairly static
+    cacheTime: Infinity, // and therefore only needs loaded at the start of the application
+  });
 };

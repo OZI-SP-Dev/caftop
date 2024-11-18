@@ -1,9 +1,9 @@
-import BACCombobox from "components/BaseFormFields/BACCombobox";
-import { CAFTOPInfo } from "api/CAFTOP/types";
-import { useProgramNamesAndECs } from "api/ProgramNamesAndElementCodes";
+import BACCombobox from "@components/BaseFormFields/BACCombobox";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
+import { useProgramNamesAndECs } from "@api/ProgramNamesAndElementCodes";
 import { useFormContext } from "react-hook-form";
 import { useContext } from "react";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 
 interface IProgramNameProps {
   isFilter?: boolean;

@@ -1,5 +1,5 @@
-import BACInput from "components/BaseFormFields/BACInput";
-import { CAFTOPInfo } from "api/CAFTOP/types";
+import BACInput from "@components/BaseFormFields/BACInput";
+import { CAFTOPInfo } from "@api/CAFTOP/types";
 
 export const PreparingOffice = () => {
   return (

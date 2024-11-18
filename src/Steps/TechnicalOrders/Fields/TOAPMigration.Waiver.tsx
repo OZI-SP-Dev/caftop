@@ -1,9 +1,9 @@
 import { Radio } from "@fluentui/react-components";
-import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
-import BACDatePicker from "components/BaseFormFields/BACDatePicker";
-import BACRadioGroup from "components/BaseFormFields/BACRadioGroup";
+import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
+import BACDatePicker from "@components/BaseFormFields/BACDatePicker";
+import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
 import { useWatch } from "react-hook-form";
-import { formatDate } from "utilities/Date";
+import { formatDate } from "@utilities/Date";
 
 export const TOAPMigrationWaiver = () => {
   const approvedWaiver = useWatch<CAFTOPTechnicalOrders, "TOApprovedWaiver">({

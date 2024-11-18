@@ -1,13 +1,9 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { spWebContext } from "../SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 import { getCAFTOPs } from "./SampleData";
 import { PagedRequestSP, PagedRequest } from "./types";
 import { transformPagedRequestsFromSP } from "./transform";
-import { getCurrentUser } from "api/UserApi";
-
-declare const _spPageContextInfo: {
-  userEmail: string;
-};
+import { getCurrentUser } from "@api/UserApi";
 
 type pageType = {
   data: PagedRequestSP[];

@@ -1,4 +1,4 @@
-import { Distribution, Improvements, LRDP, Labor } from "api/CAFTOP/defaults";
+import { Distribution, Improvements, LRDP, Labor } from "./defaults";
 import {
   PageType,
   Pages,
@@ -22,8 +22,8 @@ import {
   PagedRequest,
   PagedRequestSPStream,
 } from "./types";
-import { spWebContext } from "api/SPWebContext";
-import { getCurrentUser } from "api/UserApi";
+import { spWebContext } from "@api/SPWebContext";
+import { getCurrentUser } from "@api/UserApi";
 
 const transformInfoFromSP = (data: CAFTOPSPInfo) => {
   const info: CAFTOPInfo = {

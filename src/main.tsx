@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "App.tsx";
+import App from "@src/App";
 import "./index.css";
-import { GlobalStore } from "providers/GlobalStoreProvider";
+import { GlobalStore } from "@providers/GlobalStoreProvider";
 import { initializeIcons } from "@fluentui/font-icons-mdl2";
 import { initializeFileTypeIcons } from "@fluentui/react-file-type-icons";
 import { FluentProvider, webLightTheme } from "@fluentui/react-components";
-import { UserProvider } from "providers/UserProvider.tsx";
+import { UserProvider } from "@providers/UserProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 initializeIcons();

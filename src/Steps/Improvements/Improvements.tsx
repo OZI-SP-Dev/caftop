@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPImprovements } from "api/CAFTOP/types";
+import { CAFTOPImprovements } from "@api/CAFTOP/types";
 import * as Fields from "./Fields";
-import { useImprovementsPageValidation } from "utilities/Validations";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { Improvements as ImprovementsDefaults } from "api/CAFTOP/defaults";
+import { useImprovementsPageValidation } from "@utilities/Validations";
+import { ICAFTOPWizardStep } from "@steps/Steps";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { Improvements as ImprovementsDefaults } from "@api/CAFTOP/defaults";
 
 const Improvements = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
@@ -27,7 +26,7 @@ const Improvements = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   return (

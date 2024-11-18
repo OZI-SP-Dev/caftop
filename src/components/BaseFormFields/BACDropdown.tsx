@@ -13,7 +13,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "./BaseTypeDef";
 import { DropdownIcon } from "@fluentui/react-icons-mdl2";
 
 export type onOptionSelectCallback<T extends FieldValues> = (

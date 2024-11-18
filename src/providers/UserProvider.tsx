@@ -1,6 +1,6 @@
 import { createContext, FunctionComponent, useState } from "react";
-//import { RoleType, useUserRoles } from "api/RolesApi";
-import { Person, getCurrentUser } from "api/UserApi";
+//import { RoleType, useUserRoles } from "@api/RolesApi";
+import { Person, getCurrentUser } from "@api/UserApi";
 
 interface IUserContext {
   /** Current or Impersonated User object */ user: Person;

@@ -1,5 +1,5 @@
-import { CAFTOPTechnicalOrders } from "api/CAFTOP/types";
-import BACTextarea from "components/BaseFormFields/BACTextarea";
+import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
+import BACTextarea from "@components/BaseFormFields/BACTextarea";
 import { TOAPMigrationWaiver } from "./TOAPMigration.Waiver";
 
 export const TOAPMigrationNo = () => {

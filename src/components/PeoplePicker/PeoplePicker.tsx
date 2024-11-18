@@ -7,13 +7,13 @@ import {
   PeoplePickerItemSuggestion,
 } from "@fluentui/react/lib/Pickers";
 import { InfoLabel, Text } from "@fluentui/react-components";
-import { spWebContext } from "api/SPWebContext";
+import { spWebContext } from "@api/SPWebContext";
 import { IPeoplePickerEntity } from "@pnp/sp/profiles";
 import { LayerHost } from "@fluentui/react";
 import { FieldValues, useController } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "@components/BaseFormFields/BaseTypeDef";
 import { TextFieldIcon } from "@fluentui/react-icons-mdl2";
-import { spPeoplePickerData } from "api/SPSampleUserData";
+import { spPeoplePickerData } from "@api/SPSampleUserData";
 
 interface Person {
   Id: number;
@@ -225,10 +225,7 @@ const BACPeoplePicker = <T extends FieldValues>({
              allows the popup people suggestions to appear above the V9 Dialog box 
              This can likely be eliminated once they release a V9 for the PeoplePicker
              NOTE:  When removing also remove the pickerCalloutProps setting hostId to this host  */}
-      <LayerHost
-        id="myPicker"
-        style={{ zIndex: 1000001, position: "fixed" }}
-      ></LayerHost>
+      <LayerHost id="myPicker" style={{ zIndex: 1000001, position: "fixed" }} />
     </>
   );
 };

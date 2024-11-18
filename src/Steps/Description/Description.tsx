@@ -1,16 +1,18 @@
 import { useContext } from "react";
 import { Title1 } from "@fluentui/react-components";
-import { globalContext } from "stateManagement/GlobalStore";
+import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
-import "Steps/Steps.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CAFTOPDescription } from "api/CAFTOP/types";
-import { useDescriptionPageValidation } from "utilities/Validations";
+import { CAFTOPDescription } from "@api/CAFTOP/types";
+import { useDescriptionPageValidation } from "@utilities/Validations";
 import * as Fields from "./Fields";
-import { useDefaultDescription, useDefaultIntroduction } from "api/DefaultData";
-import { ICAFTOPWizardStep } from "Steps/Steps";
-import { useCAFTOP } from "api/CAFTOP/useCAFTOP";
-import { Description as DescriptionDefaults } from "api/CAFTOP/defaults";
+import {
+  useDefaultDescription,
+  useDefaultIntroduction,
+} from "@api/DefaultData";
+import { ICAFTOPWizardStep } from "@steps/Steps";
+import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { Description as DescriptionDefaults } from "@api/CAFTOP/defaults";
 
 const Description = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
@@ -50,7 +52,7 @@ const Description = (props: ICAFTOPWizardStep) => {
   const hasChanges = myForm.formState.isDirty;
 
   if (!currentCAFTOP.data || !defaultDescription || !defualtIntroduction) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   if (globalState.mode === "submit") {

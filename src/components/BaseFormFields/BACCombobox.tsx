@@ -14,7 +14,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { BaseFormField } from "components/BaseFormFields/BaseTypeDef";
+import { BaseFormField } from "./BaseTypeDef";
 import { DropdownIcon } from "@fluentui/react-icons-mdl2";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
@@ -47,11 +47,11 @@ const BACCombobox = <T extends FieldValues>({
 }) => {
   const form = useFormContext<T>();
 
+  const [query, setQuery] = useState("");
   const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQuery(e.target.value ?? "");
   };
 
-  const [query, setQuery] = useState("");
   const children = useComboboxFilter(query, options, {
     noOptionsMessage: "No matches for your search.",
   });
