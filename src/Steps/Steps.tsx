@@ -86,7 +86,7 @@ const WizardSteps: WizardStep[] = [
   },
   {
     id: "LRDP",
-    name: "Logistics Requirements Destermination Process (LRDP) Task Prioritization",
+    name: "Logistics Requirements Determination Process (LRDP) Task Prioritization",
   },
   {
     id: "Completed",
