@@ -37,7 +37,7 @@ const LRDPStep = (props: ICAFTOPWizardStep) => {
   return (
     <>
       <Title1>
-        Logistics Requirements Destermination Process (LRDP) Task Prioritization
+        Logistics Requirements Determination Process (LRDP) Task Prioritization
       </Title1>
       <FormProvider {...myForm}>
         <form

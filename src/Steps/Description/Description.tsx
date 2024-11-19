@@ -6,10 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CAFTOPDescription } from "@api/CAFTOP/types";
 import { useDescriptionPageValidation } from "@utilities/Validations";
 import * as Fields from "./Fields";
-import {
-  useDefaultDescription,
-  useDefaultIntroduction,
-} from "@api/DefaultData";
 import { ICAFTOPWizardStep } from "@steps/Steps";
 import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { Description as DescriptionDefaults } from "@api/CAFTOP/defaults";
@@ -17,41 +13,18 @@ import { Description as DescriptionDefaults } from "@api/CAFTOP/defaults";
 const Description = (props: ICAFTOPWizardStep) => {
   const { globalState } = useContext(globalContext);
   const currentCAFTOP = useCAFTOP(globalState.id, "Description");
-
-  const defaultDescription = useDefaultDescription();
-  const defualtIntroduction = useDefaultIntroduction();
-
-  let formData;
-  if (
-    currentCAFTOP.data &&
-    defaultDescription !== "" &&
-    defualtIntroduction !== ""
-  ) {
-    const desc = currentCAFTOP.data.Description
-      ? currentCAFTOP.data.Description
-      : defaultDescription;
-    const intro = currentCAFTOP.data.Introduction
-      ? currentCAFTOP.data.Introduction
-      : defualtIntroduction;
-    formData = {
-      ...currentCAFTOP.data,
-      Description: desc,
-      Introduction: intro,
-    };
-  }
-
   const schema = useDescriptionPageValidation();
 
   const myForm = useForm<CAFTOPDescription>({
     defaultValues: DescriptionDefaults,
-    values: formData,
+    values: currentCAFTOP.data,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
 
   const hasChanges = myForm.formState.isDirty;
 
-  if (!currentCAFTOP.data || !defaultDescription || !defualtIntroduction) {
+  if (!currentCAFTOP.data) {
     return <>Loading...</>;
   }
 
