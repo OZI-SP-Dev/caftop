@@ -15,6 +15,7 @@ import {
   tocountsRuleSave,
 } from "@steps/TechnicalOrders/Fields/TOCounts.Validation";
 import {
+  checkTOCountsForPartiallyMigrated,
   toapRuleFinal,
   toapRuleSave,
 } from "@steps/TechnicalOrders/Fields/TOAPMigration.Validation";
@@ -119,9 +120,13 @@ export const useTechnicalOrdersPageValidation = (
 
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return tocountsRuleSave.and(toapRuleSave);
+    return tocountsRuleSave
+      .and(toapRuleSave)
+      .pipe(checkTOCountsForPartiallyMigrated);
   } else {
-    return tocountsRuleFinal.and(toapRuleFinal);
+    return tocountsRuleFinal
+      .and(toapRuleFinal)
+      .pipe(checkTOCountsForPartiallyMigrated);
   }
 };
 

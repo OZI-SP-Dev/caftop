@@ -21,6 +21,48 @@ const numberRulesFinal = (fieldName: string) => {
   );
 };
 
+export const checkTOCountsForPartiallyMigrated = z
+  .object({
+    /* Previous validation will ensure that these are either numbers or blank -- but we have to restate here so that we have proper type to use in superRefine */
+    NumAuthoredInTOAP: z.literal("").or(z.number()),
+    NumNotAuthoredInTOAP: z.literal("").or(z.number()),
+    NumWillNotBeAuthoredInTOAP: z.literal("").or(z.number()),
+    NumElectronic: z.literal("").or(z.number()),
+    NumPaper: z.literal("").or(z.number()),
+    NumCDDVD: z.literal("").or(z.number()),
+    NumUnpublished: z.literal("").or(z.number()),
+    AuthoredInTOAPType: z.enum(["fully", "partially", "no", ""]),
+  })
+  .passthrough()
+  .superRefine((obj, ctx) => {
+    if (
+      /* Only check if we have numbers provided for all and TOAP Type is "partially" */
+      obj.AuthoredInTOAPType === "partially" &&
+      obj.NumAuthoredInTOAP !== "" &&
+      obj.NumNotAuthoredInTOAP !== "" &&
+      obj.NumWillNotBeAuthoredInTOAP !== "" &&
+      obj.NumUnpublished !== "" &&
+      obj.NumElectronic !== "" &&
+      obj.NumPaper !== "" &&
+      obj.NumCDDVD !== ""
+    ) {
+      if (
+        obj.NumAuthoredInTOAP +
+          obj.NumNotAuthoredInTOAP +
+          obj.NumWillNotBeAuthoredInTOAP +
+          obj.NumUnpublished !==
+        obj.NumElectronic + obj.NumPaper + obj.NumCDDVD
+      ) {
+        ctx.addIssue({
+          path: ["TOCountIssue"],
+          message:
+            "The sum of the TOs in the Migration Plan and the Unpublished TOs must equal the sum of Electronic, Paper, and CD/DVD TOs",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+  });
+
 const blankApprovedWaiver = z.object({
   TOApprovedWaiver: populateWithDefaultValue(TechnicalOrders.TOApprovedWaiver),
   TOApprovedWaiverDate: populateWithDefaultValue(

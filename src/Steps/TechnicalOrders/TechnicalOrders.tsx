@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Title1 } from "@fluentui/react-components";
 import { globalContext } from "@stateManagement/GlobalStore";
 import { FormProvider, useForm } from "react-hook-form";
@@ -16,11 +16,24 @@ const TechnicalOrders = (props: ICAFTOPWizardStep) => {
 
   const schema = useTechnicalOrdersPageValidation();
 
-  const myForm = useForm<CAFTOPTechnicalOrders>({
+  // We make TOCountIssue part of the data, in order to have a general field error field we can flag against,
+  //  however, it is optional as we won't (and don't) want to populate it with information
+  const myForm = useForm<CAFTOPTechnicalOrders & { TOCountIssue?: string }>({
     values: currentCAFTOP.data ?? TechnicalOrdersDefaults,
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  // https://github.com/orgs/react-hook-form/discussions/8516
+  // Force the form to refresh when one of the fields cause it to be added
+  // Just having it trigger against the field onChange of all the fields was not working
+  const { watch, trigger } = myForm;
+  useEffect(() => {
+    const subscription = watch(() => {
+      void trigger(["TOCountIssue"]);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, trigger]);
 
   const hasChanges = myForm.formState.isDirty;
 
