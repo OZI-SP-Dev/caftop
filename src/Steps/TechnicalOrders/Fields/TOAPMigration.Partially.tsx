@@ -1,9 +1,9 @@
 import { CAFTOPTechnicalOrders } from "@api/CAFTOP/types";
 import BACInput from "@components/BaseFormFields/BACInput";
 import BACTextarea from "@components/BaseFormFields/BACTextarea";
-import { useWatch } from "react-hook-form";
+import { useFormState, useWatch } from "react-hook-form";
 import { TOAPMigrationWaiver } from "./TOAPMigration.Waiver";
-
+import { Text } from "@fluentui/react-components";
 export const TOAPMigrationPartially = () => {
   const numWillNotBeAuthoredInTOAP = useWatch<
     CAFTOPTechnicalOrders,
@@ -11,6 +11,10 @@ export const TOAPMigrationPartially = () => {
   >({
     name: "NumWillNotBeAuthoredInTOAP",
   });
+
+  const {
+    errors: { TOCountIssue },
+  } = useFormState();
 
   return (
     <>
@@ -51,6 +55,11 @@ export const TOAPMigrationPartially = () => {
             }}
           />
         </div>
+      )}
+      {TOCountIssue && (
+        <Text role="alert" id={"TOCountErr"} className="fieldErrorText">
+          {typeof TOCountIssue.message === "string" && TOCountIssue.message}
+        </Text>
       )}
     </>
   );
