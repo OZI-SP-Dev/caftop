@@ -263,7 +263,9 @@ const transformInfoToSP = async (data: CAFTOPInfo) => {
     }
   }
 
-  let authorId = data.PMandTOMAandAuthorIds.split(",")?.pop() ?? ""; // Get the last item of the array as it is the author
+  const authorIdArray = data.PMandTOMAandAuthorIds.split(",");
+  authorIdArray.pop(); // Drop the last item of the array, as it will be blank, since the string ends in a comma (,)
+  let authorId = authorIdArray.pop() ?? ""; // Get the now last item of the array (previously 2nd to last) as it is the author
   if (authorId === "") {
     // If this is a brand new request then get current user as author
     authorId = `"${getCurrentUser().Id.toString()}"`;
