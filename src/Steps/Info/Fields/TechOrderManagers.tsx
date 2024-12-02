@@ -45,15 +45,19 @@ export const TechOrderManagers = () => {
 
     myForm.setValue(techOrderManager + ".FirstName", firstName, {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(techOrderManager + ".LastName", lastName, {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(techOrderManager + ".Phone", formatPhone(workPhone), {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(techOrderManager + ".Email", person[0].EMail, {
       shouldValidate: true,
+      shouldDirty: true,
     });
   };
 

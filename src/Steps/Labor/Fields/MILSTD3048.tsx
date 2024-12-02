@@ -17,7 +17,7 @@ export const MILSTD3048 = () => {
     <div className="requestFieldContainer">
       <fieldset>
         <legend>
-          <Text weight="semibold">MIL-STD-3048 (S100D)</Text>
+          <Text weight="semibold">MIL-STD-3048 (S1000D)</Text>
         </legend>
         <div className="requestFieldContainer">
           <BACRadioGroup<CAFTOPLabor>

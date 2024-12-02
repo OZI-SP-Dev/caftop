@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useEffect } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { globalContext } from "@stateManagement/GlobalStore";
 import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
@@ -10,6 +10,7 @@ import { useCheckComplete } from "@utilities/Validations";
 import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate, formatDate2 } from "@utilities/Date";
 import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import { AlertTOC } from "./AlertTOC";
 
 const Complete = (
   props: ICAFTOPWizardStep & {
@@ -19,6 +20,7 @@ const Complete = (
   const { globalState, dispatch } = useContext(globalContext);
   const caftop = useCAFTOP(globalState.id, "ALL");
   const errors = useCheckComplete();
+  const [isGenerated, setIsGenerated] = useState<boolean>(false);
 
   useEffect(() => {
     if (errors && errors.length === 0) {
@@ -199,52 +201,61 @@ const Complete = (
             compression: "DEFLATE",
           }); //Output the document using Data-URI
           saveAs(out, outFileName);
+          setIsGenerated(true);
         }
       );
     }
   }
 
   return (
-    <div className="m-3">
-      <h1>CAFTOP Template Steps Complete</h1>
-      <form id="innerForm" onSubmit={handleSubmit} />
-      {errors && errors.length === 0 && (
-        <div>
-          You have completed all information required to generate a CAFTOP. If
-          you are ready to create the CAFTOP Narrative file, you can do so by
-          clicking &quot;Generate Document&quot; button below.
-        </div>
-      )}
-      {errors && errors.length > 0 && (
-        <>
+    <>
+      <div className="m-3">
+        <h1>CAFTOP Template Steps Complete</h1>
+        <form id="innerForm" onSubmit={handleSubmit} />
+        {errors && errors.length === 0 && (
           <div>
-            There is missing information, which must be completed before being
-            able to generate the CAFTOP Narrative file. Please click on the
-            below links to enter the missing information.
+            You have completed all information required to generate a CAFTOP. If
+            you are ready to create the CAFTOP Narrative file, you can do so by
+            clicking &quot;Generate Document&quot; button below.
           </div>
-          <ul>
-            {errors.map((error) => (
-              <li key={error.errortext + error.pageIndex}>
-                <Link
-                  onClick={() => {
-                    dispatch({
-                      type: "CHANGE_MODE",
-                      payload: { mode: "submit" },
-                    });
-                    dispatch({
-                      type: "GOTO_STEP",
-                      payload: { wizardStep: error.pageIndex },
-                    });
-                  }}
-                >
-                  {error.errortext}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
+        )}
+        {errors && errors.length > 0 && (
+          <>
+            <div>
+              There is missing information, which must be completed before being
+              able to generate the CAFTOP Narrative file. Please click on the
+              below links to enter the missing information.
+            </div>
+            <ul>
+              {errors.map((error) => (
+                <li key={error.errortext + error.pageIndex}>
+                  <Link
+                    onClick={() => {
+                      dispatch({
+                        type: "CHANGE_MODE",
+                        payload: { mode: "submit" },
+                      });
+                      dispatch({
+                        type: "GOTO_STEP",
+                        payload: { wizardStep: error.pageIndex },
+                      });
+                    }}
+                  >
+                    {error.errortext}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+      <AlertTOC
+        show={isGenerated}
+        close={() => {
+          setIsGenerated(false);
+        }}
+      />
+    </>
   );
 };
 

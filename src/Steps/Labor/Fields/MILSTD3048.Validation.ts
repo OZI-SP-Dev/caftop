@@ -109,7 +109,7 @@ export const milstd3048RuleSave = z
         MILSTD3048Status: z.literal("current"),
         MILSTD3048Location: z.enum(["withinTDSSe", "withinOther", "outside"], {
           message:
-            "You must select if MIL-STD-3048 (S1000D) it is within or outside TOAP",
+            "You must select if MIL-STD-3048 (S1000D) is within or outside TOAP",
         }),
         MILSTD3048SourceData: z.any(), // Pass these 2 values through, as we will check them in the discrimated union this is piped to
         MILSTD3048Contractor: z.any(),
@@ -149,7 +149,7 @@ export const milstd3048RuleFinal = z
       MILSTD3048Status: z.literal("current"),
       MILSTD3048Location: z.enum(["withinTDSSe", "withinOther", "outside"], {
         message:
-          "You must select if MIL-STD-3048 (S1000D) it is within or outside TOAP",
+          "You must select if MIL-STD-3048 (S1000D) is within or outside TOAP",
       }),
       MILSTD3048SourceData: z.any(), // Pass these 2 values through, as we will check them in the discrimated union this is piped to
       MILSTD3048Contractor: z.any(),

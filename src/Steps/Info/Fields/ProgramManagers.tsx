@@ -45,15 +45,19 @@ export const ProgramManagers = () => {
 
     myForm.setValue(programManager + ".FirstName", firstName, {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(programManager + ".LastName", lastName, {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(programManager + ".Phone", formatPhone(workPhone), {
       shouldValidate: true,
+      shouldDirty: true,
     });
     myForm.setValue(programManager + ".Email", person[0].EMail, {
       shouldValidate: true,
+      shouldDirty: true,
     });
   };
 
