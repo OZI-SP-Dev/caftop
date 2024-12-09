@@ -11,6 +11,13 @@ import { ICAFTOPWizardStep } from "./Steps";
 import { formatDate, formatDate2 } from "@utilities/Date";
 import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
 import { AlertTOC } from "./AlertTOC";
+import { CAFTOPLabor } from "@src/api/CAFTOP/types";
+
+// The ContractorSupport array passed to the document is the same with the exception that we convert ContractExpiration to a string
+type TContractorSupportForDoc = Omit<
+  CAFTOPLabor["ContractorSupport"][number],
+  "ContractExpiration"
+> & { ContractExpiration: string };
 
 const Complete = (
   props: ICAFTOPWizardStep & {
@@ -98,9 +105,17 @@ const Complete = (
         caftopData.Distribution.ODSOApprovedWaiverDate ?? undefined
       );
 
-      const ctrExpirationDate = formatDate(
-        caftopData.Labor.ContractorSupport.ContractExpiration ?? undefined
-      );
+      const ctrSupport = [...caftopData.Labor.ContractorSupport];
+      const ctrSupportConv: TContractorSupportForDoc[] = [];
+
+      ctrSupport.forEach((ctrSupportItem) => {
+        ctrSupportConv.push({
+          ...ctrSupportItem,
+          ContractExpiration: formatDate(
+            ctrSupportItem.ContractExpiration ?? undefined
+          ),
+        });
+      });
 
       const technicalOrders = {
         ...caftopData.TechnicalOrders,
@@ -116,10 +131,7 @@ const Complete = (
 
       const labor = {
         ...caftopData.Labor,
-        ContractorSupport: {
-          ...caftopData.Labor.ContractorSupport,
-          ContractExpiration: ctrExpirationDate,
-        },
+        ContractorSupport: ctrSupportConv,
       };
 
       const dataForDocument = {

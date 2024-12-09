@@ -45,15 +45,17 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
 };
 
 export const Labor: CAFTOPLabor = {
-  LaborType: "",
-  ContractorSupport: {
-    LaborCost: "",
-    TDSSe: "",
-    TDSSeRobins: "",
-    ContractorName: "",
-    ContractNumber: "",
-    ContractExpiration: null,
-  },
+  LaborType: [],
+  ContractorSupport: [
+    {
+      LaborCost: "",
+      TDSSe: "",
+      TDSSeRobins: "",
+      ContractorName: "",
+      ContractNumber: "",
+      ContractExpiration: null,
+    },
+  ],
   OrganicSupport: { Office: "" },
   MILSTD3048Status: "",
   MILSTD3048Location: "",
