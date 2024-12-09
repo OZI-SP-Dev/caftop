@@ -97,7 +97,7 @@ const transformLaborFromSP = (data: CAFTOPSPLabor) => {
   };
 
   const labor: CAFTOPLabor = {
-    LaborType: JSON.parse(data.LaborType ?? '"[]"') as CAFTOPLabor["LaborType"],
+    LaborType: JSON.parse(data.LaborType ?? "[]") as CAFTOPLabor["LaborType"],
     ContractorSupport: transformCtrSupport(),
     OrganicSupport:
       data.OrganicSupport !== null && data.OrganicSupport !== ""
