@@ -19,6 +19,16 @@ type TContractorSupportForDoc = Omit<
   "ContractExpiration"
 > & { ContractExpiration: string };
 
+const getLaborType = (laborType: string[]) => {
+  if (laborType.includes("contractor") && laborType.includes("organic")) {
+    return "both";
+  } else if (laborType.includes("contractor")) {
+    return "contractor";
+  } else if (laborType.includes("organic")) {
+    return "organic";
+  }
+};
+
 const Complete = (
   props: ICAFTOPWizardStep & {
     setReadyForGeneration: React.Dispatch<React.SetStateAction<boolean>>;
@@ -107,6 +117,13 @@ const Complete = (
 
       const ctrSupport = [...caftopData.Labor.ContractorSupport];
       const ctrSupportConv: TContractorSupportForDoc[] = [];
+      let ctrSupportTotal = 0;
+      let hasRobinsTDSSe = false;
+      const supportList: string[] = [];
+
+      if (caftopData.Labor.OrganicSupport.Office !== "") {
+        supportList.push(caftopData.Labor.OrganicSupport.Office);
+      }
 
       ctrSupport.forEach((ctrSupportItem) => {
         ctrSupportConv.push({
@@ -115,7 +132,29 @@ const Complete = (
             ctrSupportItem.ContractExpiration ?? undefined
           ),
         });
+        ctrSupportTotal += parseInt(ctrSupportItem.LaborCost);
+        if (
+          ctrSupportItem.TDSSe === "yes" &&
+          ctrSupportItem.TDSSeRobins === "yes"
+        ) {
+          // If any of the contracts are TDSSeRobins, then flip the flag so it includes those paragraphs
+          hasRobinsTDSSe = true;
+        }
+        supportList.push(ctrSupportItem.ContractorName);
       });
+
+      let supportListString = "";
+      if (supportList.length > 1) {
+        supportList[supportList.length - 1] =
+          "and " + supportList[supportList.length - 1];
+        if (supportList.length == 2) {
+          supportListString = supportList.join(" ");
+        } else {
+          supportListString = supportList.join(", ");
+        }
+      } else {
+        supportListString = supportList[0]; // It is just the first entry
+      }
 
       const technicalOrders = {
         ...caftopData.TechnicalOrders,
@@ -131,7 +170,11 @@ const Complete = (
 
       const labor = {
         ...caftopData.Labor,
+        LaborType: getLaborType(caftopData.Labor.LaborType),
         ContractorSupport: ctrSupportConv,
+        TotalContractSupport: ctrSupportConv.length > 1 ? ctrSupportTotal : "",
+        HasRobinsTDSSe: hasRobinsTDSSe,
+        SupportList: supportListString,
       };
 
       const dataForDocument = {
