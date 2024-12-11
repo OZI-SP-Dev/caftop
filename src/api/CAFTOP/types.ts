@@ -42,7 +42,7 @@ export type CAFTOPTechnicalOrders = {
 };
 
 export type CAFTOPLabor = {
-  LaborType: "contractor" | "organic" | "";
+  LaborType: ("contractor" | "organic")[];
   ContractorSupport: {
     LaborCost: string;
     TDSSe: "yes" | "no" | "";
@@ -50,7 +50,7 @@ export type CAFTOPLabor = {
     ContractorName: string;
     ContractNumber: string;
     ContractExpiration: Date | null;
-  };
+  }[];
   OrganicSupport: { Office: string };
   MILSTD3048Status: "current" | "plan" | "noplan" | "";
   MILSTD3048Location: "withinTDSSe" | "withinOther" | "outside" | "";

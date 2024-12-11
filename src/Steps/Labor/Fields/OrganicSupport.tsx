@@ -7,7 +7,7 @@ export const OrganicSupport = () => {
     name: "LaborType",
   });
 
-  if (laborType === "organic") {
+  if (laborType.includes("organic")) {
     return (
       <div className="requestFieldContainer">
         <BACInput<CAFTOPLabor>

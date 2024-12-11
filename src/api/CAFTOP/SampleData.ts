@@ -33,9 +33,9 @@ const caftopSamples: CAFTOPSP[] = [
     Explanation:
       "Here is an explanation of why the TOs will not be authored in TOAP, identifying the constraints, justification and list the plan of action.",
     PlanToConvert: "",
-    LaborType: "contractor",
+    LaborType: '["contractor"]',
     ContractorSupport:
-      '{"LaborCost":5,"ContractNumber":"FA8124-24-D-0003","ContractExpiration":"2024-12-31T05:00:00.000Z","TDSSe":"yes","TDSSeRobins":"yes","ContractorName":"AFLCMC/LZP via Technical Data Support Service Enterprise (TDSSe)"}',
+      '[{"LaborCost":5,"ContractNumber":"FA8124-24-D-0003","ContractExpiration":"2024-12-31T05:00:00.000Z","TDSSe":"yes","TDSSeRobins":"yes","ContractorName":"AFLCMC/LZP via Technical Data Support Service Enterprise (TDSSe)"}]',
     OrganicSupport: '{"Office": "" }',
     HasAdditionalLabor: "yes",
     AdditionalLabor:
@@ -93,9 +93,9 @@ const caftopSamples: CAFTOPSP[] = [
     Explanation:
       "Here is an explanation of why the TOs will not be authored in TOAP, identifying the constraints, justification and list the plan of action. This is for second item",
     PlanToConvert: "",
-    LaborType: "contractor",
+    LaborType: '["contractor"]',
     ContractorSupport:
-      '{"LaborCost":5,"ContractNumber":"FA8124-24-D-0003","ContractExpiration":"2024-12-31T05:00:00.000Z","TDSSe":"yes","TDSSeRobins":"yes","ContractorName":"AFLCMC/LZP via Technical Data Support Service Enterprise (TDSSe)"}',
+      '[{"LaborCost":5,"ContractNumber":"FA8124-24-D-0003","ContractExpiration":"2024-12-31T05:00:00.000Z","TDSSe":"yes","TDSSeRobins":"yes","ContractorName":"AFLCMC/LZP via Technical Data Support Service Enterprise (TDSSe)"}]',
     OrganicSupport: '{"Office": "" }',
     HasAdditionalLabor: "yes",
     AdditionalLabor:

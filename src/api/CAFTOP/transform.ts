@@ -85,9 +85,11 @@ const transformLaborFromSP = (data: CAFTOPSPLabor) => {
         data.ContractorSupport
       ) as CAFTOPLabor["ContractorSupport"];
 
-      ctrSupport.ContractExpiration = ctrSupport.ContractExpiration
-        ? new Date(ctrSupport.ContractExpiration)
-        : null;
+      ctrSupport.forEach((entry) => {
+        entry.ContractExpiration = entry.ContractExpiration
+          ? new Date(entry.ContractExpiration)
+          : null;
+      });
 
       return ctrSupport;
     }
@@ -95,7 +97,7 @@ const transformLaborFromSP = (data: CAFTOPSPLabor) => {
   };
 
   const labor: CAFTOPLabor = {
-    LaborType: (data.LaborType ?? "") as CAFTOPLabor["LaborType"],
+    LaborType: JSON.parse(data.LaborType ?? "[]") as CAFTOPLabor["LaborType"],
     ContractorSupport: transformCtrSupport(),
     OrganicSupport:
       data.OrganicSupport !== null && data.OrganicSupport !== ""
@@ -320,7 +322,7 @@ const transformTechnicalOrdersToSP = (data: CAFTOPTechnicalOrders) => {
 
 const transformLaborToSP = (data: CAFTOPLabor) => {
   const labor: CAFTOPSPLabor = {
-    LaborType: data.LaborType,
+    LaborType: JSON.stringify(data.LaborType),
     ContractorSupport: JSON.stringify(data.ContractorSupport),
     OrganicSupport: JSON.stringify(data.OrganicSupport),
     HasAdditionalLabor: data.HasAdditionalLabor,

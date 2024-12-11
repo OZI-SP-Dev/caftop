@@ -22,9 +22,11 @@ const tdsseCtr =
 const tdsseBaseRule = z.discriminatedUnion("TDSSe", [
   z.object({
     TDSSe: z.literal(""),
-    TDSSeRobins: populateWithDefaultValue(Labor.ContractorSupport.TDSSeRobins),
+    TDSSeRobins: populateWithDefaultValue(
+      Labor.ContractorSupport[0].TDSSeRobins
+    ),
     ContractorName: populateWithDefaultValue(
-      Labor.ContractorSupport.TDSSeRobins
+      Labor.ContractorSupport[0].TDSSeRobins
     ),
   }),
   z.object({
@@ -34,7 +36,9 @@ const tdsseBaseRule = z.discriminatedUnion("TDSSe", [
   }),
   z.object({
     TDSSe: z.literal("no"),
-    TDSSeRobins: populateWithDefaultValue(Labor.ContractorSupport.TDSSeRobins),
+    TDSSeRobins: populateWithDefaultValue(
+      Labor.ContractorSupport[0].TDSSeRobins
+    ),
     ContractorName: contractornameBaseRule,
   }),
 ]);
@@ -52,7 +56,7 @@ const tdsseFinalRule = z.discriminatedUnion(
     z.object({
       TDSSe: z.literal("no"),
       TDSSeRobins: populateWithDefaultValue(
-        Labor.ContractorSupport.TDSSeRobins
+        Labor.ContractorSupport[0].TDSSeRobins
       ),
       ContractorName: contractornameBaseRule.min(
         1,
@@ -101,30 +105,62 @@ const finalRule = z.object({
   }),
 });
 
-export const ContractorSupportRuleSave = z.discriminatedUnion("LaborType", [
-  z.object({
-    LaborType: z.literal("organic"),
-    // If we are organic, then populate the ContractoSupport with the default blank values
-    ContractorSupport: populateWithDefaultValue({
-      ...Labor.ContractorSupport,
-    }),
-  }),
-  z.object({
-    LaborType: z.literal("contractor"),
-    ContractorSupport: saveRule.and(tdsseBaseRule),
-  }),
-]);
+export const ContractorSupportRuleSave = z
+  .object({
+    LaborType: z.array(z.string()),
+    ContractorSupport: z.array(z.unknown()),
+  })
+  .transform((data, ctx) => {
+    if (data.LaborType.includes("contractor")) {
+      const parseRes = z
+        .array(saveRule.and(tdsseBaseRule))
+        .safeParse(data.ContractorSupport);
+      if (parseRes.error) {
+        parseRes.error.errors.forEach((issue) => {
+          // Override the path as the safeParse doesn't see the "ContractorSupport" level
+          const path = ["ContractorSupport", ...issue.path];
+          ctx.addIssue({ ...issue, path });
+        });
+        return z.NEVER; // Don't impact the return type
+      }
+      return {
+        LaborType: data.LaborType,
+        ContractorSupport: parseRes.data,
+      };
+    } else {
+      return {
+        LaborType: data.LaborType,
+        ContractorSupport: [],
+      };
+    }
+  });
 
-export const ContractorSupportRuleFinal = z.discriminatedUnion("LaborType", [
-  z.object({
-    LaborType: z.literal("organic"),
-    // If we are organic, then populate the ContractoSupport with the default blank values
-    ContractorSupport: populateWithDefaultValue({
-      ...Labor.ContractorSupport,
-    }),
-  }),
-  z.object({
-    LaborType: z.literal("contractor"),
-    ContractorSupport: finalRule.and(tdsseFinalRule),
-  }),
-]);
+export const ContractorSupportRuleFinal = z
+  .object({
+    LaborType: z.array(z.string()),
+    ContractorSupport: z.array(z.unknown()),
+  })
+  .transform((data, ctx) => {
+    if (data.LaborType.includes("contractor")) {
+      const parseRes = z
+        .array(finalRule.and(tdsseFinalRule))
+        .safeParse(data.ContractorSupport);
+      if (parseRes.error) {
+        parseRes.error.errors.forEach((issue) => {
+          // Override the path as the safeParse doesn't see the "ContractorSupport" level
+          const path = ["ContractorSupport", ...issue.path];
+          ctx.addIssue({ ...issue, path });
+        });
+        return z.NEVER; // Don't impact the return type
+      }
+      return {
+        LaborType: data.LaborType,
+        ContractorSupport: parseRes.data,
+      };
+    } else {
+      return {
+        LaborType: data.LaborType,
+        ContractorSupport: [{ ...Labor.ContractorSupport }],
+      };
+    }
+  });

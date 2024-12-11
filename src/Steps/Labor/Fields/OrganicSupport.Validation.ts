@@ -11,18 +11,30 @@ const finalRule = z.object({
   Office: officeFinalRule,
 });
 
-export const OrganicSupportRuleFinal = z.discriminatedUnion("LaborType", [
-  z.object({
-    LaborType: z.literal("organic"),
-    OrganicSupport: finalRule,
-  }),
-  z.object({
-    LaborType: z.literal("contractor"),
-    // If it is contractor, then populate the OrganicSupport with the default blank values
-    OrganicSupport: z
-      .object({ Office: z.optional(z.string()) })
-      .transform((_obj) => {
-        return { ...Labor.OrganicSupport };
-      }),
-  }),
-]);
+export const OrganicSupportRuleFinal = z
+  .object({
+    LaborType: z.array(z.string()),
+    OrganicSupport: z.object({ Office: z.unknown() }),
+  })
+  .transform((data, ctx) => {
+    if (data.LaborType.includes("organic")) {
+      const parseRes = finalRule.safeParse(data.OrganicSupport);
+      if (parseRes.error) {
+        parseRes.error.errors.forEach((issue) => {
+          // Overide the path as the parse doesn't see the Organic SUpport level so must be added in
+          const path = ["OrganicSupport", ...issue.path];
+          ctx.addIssue({ ...issue, path });
+        });
+        return z.NEVER; // Don't impact the return type
+      }
+      return {
+        LaborType: data.LaborType,
+        OrganicSupport: data.OrganicSupport,
+      };
+    } else {
+      return {
+        LaborType: data.LaborType,
+        OrganicSupport: { ...Labor.OrganicSupport },
+      };
+    }
+  });
