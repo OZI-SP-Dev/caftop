@@ -160,7 +160,7 @@ export const ContractorSupportRuleFinal = z
     } else {
       return {
         LaborType: data.LaborType,
-        ContractorSupport: [{ ...Labor.ContractorSupport }],
+        ContractorSupport: [],
       };
     }
   });

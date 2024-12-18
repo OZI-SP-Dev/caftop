@@ -76,6 +76,7 @@ const Complete = (
         caftopData.Info.Center,
         caftopData.Info.ProgramElementCode,
         caftopData.Info.ProgramName,
+        "Narrative",
         "v1",
         formatDate2(new Date()),
       ]

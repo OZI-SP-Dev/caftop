@@ -171,14 +171,24 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
         navAction = () => dispatch({ type: "PREV_STEP" });
       }
     }
-    if (hasChanges && !isSaveAndContinue) {
-      setNavChanges(hasChanges);
-      setCloseFuncChanges(() => saveAction);
-      setCloseFunc(() => navAction);
-    } else {
-      if (saveAction) {
-        await saveAction();
+    if (hasChanges) {
+      if (!isSaveAndContinue) {
+        // Prompt to save changes if it isn't the "Save and Continue" button -- as that implies Save
+        setNavChanges(hasChanges);
+        setCloseFuncChanges(() => saveAction);
+        setCloseFunc(() => navAction);
+      } else {
+        // If the "Save and Continue" button was clicked, then don't prompt to Save, just Save
+        if (saveAction) {
+          await saveAction();
+        }
+        if (navAction) {
+          navAction();
+        }
+        return Promise.resolve();
       }
+    } else {
+      // There were no changes, so don't save -- just navigate
       if (navAction) {
         navAction();
       }
