@@ -32,7 +32,7 @@ export const AdditionalLabor = () => {
         </BACRadioGroup>
       </div>
       {hasAdditionalLabor === "yes" && (
-        <>
+        <div className="requestFieldContainer">
           {fields.map((data, index) => (
             <fieldset key={data.id}>
               <legend>
@@ -90,7 +90,7 @@ export const AdditionalLabor = () => {
               </Button>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );

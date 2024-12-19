@@ -40,7 +40,7 @@ export const ContractorSupport = () => {
 
   if (laborType.includes("contractor")) {
     return (
-      <>
+      <div className="requestFieldContainer">
         {fields.map((data, index) => (
           <fieldset key={data.id}>
             <legend>
@@ -140,7 +140,7 @@ export const ContractorSupport = () => {
             </Button>
           </div>
         )}
-      </>
+      </div>
     );
   } else {
     return <></>;
