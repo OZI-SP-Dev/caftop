@@ -119,7 +119,7 @@ export const ContractorSupportRuleSave = z
         parseRes.error.errors.forEach((issue) => {
           // Override the path as the safeParse doesn't see the "ContractorSupport" level
           const path = ["ContractorSupport", ...issue.path];
-          ctx.addIssue({ ...issue, path });
+          ctx.addIssue({ ...issue, path, fatal: true });
         });
         return z.NEVER; // Don't impact the return type
       }
@@ -149,7 +149,7 @@ export const ContractorSupportRuleFinal = z
         parseRes.error.errors.forEach((issue) => {
           // Override the path as the safeParse doesn't see the "ContractorSupport" level
           const path = ["ContractorSupport", ...issue.path];
-          ctx.addIssue({ ...issue, path });
+          ctx.addIssue({ ...issue, path, fatal: true });
         });
         return z.NEVER; // Don't impact the return type
       }

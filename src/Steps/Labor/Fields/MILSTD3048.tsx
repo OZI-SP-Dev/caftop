@@ -1,8 +1,9 @@
 import { CAFTOPLabor } from "@api/CAFTOP/types";
 import BACRadioGroup from "@components/BaseFormFields/BACRadioGroup";
-import { Radio, Text } from "@fluentui/react-components";
+import { Option, Radio, Text } from "@fluentui/react-components";
 import { useWatch } from "react-hook-form";
 import BACInput from "@components/BaseFormFields/BACInput";
+import BACDropdown from "@src/components/BaseFormFields/BACDropdown";
 
 export const MILSTD3048 = () => {
   const milstd3048Status = useWatch<CAFTOPLabor, "MILSTD3048Status">({
@@ -11,6 +12,10 @@ export const MILSTD3048 = () => {
 
   const milstd3048Location = useWatch<CAFTOPLabor, "MILSTD3048Location">({
     name: "MILSTD3048Location",
+  });
+
+  const ctrSupport = useWatch<CAFTOPLabor, "ContractorSupport">({
+    name: "ContractorSupport",
   });
 
   return (
@@ -60,9 +65,7 @@ export const MILSTD3048 = () => {
             </BACRadioGroup>
           </div>
         )}
-        {(milstd3048Status === "plan" ||
-          (milstd3048Status === "current" &&
-            milstd3048Location === "withinOther")) && (
+        {milstd3048Status === "plan" && (
           <div className="requestFieldContainer">
             <BACInput<CAFTOPLabor>
               name="MILSTD3048Contractor"
@@ -71,6 +74,33 @@ export const MILSTD3048 = () => {
             />
           </div>
         )}
+        {milstd3048Status === "current" &&
+          milstd3048Location === "withinOther" && (
+            <div className="requestFieldContainer">
+              <BACDropdown<CAFTOPLabor>
+                name="MILSTD3048Contractor"
+                labelText="Contractor Name"
+                labelInfo="Select a non TDSSe contract from the contractors defined at the top of the page"
+                rules={{ required: true }}
+              >
+                {ctrSupport?.map((item) => {
+                  if (item.TDSSe === "no") {
+                    return (
+                      <Option
+                        key={item.ContractorName}
+                        value={item.ContractorName}
+                        text={item.ContractorName}
+                      >
+                        {item.ContractorName}
+                      </Option>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+              </BACDropdown>
+            </div>
+          )}
         {milstd3048Status === "current" && milstd3048Location === "outside" && (
           <div className="requestFieldContainer">
             <BACInput<CAFTOPLabor>

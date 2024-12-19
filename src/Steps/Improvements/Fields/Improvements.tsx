@@ -32,7 +32,7 @@ export const Improvements = () => {
         </BACRadioGroup>
       </div>
       {hasImprovements === "yes" && (
-        <>
+        <div className="requestFieldContainer">
           {fields.map((data, index) => (
             <fieldset key={data.id}>
               <legend>
@@ -88,7 +88,7 @@ export const Improvements = () => {
               </Button>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );
