@@ -7,6 +7,7 @@ import { IntroductionRuleFinal } from "@steps/Description/Fields/Introduction.Va
 import { LaborTypeRuleFinal } from "@steps/Labor/Fields/LaborType.Validation";
 import { OrganicSupportRuleFinal } from "@steps/Labor/Fields/OrganicSupport.Validation";
 import {
+  ensureMilStd3048Ctr,
   milstd3048RuleFinal,
   milstd3048RuleSave,
 } from "@steps/Labor/Fields/MILSTD3048.Validation";
@@ -28,7 +29,11 @@ import { ProgramGroupRuleFinal } from "@steps/Info/Fields/ProgramGroup.Validatio
 import { ProgramManagersRuleFinal } from "@steps/Info/Fields/ProgramManagers.Validation";
 import { ProgramNameRuleFinal } from "@steps/Info/Fields/ProgramName.Validation";
 import { TechOrderManagersRuleFinal } from "@steps/Info/Fields/TechOrderManagers.Validation";
-import { CAFTOPInfo, isNotElectronicOnly } from "@api/CAFTOP/types";
+import {
+  CAFTOPInfo,
+  CAFTOPLabor,
+  isNotElectronicOnly,
+} from "@api/CAFTOP/types";
 import { useProgramNamesAndECs } from "@api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
 import { globalContext } from "@stateManagement/GlobalStore";
@@ -77,6 +82,7 @@ const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
         code: z.ZodIssueCode.custom,
         message: `Select a valid PEC for the selected Program Name`,
         path: ["ProgramElementCode"],
+        fatal: true,
       });
     }
   });
@@ -138,12 +144,19 @@ export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
     return LaborTypeRuleFinal.and(ContractorSupportRuleSave)
       .and(OrganicSupportRuleFinal)
       .and(additionalLaborRuleFinal)
-      .and(milstd3048RuleSave);
+      .and(milstd3048RuleSave)
+      .superRefine((data, ctx) => {
+        ensureMilStd3048Ctr(data as CAFTOPLabor, ctx);
+      });
   } else {
     return LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
       .and(OrganicSupportRuleFinal)
       .and(additionalLaborRuleFinal)
-      .and(milstd3048RuleFinal);
+      .and(milstd3048RuleFinal)
+      .superRefine((data, ctx) => {
+        //TODO - Figure out why it doesn't like the typing here
+        ensureMilStd3048Ctr(data as unknown as CAFTOPLabor, ctx);
+      });
   }
 };
 

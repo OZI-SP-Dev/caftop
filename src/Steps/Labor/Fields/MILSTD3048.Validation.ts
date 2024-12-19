@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Labor } from "@api/CAFTOP/defaults";
 import { populateWithDefaultValue } from "@utilities/Validation";
+import { CAFTOPLabor } from "@src/api/CAFTOP/types";
 
 const contractornameBaseRule = z
   .string()
@@ -170,3 +171,43 @@ export const milstd3048RuleFinal = z
       .merge(milstdNotCurrent),
   ])
   .pipe(milstd3048CurrentFinal);
+
+export const ensureMilStd3048Ctr = (
+  data: CAFTOPLabor,
+  ctx: z.RefinementCtx
+) => {
+  console.log(data);
+  if (
+    data.MILSTD3048Status === "current" &&
+    data.MILSTD3048Location === "withinOther"
+  ) {
+    const ctrInList = data.ContractorSupport?.find(
+      (item) =>
+        item.ContractorName === data.MILSTD3048Contractor && item.TDSSe === "no"
+    )
+      ? true
+      : false;
+    if (!ctrInList)
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `You must select a non TDSSe contract defined in the labor section if 'Within TOAP (utilizing a different contract)'`,
+        path: ["MILSTD3048Contractor"],
+      });
+  }
+  if (
+    data.MILSTD3048Status === "current" &&
+    data.MILSTD3048Location === "withinTDSSe"
+  ) {
+    const hasTDSSe = data.ContractorSupport?.find(
+      (item) => item.TDSSe === "yes"
+    )
+      ? true
+      : false;
+    if (!hasTDSSe)
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `You must have a TDSSe contract added in the labor section to select 'Within TOAP (utilizing the TDSSe contract)'`,
+        path: ["MILSTD3048Location"],
+      });
+  }
+};
