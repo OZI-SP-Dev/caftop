@@ -58,6 +58,7 @@ export const checkTOCountsForPartiallyMigrated = z
           message:
             "The sum of the TOs in the Migration Plan and the Unpublished TOs must equal the sum of Electronic, Paper, and CD/DVD TOs",
           code: z.ZodIssueCode.custom,
+          fatal: true,
         });
       }
     }
@@ -275,6 +276,7 @@ export const toapRuleFinal = z
           minimum: 1,
           type: "string",
           inclusive: false,
+          fatal: true,
         });
       } else if (obj.NumWillNotBeAuthoredInTOAP === 0) {
         // If it is zero, then TOExplanation is made blank

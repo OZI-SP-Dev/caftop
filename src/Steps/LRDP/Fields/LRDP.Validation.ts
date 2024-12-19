@@ -22,6 +22,7 @@ const checkForDuplicates = (items: CAFTOPLRDP, ctx: z.RefinementCtx) => {
         code: z.ZodIssueCode.custom,
         message: `Name must be unique`,
         path: ["LRDP", idx, "Name"],
+        fatal: true,
       });
     } else {
       uniqueValuesName.set(lowerCaseName, idx);
@@ -31,6 +32,7 @@ const checkForDuplicates = (items: CAFTOPLRDP, ctx: z.RefinementCtx) => {
         code: z.ZodIssueCode.custom,
         message: `Sequence Number must be unique`,
         path: ["LRDP", idx, "SeqNum"],
+        fatal: true,
       });
     } else {
       uniqueValuesSeqNum.set(item.SeqNum, idx);

@@ -23,7 +23,7 @@ export const OrganicSupportRuleFinal = z
         parseRes.error.errors.forEach((issue) => {
           // Overide the path as the parse doesn't see the Organic SUpport level so must be added in
           const path = ["OrganicSupport", ...issue.path];
-          ctx.addIssue({ ...issue, path });
+          ctx.addIssue({ ...issue, path, fatal: true });
         });
         return z.NEVER; // Don't impact the return type
       }
