@@ -64,3 +64,9 @@ The PowerAuotmate is triggered when an item in the `caftops` list is updated, bu
 8. It Adds the users needing added
 9. It Removes the users needing removed
 10. It updates the CAFTOP entries `PMandTOMAandAuthorIdsTrigger` field to be the value of `PMandTOMAandAuthorIds` (thus preventing future updates from running unless users are changed)
+
+## List setup
+
+1. `caftops`
+   1. Ensure the list has Content Approval on - as this is what restricts users from seeing other CAFTOPs
+   2. Ensure that the `Title` column has `Enforce unique values` turned on, as this will ensure only 1 CAFTOP is created each year, and permissions are controlled by yearly entry
