@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { Labor } from "@api/CAFTOP/defaults";
 import { populateWithDefaultValue } from "@utilities/Validation";
-import { CAFTOPLabor } from "@src/api/CAFTOP/types";
 
 const contractornameBaseRule = z
   .string()
@@ -32,47 +31,47 @@ const milstdNotCurrent = z.object({
   MILSTD3048SourceData: populateWithDefaultValue(Labor.MILSTD3048SourceData),
 });
 
+/* Although we know MILSTD3048Status will be either "current", "plan", or "noplan" based on the schema we pipe in to this schema
+ * Zod is unable to determine that and flags it as "unknown" type -- so adding MILSTD3048Status explicitly to this schmea
+ * allows Zod to properly type this field for passing in to the ensureMilStd3048Ctr validation function */
 const milstd3048CurrentSave = z.discriminatedUnion("MILSTD3048Location", [
   z
     .object({
       MILSTD3048Location: z.literal(""),
+      MILSTD3048Status: z.enum(["plan", "noplan"]),
     })
-    .passthrough(),
-  z
-    .object({
-      MILSTD3048Location: z.literal("withinTDSSe"),
-      MILSTD3048Contractor: populateWithDefaultValue(tdsseCtr),
-      MILSTD3048SourceData: populateWithDefaultValue(
-        Labor.MILSTD3048SourceData
-      ),
-    })
-    .passthrough(),
-  z
-    .object({
-      MILSTD3048Location: z.literal("withinOther"),
-      MILSTD3048Contractor: contractornameFinalRule,
-      MILSTD3048SourceData: populateWithDefaultValue(
-        Labor.MILSTD3048SourceData
-      ),
-    })
-    .passthrough(),
-  z
-    .object({
-      MILSTD3048Location: z.literal("outside"),
-      MILSTD3048Contractor: populateWithDefaultValue(
-        Labor.MILSTD3048Contractor
-      ),
-      MILSTD3048SourceData: sourcedataBaseRule,
-    })
-    .passthrough(),
+    .passthrough(), // Pass through the MILSTD3048Contractor and MILSTD3048SourceData set in the first discriminator this is piped from
+  z.object({
+    MILSTD3048Location: z.literal("withinTDSSe"),
+    MILSTD3048Contractor: populateWithDefaultValue(tdsseCtr),
+    MILSTD3048SourceData: populateWithDefaultValue(Labor.MILSTD3048SourceData),
+    MILSTD3048Status: z.literal("current"),
+  }),
+
+  z.object({
+    MILSTD3048Location: z.literal("withinOther"),
+    MILSTD3048Contractor: contractornameFinalRule,
+    MILSTD3048SourceData: populateWithDefaultValue(Labor.MILSTD3048SourceData),
+    MILSTD3048Status: z.literal("current"),
+  }),
+  z.object({
+    MILSTD3048Location: z.literal("outside"),
+    MILSTD3048Contractor: populateWithDefaultValue(Labor.MILSTD3048Contractor),
+    MILSTD3048SourceData: sourcedataBaseRule,
+    MILSTD3048Status: z.literal("current"),
+  }),
 ]);
 
+/* Although we know MILSTD3048Status will be either "current", "plan", or "noplan" based on the schema we pipe in to this
+ * Zod is unable to determine that and flags it as "unknown" type -- so adding MILSTD3048Status explicitly to this schmea
+ * allows Zod to properly type this field for passing in to the ensureMilStd3048Ctr validation function */
 const milstd3048CurrentFinal = z.discriminatedUnion("MILSTD3048Location", [
   z
     .object({
       MILSTD3048Location: z.literal(""),
+      MILSTD3048Status: z.enum(["plan", "noplan"]),
     })
-    .passthrough(),
+    .passthrough(), // Pass through the MILSTD3048Contractor and MILSTD3048SourceData set in the first discriminator this is piped from
   z
     .object({
       MILSTD3048Location: z.literal("withinTDSSe"),
@@ -80,6 +79,7 @@ const milstd3048CurrentFinal = z.discriminatedUnion("MILSTD3048Location", [
       MILSTD3048SourceData: populateWithDefaultValue(
         Labor.MILSTD3048SourceData
       ),
+      MILSTD3048Status: z.literal("current"),
     })
     .passthrough(),
   z
@@ -89,6 +89,7 @@ const milstd3048CurrentFinal = z.discriminatedUnion("MILSTD3048Location", [
       MILSTD3048SourceData: populateWithDefaultValue(
         Labor.MILSTD3048SourceData
       ),
+      MILSTD3048Status: z.literal("current"),
     })
     .passthrough(),
   z
@@ -98,6 +99,7 @@ const milstd3048CurrentFinal = z.discriminatedUnion("MILSTD3048Location", [
         Labor.MILSTD3048Contractor
       ),
       MILSTD3048SourceData: sourcedataFinalRule,
+      MILSTD3048Status: z.literal("current"),
     })
     .passthrough(),
 ]);
@@ -171,43 +173,3 @@ export const milstd3048RuleFinal = z
       .merge(milstdNotCurrent),
   ])
   .pipe(milstd3048CurrentFinal);
-
-export const ensureMilStd3048Ctr = (
-  data: CAFTOPLabor,
-  ctx: z.RefinementCtx
-) => {
-  console.log(data);
-  if (
-    data.MILSTD3048Status === "current" &&
-    data.MILSTD3048Location === "withinOther"
-  ) {
-    const ctrInList = data.ContractorSupport?.find(
-      (item) =>
-        item.ContractorName === data.MILSTD3048Contractor && item.TDSSe === "no"
-    )
-      ? true
-      : false;
-    if (!ctrInList)
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `You must select a non TDSSe contract defined in the labor section if 'Within TOAP (utilizing a different contract)'`,
-        path: ["MILSTD3048Contractor"],
-      });
-  }
-  if (
-    data.MILSTD3048Status === "current" &&
-    data.MILSTD3048Location === "withinTDSSe"
-  ) {
-    const hasTDSSe = data.ContractorSupport?.find(
-      (item) => item.TDSSe === "yes"
-    )
-      ? true
-      : false;
-    if (!hasTDSSe)
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `You must have a TDSSe contract added in the labor section to select 'Within TOAP (utilizing the TDSSe contract)'`,
-        path: ["MILSTD3048Location"],
-      });
-  }
-};

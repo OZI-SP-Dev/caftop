@@ -7,7 +7,6 @@ import { IntroductionRuleFinal } from "@steps/Description/Fields/Introduction.Va
 import { LaborTypeRuleFinal } from "@steps/Labor/Fields/LaborType.Validation";
 import { OrganicSupportRuleFinal } from "@steps/Labor/Fields/OrganicSupport.Validation";
 import {
-  ensureMilStd3048Ctr,
   milstd3048RuleFinal,
   milstd3048RuleSave,
 } from "@steps/Labor/Fields/MILSTD3048.Validation";
@@ -29,11 +28,7 @@ import { ProgramGroupRuleFinal } from "@steps/Info/Fields/ProgramGroup.Validatio
 import { ProgramManagersRuleFinal } from "@steps/Info/Fields/ProgramManagers.Validation";
 import { ProgramNameRuleFinal } from "@steps/Info/Fields/ProgramName.Validation";
 import { TechOrderManagersRuleFinal } from "@steps/Info/Fields/TechOrderManagers.Validation";
-import {
-  CAFTOPInfo,
-  CAFTOPLabor,
-  isNotElectronicOnly,
-} from "@api/CAFTOP/types";
+import { CAFTOPInfo, isNotElectronicOnly } from "@api/CAFTOP/types";
 import { useProgramNamesAndECs } from "@api/ProgramNamesAndElementCodes";
 import { useContext } from "react";
 import { globalContext } from "@stateManagement/GlobalStore";
@@ -139,24 +134,65 @@ export const useTechnicalOrdersPageValidation = (
 export const useLaborPageValidation = (mode?: GlobalStateInterface["mode"]) => {
   const { globalState } = useContext(globalContext);
 
+  const saveSchema = LaborTypeRuleFinal.and(ContractorSupportRuleSave)
+    .and(OrganicSupportRuleFinal)
+    .and(additionalLaborRuleFinal)
+    .and(milstd3048RuleSave);
+
+  const submitSchema = LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
+    .and(OrganicSupportRuleFinal)
+    .and(additionalLaborRuleFinal)
+    .and(milstd3048RuleFinal);
+
+  const ensureMilStd3048Ctr = (
+    data: z.infer<typeof saveSchema> | z.infer<typeof submitSchema>,
+    ctx: z.RefinementCtx
+  ) => {
+    if (
+      data.MILSTD3048Status === "current" &&
+      data.MILSTD3048Location === "withinOther"
+    ) {
+      const ctrInList = data.ContractorSupport?.find(
+        (item) =>
+          item.ContractorName === data.MILSTD3048Contractor &&
+          item.TDSSe === "no"
+      )
+        ? true
+        : false;
+      if (!ctrInList)
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `You must select a non TDSSe contract defined in the labor section if 'Within TOAP (utilizing a different contract)'`,
+          path: ["MILSTD3048Contractor"],
+        });
+    }
+    if (
+      data.MILSTD3048Status === "current" &&
+      data.MILSTD3048Location === "withinTDSSe"
+    ) {
+      const hasTDSSe = data.ContractorSupport?.find(
+        (item) => item.TDSSe === "yes"
+      )
+        ? true
+        : false;
+      if (!hasTDSSe)
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `You must have a TDSSe contract added in the labor section to select 'Within TOAP (utilizing the TDSSe contract)'`,
+          path: ["MILSTD3048Location"],
+        });
+    }
+  };
+
   // If we are in save mode OR if we didn't call validation with the "submit" mode
   if (globalState.mode === "save" && mode !== "submit") {
-    return LaborTypeRuleFinal.and(ContractorSupportRuleSave)
-      .and(OrganicSupportRuleFinal)
-      .and(additionalLaborRuleFinal)
-      .and(milstd3048RuleSave)
-      .superRefine((data, ctx) => {
-        ensureMilStd3048Ctr(data as CAFTOPLabor, ctx);
-      });
+    return saveSchema.superRefine((data, ctx) => {
+      ensureMilStd3048Ctr(data, ctx);
+    });
   } else {
-    return LaborTypeRuleFinal.and(ContractorSupportRuleFinal)
-      .and(OrganicSupportRuleFinal)
-      .and(additionalLaborRuleFinal)
-      .and(milstd3048RuleFinal)
-      .superRefine((data, ctx) => {
-        //TODO - Figure out why it doesn't like the typing here
-        ensureMilStd3048Ctr(data as unknown as CAFTOPLabor, ctx);
-      });
+    return submitSchema.superRefine((data, ctx) => {
+      ensureMilStd3048Ctr(data, ctx);
+    });
   }
 };
 
