@@ -6,6 +6,7 @@ import "@pnp/sp/lists/web";
 import "@pnp/sp/items";
 import "@pnp/sp/items/list";
 import "@pnp/sp/site-users/web";
+import "@pnp/sp/site-groups/web";
 import "@pnp/sp/profiles";
 import "@pnp/sp/batching";
 import "@pnp/sp/folders";

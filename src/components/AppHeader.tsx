@@ -11,6 +11,7 @@ import { UserContext } from "@providers/UserProvider";
 import { tokens } from "@fluentui/react-theme";
 import { Link } from "react-router-dom";
 import { useDefaultHelpLink } from "@api/DefaultData";
+import { useMyRoles } from "@api/RolesApi";
 
 /* FluentUI Styling */
 const useStyles = makeStyles({
@@ -63,6 +64,7 @@ export const AppHeader = () => {
   const classes = useStyles();
   const userContext = useContext(UserContext);
   const helpLink = useDefaultHelpLink();
+  const myRoles = useMyRoles();
 
   const title =
     import.meta.env.MODE === "testing" || import.meta.env.DEV
@@ -75,9 +77,11 @@ export const AppHeader = () => {
         <Link to="/" className={classes.navHeaderSiteName}>
           {title}
         </Link>
-        <Link to="/CAFTOPs" className={classes.navLink}>
-          CAFTOPs
-        </Link>
+        {myRoles.data?.isFocalPoint && (
+          <Link to="/CAFTOPs" className={classes.navLink}>
+            CAFTOPs
+          </Link>
+        )}
         <Link to={helpLink} className={classes.navHelp} target="_blank">
           Help
         </Link>
@@ -101,23 +105,22 @@ export const AppHeader = () => {
             </Tooltip>
           </PopoverTrigger>
           <PopoverSurface aria-label="Your roles">
-            {/** If the user has role(s), list them */
-            /*userContext.roles && userContext.roles.length > 0 && (
+            {
+              /* If user is a Focal Point */
+              myRoles.data?.isFocalPoint && (
                 <ul>
-                  {userContext.roles?.map((role) => (
-                    <li key={role}>{role}</li>
-                  ))}
+                  <li key="focalPoint">Focal Point</li>
                 </ul>
-              )*/}
-            {/** If the user has no privleged role(s), just state standard account */
-            /*userContext.roles && userContext.roles.length === 0 && (
+              )
+            }
+            {
+              /* If the user has no privleged role(s), just state standard account */
+              !myRoles.data?.isFocalPoint && (
                 <ul>
                   <li>Standard user account</li>
                 </ul>
-              )*/}
-            <ul>
-              <li>Standard user account</li>
-            </ul>
+              )
+            }
           </PopoverSurface>
         </Popover>
       </div>
