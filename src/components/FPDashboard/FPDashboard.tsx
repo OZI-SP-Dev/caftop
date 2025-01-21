@@ -36,7 +36,8 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { FilterIcon } from "@fluentui/react-icons-mdl2";
 import FilterRequestsDrawer from "./Filter";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useMyRoles } from "@api/RolesApi";
 
 const Year = createTableColumn<PagedRequest>({
   columnId: "Year",
@@ -136,6 +137,7 @@ const FPDashboard = () => {
       ProgramName: { minWidth: 60, idealWidth: 280 },
     });
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const myRoles = useMyRoles();
 
   const onColumnResize = useCallback(
     (
@@ -177,6 +179,16 @@ const FPDashboard = () => {
     ProgramGroup,
     ProgramName,
   ];
+
+  // Render "Loading" if we are still waiting to determine if user is authorized this page
+  if (myRoles.isLoading) {
+    return <>Loading</>;
+  }
+
+  // If roles have loaded, and user is not a Focal Point, then send them back to the Homepage
+  if (!myRoles.data?.isFocalPoint) {
+    return <Navigate to={"/"} />;
+  }
 
   // RENDER
   return (
