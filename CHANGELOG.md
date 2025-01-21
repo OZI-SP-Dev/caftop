@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - Only show the CAFTOPs link to those with the Focal Point role
+- Removed PnPJS imports that aren't used by this application
 
 ## [1.0.1] - 2024-12-31
 
