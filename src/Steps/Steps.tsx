@@ -171,7 +171,8 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
         navAction = () => dispatch({ type: "PREV_STEP" });
       }
     }
-    if (hasChanges) {
+    // If they changed data OR if they are moving to the next step which needs to become the new max step
+    if (hasChanges || isSaveAndContinue) {
       if (!isSaveAndContinue) {
         // Prompt to save changes if it isn't the "Save and Continue" button -- as that implies Save
         setNavChanges(hasChanges);
