@@ -147,7 +147,7 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
       if (e.nativeEvent?.submitter?.id === "next") {
         isSaveAndContinue = globalState.wizardMaxStep === props.currentStep;
         saveAction = async () => {
-          if (props.currentStep + 1 > (maxStep.data?.wizardMaxStep ?? 0)) {
+          if (props.currentStep + 1 > globalState.wizardMaxStep) {
             Object.assign(data, {
               wizardMaxStep: props.currentStep + 1,
             });
