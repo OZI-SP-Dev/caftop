@@ -2,6 +2,8 @@ import { ActionType, GlobalStateInterface } from "./types";
 
 export const initialState: GlobalStateInterface = {
   id: 0,
+  programName: "test",
+  pec: "123",
   wizardStep: 0,
   wizardMaxStep: 0,
   mode: "save",
@@ -58,12 +60,26 @@ const Reducer = (state: GlobalStateInterface, action: ActionType) => {
         wizardStep,
       };
     }
+    case "SET_NAMES": {
+      const programName = action.payload?.programName ?? "";
+      const pec = action.payload?.pec ?? "";
+
+      return {
+        ...state,
+        programName,
+        pec,
+      };
+    }
     case "SET_MAX_STEP": {
       const wizardMaxStep = action.payload?.wizardMaxStep ?? 0;
+      const programName = action.payload?.programName ?? "";
+      const pec = action.payload?.pec ?? "";
       const wizardStep = wizardMaxStep;
       return {
         ...state,
         wizardMaxStep,
+        programName,
+        pec,
         wizardStep,
       };
     }

@@ -1,14 +1,30 @@
 import { useContext } from "react";
-import { Button } from "@fluentui/react-components";
+import { Button, Text } from "@fluentui/react-components";
 import { globalContext } from "@stateManagement/GlobalStore";
 import { CAFTOPStepNames } from "@steps/Steps";
+import { useLocation } from "react-router-dom";
 
 export const AppLeftNav = () => {
   const { globalState } = useContext(globalContext);
+  const location = useLocation();
+
+  const isNewCAFTOP = location.pathname === "/new";
+
   const steps = CAFTOPStepNames;
 
   return (
     <div style={{ display: "grid" }}>
+      {!isNewCAFTOP && (
+        <>
+          <Text>
+            <strong>Program Name: </strong>
+            {globalState.programName}
+          </Text>
+          <Text>
+            <strong>PEC: </strong> {globalState.pec}
+          </Text>
+        </>
+      )}
       {steps.map((element, i) => (
         <Button
           id={`goto_${i}`}

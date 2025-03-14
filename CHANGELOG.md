@@ -23,6 +23,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed for any bug fixes.
 - Security in case of vulnerabilities.
 
+## [1.0.4] - 2025-03-xx
+
+### Added
+
+- Identifier added to left navigation panel to let user know what CAFTOP they are currently viewing/editing
+
 ## [1.0.3] - 2025-02-13
 
 ### Fixed

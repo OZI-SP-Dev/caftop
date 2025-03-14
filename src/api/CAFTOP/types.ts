@@ -81,7 +81,11 @@ export type CAFTOPLRDP = {
   LRDP: { Name: string; SeqNum: string }[];
 };
 
-export type CAFTOPMaxStep = { wizardMaxStep: number };
+export type CAFTOPMaxStep = {
+  wizardMaxStep: number;
+  ProgramName: string;
+  ProgramElementCode: string;
+};
 
 type CAFTOP = {
   Info: CAFTOPInfo;

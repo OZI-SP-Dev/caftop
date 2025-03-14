@@ -21,7 +21,7 @@ import { useCreateCAFTOP } from "@api/CAFTOP/useCreateCAFTOP";
 import { Link } from "@fluentui/react";
 
 const Info = (props: ICAFTOPWizardStep) => {
-  const { globalState } = useContext(globalContext);
+  const { globalState, dispatch } = useContext(globalContext);
   const { pathname } = useLocation();
   const currentCAFTOP = useCAFTOP(globalState.id, "Info");
   const createCAFTOP = useCreateCAFTOP();
@@ -30,7 +30,14 @@ const Info = (props: ICAFTOPWizardStep) => {
 
   const createNew: SubmitHandler<CAFTOPInfo> = (data, _e?) => {
     createCAFTOP.mutate(data, {
-      onSuccess: (data: { Id: number }) => {
+      onSuccess: (data: { Id: number }, variables) => {
+        dispatch({
+          type: "SET_NAMES",
+          payload: {
+            programName: variables.ProgramName,
+            pec: variables.ProgramElementCode,
+          },
+        });
         navigate(`/item/${data.Id}`);
       },
       onError: (e) => {

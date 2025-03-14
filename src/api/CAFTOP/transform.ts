@@ -1,3 +1,4 @@
+import { ProgramElementCode } from "@src/Steps/Info/Fields";
 import { Distribution, Improvements, LRDP, Labor } from "./defaults";
 import {
   PageType,
@@ -231,6 +232,8 @@ export const transformRequestFromSP = <T extends Pages>(
     case "MaxStep":
       return {
         wizardMaxStep: (<CAFTOPMaxStep>request).wizardMaxStep,
+        ProgramName: (<CAFTOPMaxStep>request).ProgramName,
+        ProgramElementCode: (<CAFTOPMaxStep>request).ProgramElementCode,
       } as PageType<T>;
   }
 
@@ -409,6 +412,8 @@ export const transformRequestToSP = async <T extends Pages>(
     case "MaxStep":
       return {
         wizardMaxStep: (<CAFTOPMaxStep>request).wizardMaxStep,
+        ProgramName: (<CAFTOPMaxStep>request).ProgramName,
+        ProgramElementCode: (<CAFTOPMaxStep>request).ProgramElementCode,
       } as PageTypeSP<T>;
   }
 
