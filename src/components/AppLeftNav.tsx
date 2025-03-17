@@ -16,13 +16,17 @@ export const AppLeftNav = () => {
     <div style={{ display: "grid" }}>
       {!isNewCAFTOP && (
         <>
-          <Text>
-            <strong>Program Name: </strong>
-            {globalState.programName}
-          </Text>
-          <Text>
-            <strong>PEC: </strong> {globalState.pec}
-          </Text>
+          <div>
+            <Text>
+              <strong>Program Name: </strong>
+              {globalState.programName}
+            </Text>
+          </div>
+          <div>
+            <Text>
+              <strong>PEC: </strong> {globalState.pec}
+            </Text>
+          </div>
         </>
       )}
       {steps.map((element, i) => (
