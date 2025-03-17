@@ -1,4 +1,3 @@
-import { ProgramElementCode } from "@src/Steps/Info/Fields";
 import { Distribution, Improvements, LRDP, Labor } from "./defaults";
 import {
   PageType,
