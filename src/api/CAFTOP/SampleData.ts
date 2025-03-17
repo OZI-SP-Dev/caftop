@@ -2,6 +2,7 @@ import { CAFTOPSP, PagedRequestSP, PagedRequestSPStream } from "./types";
 
 const caftopSamples: CAFTOPSP[] = [
   {
+    Id: 1,
     ProgramGroup: "330 TACTICAL AIRLIFT CSG",
     ProgramName: "A010",
     ProgramElementCode: "78202D",
@@ -62,9 +63,10 @@ const caftopSamples: CAFTOPSP[] = [
     PMandTOMAandAuthorIds: '"1",',
   },
   {
-    ProgramGroup: "330 TACTICAL AIRLIFT CSG",
-    ProgramName: "A010",
-    ProgramElementCode: "78202D",
+    Id: 2,
+    ProgramGroup: "542 ELECTRONIC WARFARE CSG",
+    ProgramName: "AERIAL TGT EGLIN",
+    ProgramElementCode: "35116F",
     LeadCommand: "AFMC",
     Center: "AFLCMC",
     PreparingBase: "Wright Patterson AFB, OH",
@@ -124,6 +126,7 @@ const caftopSamples: CAFTOPSP[] = [
 ];
 
 const blankData: CAFTOPSP = {
+  Id: 0,
   ProgramGroup: "",
   ProgramName: "",
   ProgramElementCode: "",
@@ -184,30 +187,45 @@ const pick = <T extends object, K extends keyof T>(obj: T, ...keys: K[]) =>
 //** Function to simulate the "select" api from SharePoint to just get particular fields */
 export const getCAFTOPFields = (id: number, fields: string) => {
   const fieldsArray = fields.split(",") as (keyof CAFTOPSP)[];
-  const record = caftopSamples[id - 1];
+  const record = caftopSamples.find((item) => item.Id === id);
 
-  return pick(record, ...fieldsArray);
+  if (record) {
+    return pick(record, ...fieldsArray);
+  } else {
+    return {};
+  }
 };
 
 //** Function to simulate the update api from SharePoint to just get particular fields */
 export const updateCAFTOPFields = (id: number, data: Partial<CAFTOPSP>) => {
+  const itemIndex = caftopSamples.findIndex((item) => item.Id === id);
   // Be "bad" and mutate the object
-  caftopSamples[id - 1] = { ...caftopSamples[id - 1], ...data };
+  caftopSamples[itemIndex] = { ...caftopSamples[itemIndex], ...data };
+};
+
+//** Function to simulate the delete api from SharePoint */
+export const deleteCAFTOP = (id: number) => {
+  const itemIndex = caftopSamples.findIndex((item) => item.Id === id);
+  // Be "bad" and mutate the object
+  caftopSamples.splice(itemIndex, 1);
+  return id.toString();
 };
 
 //** Function to simulate the create api from SharePoint to just get particular fields */
 export const createCAFTOP = (data: Partial<CAFTOPSP>) => {
+  const ids = caftopSamples.map((item) => item.Id);
+  const maxId = Math.max(...ids) + 1;
+
   // Be "bad" and mutate the object
-  caftopSamples[caftopSamples.length] = { ...blankData, ...data };
-  return { Id: caftopSamples.length };
+  caftopSamples[caftopSamples.length] = { ...blankData, ...data, Id: maxId };
+  return { Id: maxId };
 };
 
 export const getCAFTOPs = () => {
   const caftops: PagedRequestSP[] = [];
-  let index = 1;
   caftopSamples.forEach((caftop) => {
     caftops.push({
-      Id: index++,
+      Id: caftop.Id,
       Year: caftop.Year,
       LeadCommand: caftop.LeadCommand,
       Center: caftop.Center,
@@ -225,10 +243,9 @@ export const getCAFTOPs = () => {
 
 export const getCAFTOPsAsStream = () => {
   const caftops: PagedRequestSPStream[] = [];
-  let index = 1;
   caftopSamples.forEach((caftop) => {
     caftops.push({
-      ID: (index++).toString(),
+      ID: caftop.Id.toString(),
       Year: caftop.Year.toString(),
       LeadCommand: caftop.LeadCommand,
       Center: caftop.Center,

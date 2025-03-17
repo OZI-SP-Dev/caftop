@@ -77,7 +77,7 @@ export const AppHeader = () => {
         <Link to="/" className={classes.navHeaderSiteName}>
           {title}
         </Link>
-        {myRoles.data?.isFocalPoint && (
+        {(myRoles.data?.isFocalPoint || myRoles.data?.isAdmin) && (
           <Link to="/CAFTOPs" className={classes.navLink}>
             CAFTOPs
           </Link>
@@ -106,6 +106,14 @@ export const AppHeader = () => {
           </PopoverTrigger>
           <PopoverSurface aria-label="Your roles">
             {
+              /* If user is an Admin */
+              myRoles.data?.isAdmin && (
+                <ul>
+                  <li key="admin">Admin</li>
+                </ul>
+              )
+            }
+            {
               /* If user is a Focal Point */
               myRoles.data?.isFocalPoint && (
                 <ul>
@@ -115,7 +123,7 @@ export const AppHeader = () => {
             }
             {
               /* If the user has no privleged role(s), just state standard account */
-              !myRoles.data?.isFocalPoint && (
+              !myRoles.data?.isFocalPoint && !myRoles.data?.isAdmin && (
                 <ul>
                   <li>Standard user account</li>
                 </ul>

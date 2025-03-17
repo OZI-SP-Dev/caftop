@@ -219,7 +219,7 @@ export type CAFTOPSP = CAFTOPSPInfo &
   CAFTOPSPDistribution &
   CAFTOPSPImprovements &
   CAFTOPSPLRDP &
-  CAFTOPSPMaxStep & { Year: number; Created: string };
+  CAFTOPSPMaxStep & { Year: number; Created: string; Id: number };
 
 export type PageTypeSP<T> = T extends "Info"
   ? CAFTOPSPInfo
