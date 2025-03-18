@@ -21,9 +21,10 @@ export const useDeleteCAFTOP = () => {
   };
 
   return useMutation([`caftop-delete`], updateFunc, {
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       void queryClient.invalidateQueries(["fp-paged-requests"]);
       void queryClient.invalidateQueries(["paged-requests"]);
+      void queryClient.removeQueries(["caftop", variables]);
     },
   });
 };

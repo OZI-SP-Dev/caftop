@@ -28,13 +28,13 @@ export const useUpdateCAFTOP = (id: string | undefined, page: Pages) => {
     }
   };
 
-  return useMutation([`caftop-${page}-update`, id], updateFunc, {
+  return useMutation([`caftop-update`, id, `${page}`], updateFunc, {
     onSuccess: () => {
-      void queryClient.invalidateQueries([`caftop-${page}`, id]);
+      void queryClient.invalidateQueries([`caftop`, id, `${page}`]);
 
       if (page === "TechnicalOrders") {
         // If updating the TechOrders, the fields are also used in Distribution
-        void queryClient.invalidateQueries([`caftop-Distribution`, id]);
+        void queryClient.invalidateQueries([`caftop`, id, "Distribution"]);
       }
     },
   });
