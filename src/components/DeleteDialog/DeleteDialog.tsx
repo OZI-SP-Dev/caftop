@@ -79,6 +79,7 @@ export const DeleteDialog = ({
                 {!deleteCAFTOP.isLoading ? (
                   <Button
                     appearance="primary"
+                    style={{ background: "#C23F38" }}
                     onClick={() => void deleteHandler()}
                   >
                     Delete Narrative{" "}
