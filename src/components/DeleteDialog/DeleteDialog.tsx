@@ -73,7 +73,11 @@ export const DeleteDialog = ({
                 </>
               </DialogContent>
               <DialogActions>
-                <Button appearance="secondary" onClick={cancelHandler}>
+                <Button
+                  appearance="secondary"
+                  onClick={cancelHandler}
+                  disabled={deleteCAFTOP.isLoading}
+                >
                   No
                 </Button>
                 {!deleteCAFTOP.isLoading ? (
