@@ -2,6 +2,8 @@ import { Dispatch } from "react";
 
 export interface GlobalStateInterface {
   id: number;
+  programName: string;
+  pec: string;
   wizardStep: number;
   wizardMaxStep: number;
   /** Drive how the "Save and Continue" button works -- page checking or full sumbission checking */
@@ -15,6 +17,7 @@ export type ActionType = {
     | "GOTO_STEP"
     | "CHANGE_MODE"
     | "SET_CURRENT_ITEM"
+    | "SET_NAMES"
     | "SET_MAX_STEP";
   payload?: Partial<GlobalStateInterface>;
 };

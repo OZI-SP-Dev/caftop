@@ -120,18 +120,21 @@ export const CAFTOPWizardSteps = (props: ICAFTOPWizardSteps) => {
 
   useEffect(() => {
     const value = maxStep.data?.wizardMaxStep ?? 0;
+    const programName = maxStep.data?.ProgramName ?? "";
+    const pec = maxStep.data?.ProgramElementCode ?? "";
     dispatch({
       type: "SET_MAX_STEP",
-      payload: { wizardMaxStep: value },
+      payload: { wizardMaxStep: value, programName: programName, pec: pec },
     });
   }, [maxStep.data, dispatch]);
 
   useEffect(() => {
+    const itemIdNum = parseInt(itemId ?? "0");
     dispatch({
       type: "SET_CURRENT_ITEM",
-      payload: { id: parseInt(itemId ?? "0") },
+      payload: { id: itemIdNum },
     });
-    void queryClient.invalidateQueries(["caftop-MaxStep"]);
+    void queryClient.invalidateQueries(["caftop", itemIdNum, "MaxStep"]);
   }, [itemId, dispatch, queryClient]);
 
   const handleSubmit: TCAFTOPSubmitFunc = async (

@@ -31,6 +31,7 @@ import {
 import {
   ArrowNextRegular,
   ArrowPreviousRegular,
+  DeleteRegular,
   FilterRegular,
 } from "@fluentui/react-icons";
 import { useCallback, useRef, useState } from "react";
@@ -38,6 +39,10 @@ import { FilterIcon } from "@fluentui/react-icons-mdl2";
 import FilterRequestsDrawer from "./Filter";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useMyRoles } from "@api/RolesApi";
+import {
+  DeleteDialog,
+  IDeleteItem,
+} from "@src/components/DeleteDialog/DeleteDialog";
 
 const Year = createTableColumn<PagedRequest>({
   columnId: "Year",
@@ -138,6 +143,36 @@ const FPDashboard = () => {
     });
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const myRoles = useMyRoles();
+  const [itemToDelete, setItemToDelete] = useState<IDeleteItem>();
+
+  // This action has to be inside the CAFTOP component, as we need acces to a hook it provides
+  const Actions = createTableColumn<PagedRequest>({
+    columnId: "Actions",
+    compare: (_a, _b) => 0, // Change nothing, but utilize table's sorting icons
+    renderHeaderCell: (_filtered = false) => {
+      return <>Actions</>;
+    },
+    renderCell: (item) => {
+      return (
+        <TableCellLayout truncate>
+          {" "}
+          <Button
+            aria-label="Delete"
+            icon={<DeleteRegular />}
+            onClick={(ev) => {
+              ev.stopPropagation();
+              setItemToDelete({
+                Id: item.Id,
+                programName: item.ProgramName,
+                pec: item.ProgramElementCode,
+                returnPath: undefined,
+              });
+            }}
+          />
+        </TableCellLayout>
+      );
+    },
+  });
 
   const onColumnResize = useCallback(
     (
@@ -178,6 +213,8 @@ const FPDashboard = () => {
     ProgramElementCode,
     ProgramGroup,
     ProgramName,
+    // Only display this column if they are an Admin
+    ...(myRoles.data?.isAdmin ? [Actions] : []),
   ];
 
   // Render "Loading" if we are still waiting to determine if user is authorized this page
@@ -185,8 +222,8 @@ const FPDashboard = () => {
     return <>Loading</>;
   }
 
-  // If roles have loaded, and user is not a Focal Point, then send them back to the Homepage
-  if (!myRoles.data?.isFocalPoint) {
+  // If roles have loaded, and user is not a Focal Point or Admin, then send them back to the Homepage
+  if (!myRoles.data?.isFocalPoint && !myRoles.data?.isAdmin) {
     return <Navigate to={"/"} />;
   }
 
@@ -290,6 +327,10 @@ const FPDashboard = () => {
           Next
         </Button>
       </div>
+      <DeleteDialog
+        itemToDelete={{ ...itemToDelete }}
+        setItemToDelete={setItemToDelete}
+      />
     </>
   );
 };

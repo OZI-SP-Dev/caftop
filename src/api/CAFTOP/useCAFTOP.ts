@@ -45,7 +45,7 @@ export const useCAFTOP = <T extends Pages>(
   }
 
   return useQuery({
-    queryKey: [`caftop-${page}`, id],
+    queryKey: [`caftop`, id, `${page}`],
     queryFn: () => getCAFTOP(id, page),
     select: (data) => transformRequestFromSP(data, page),
     ...(dontRefresh && dontRefresh),

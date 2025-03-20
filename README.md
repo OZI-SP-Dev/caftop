@@ -40,7 +40,8 @@ If you are developing a production application, we recommend updating the config
 - Custom permission levels
   - CAFTOPItemLevel - Contribue plus Approve Items for use at Item Level
 
-Note: The application looks for a group name that ends with "Focal Points" to determine whether or not to show the link
+Note: The application looks for a group name that ends with "Focal Points" to determine whether or not the user is a Focal Point
+Note: The application looks for a group name that ends with "Owners" to determine whether or not the user is an Admin
 
 ## PowerAutomate setuup
 

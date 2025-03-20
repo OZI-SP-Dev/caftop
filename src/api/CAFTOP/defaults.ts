@@ -89,9 +89,9 @@ export const LRDP: CAFTOPLRDP = {
 export const getFieldsForPage = (page: string) => {
   let pageObj;
   switch (page) {
-    // This isn't a "page" in the tool -- but is the value of the highest page/step reached
+    // This isn't a "page" in the tool -- but is the value of the highest page/step reached along with the identity of the CAFTOP
     case "MaxStep":
-      pageObj = { wizardMaxStep: 0 };
+      pageObj = { wizardMaxStep: 0, ProgramName: "", ProgramElementCode: "" };
       break;
     case "Info":
       pageObj = Info;
