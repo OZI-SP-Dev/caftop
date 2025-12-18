@@ -65,6 +65,10 @@ import {
 } from "@steps/LRDP/Fields/LRDP.Validation";
 import { useParams } from "react-router-dom";
 import { useCAFTOP } from "@api/CAFTOP/useCAFTOP";
+import {
+  toFormatRuleFinal,
+  toFormatRuleSave,
+} from "@src/Steps/TechnicalOrders/Fields/TOFormat.Validation";
 
 const useAddlPECValidation = (schema: ZodSchema<CAFTOPInfo>) => {
   const ProgramNamesAndECs = useProgramNamesAndECs();
@@ -123,10 +127,12 @@ export const useTechnicalOrdersPageValidation = (
   if (globalState.mode === "save" && mode !== "submit") {
     return tocountsRuleSave
       .and(toapRuleSave)
+      .and(toFormatRuleSave)
       .pipe(checkTOCountsForPartiallyMigrated);
   } else {
     return tocountsRuleFinal
       .and(toapRuleFinal)
+      .and(toFormatRuleFinal)
       .pipe(checkTOCountsForPartiallyMigrated);
   }
 };

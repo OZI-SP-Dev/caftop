@@ -74,6 +74,10 @@ const transformTechnicalOrdersFromSP = (data: CAFTOPSPTechnicalOrders) => {
     NumWillNotBeAuthoredInTOAP: data.NumWillNotBeAuthoredInTOAP ?? "",
     Explanation: data.Explanation ?? "",
     PlanToConvert: data.PlanToConvert ?? "",
+    TOFormat: JSON.parse(
+      data.TOFormat ?? "[]"
+    ) as CAFTOPTechnicalOrders["TOFormat"],
+    TOOtherFormat: data.TOOtherFormat ?? "",
   };
   return techOrder;
 };
@@ -318,6 +322,8 @@ const transformTechnicalOrdersToSP = (data: CAFTOPTechnicalOrders) => {
     ),
     Explanation: data.Explanation ?? "",
     PlanToConvert: data.PlanToConvert ?? "",
+    TOFormat: JSON.stringify(data.TOFormat),
+    TOOtherFormat: data.TOOtherFormat ?? "",
   };
   return techOrder;
 };

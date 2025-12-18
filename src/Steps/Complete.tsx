@@ -157,11 +157,32 @@ const Complete = (
         supportListString = supportList[0]; // It is just the first entry
       }
 
+      // Remove "Other" on a new temp array, as if it is in there, we don't want to display "Other" itself
+      const tempTOFormat = caftopData.TechnicalOrders.TOFormat.filter(
+        (val) => val !== "Other"
+      );
+
+      // If orginal has "Other", than push the value they typed in
+      if (caftopData.TechnicalOrders.TOFormat.includes("Other")) {
+        tempTOFormat.push(caftopData.TechnicalOrders.TOOtherFormat);
+      }
+
+      // Add the word "and" to the last element if there is more than one
+      if (tempTOFormat.length > 1) {
+        tempTOFormat[tempTOFormat.length - 1] = `and ${
+          tempTOFormat[tempTOFormat.length - 1]
+        }`;
+      }
+
+      // Create the comma separate string for display in the document
+      const TOFormatStatement = tempTOFormat.join(", ");
+
       const technicalOrders = {
         ...caftopData.TechnicalOrders,
         TotalCount: totalCount,
         TotalTypeCount: totalTypeCount,
         TOApprovedWaiverDate: approvedTOWaiverDate,
+        TOFormatStatement,
       };
 
       const distribution = {

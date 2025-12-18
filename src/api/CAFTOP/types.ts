@@ -39,6 +39,8 @@ export type CAFTOPTechnicalOrders = {
   NumWillNotBeAuthoredInTOAP: number | "";
   Explanation: string;
   PlanToConvert: string;
+  TOFormat: string[];
+  TOOtherFormat: string;
 };
 
 export type CAFTOPLabor = {
@@ -175,6 +177,8 @@ export type CAFTOPSPTechnicalOrders = {
   NumWillNotBeAuthoredInTOAP: number | null;
   Explanation: string | null;
   PlanToConvert: string | null;
+  TOFormat: string | null;
+  TOOtherFormat: string | null;
 };
 
 export type CAFTOPSPLabor = {
