@@ -61,6 +61,9 @@ const caftopSamples: CAFTOPSP[] = [
     Year: 2027,
     Created: "2024-09-18T15:54:18Z",
     PMandTOMAandAuthorIds: '"1",',
+    TOFormat:
+      '["Interactive Portable Document Format (IPDF)","Portable Document Format (PDF)"]',
+    TOOtherFormat: "",
   },
   {
     Id: 2,
@@ -122,6 +125,8 @@ const caftopSamples: CAFTOPSP[] = [
     Year: 2027,
     Created: "2024-09-18T15:54:18Z",
     PMandTOMAandAuthorIds: '"1",',
+    TOFormat: '["Other"]',
+    TOOtherFormat: "Virtual Desktop Infrastructure (VDI)",
   },
 ];
 
@@ -176,6 +181,8 @@ const blankData: CAFTOPSP = {
   Year: 0,
   Created: "",
   PMandTOMAandAuthorIds: "",
+  TOFormat: null,
+  TOOtherFormat: null,
 };
 
 // https://stackoverflow.com/questions/17781472/how-to-get-a-subset-of-a-javascript-objects-properties

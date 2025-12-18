@@ -42,6 +42,8 @@ export const TechnicalOrders: CAFTOPTechnicalOrders = {
   NumWillNotBeAuthoredInTOAP: "",
   Explanation: "",
   PlanToConvert: "",
+  TOFormat: [],
+  TOOtherFormat: "",
 };
 
 export const Labor: CAFTOPLabor = {
